@@ -1,7 +1,8 @@
 #include "HelloWorldScene.h"
 
 #include "Sprites_LoadSpriteFromPNGTest.h"
-
+#include "Sprites_LoadSpriteFromPVRTest.h"
+#include "Sprites_LoadSpriteFromPVRCCZTest.h"
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -67,7 +68,7 @@ bool HelloWorld::init()
         item->setTag(2);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Sprites - Load from PVR CCZ", this,
+        item = CCMenuItemFont::create("Sprites - Load from PVR.CCZ", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(3);
         itemsArray->addObject(item);
@@ -130,13 +131,13 @@ bool HelloWorld::init()
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
 
-        
+//        CCSize s = CCDirector::sharedDirector()->getWinSize();
         
         CCMenu* menu = CCMenu::createWithArray(itemsArray);
         menu->alignItemsVertically();
         menu->setTag(MENU_TAG);
         this->addChild(menu);
-        menu->setPosition(CCPoint(menu->getPosition().x,-100));
+        menu->setPosition(CCPoint(menu->getPosition().x,0));
         
 		bRet = true;
 	} while (0);
@@ -153,10 +154,11 @@ void HelloWorld::menuCallback(CCObject* sender)
             break;
 
         case 2:
-            
+            CCDirector::sharedDirector()->replaceScene(Sprites_LoadSpriteFromPVRTest::scene());
             break;
 
         case 3:
+            CCDirector::sharedDirector()->replaceScene(Sprites_LoadSpriteFromPVRCCZTest::scene());
             
             break;
 
@@ -175,7 +177,7 @@ void HelloWorld::menuCallback(CCObject* sender)
         default:
             break;
     }
-    CCLOG("Clicked on menu sprite item %d", menu->getTag());
+//    CCLOG("Clicked on menu sprite item %d", menu->getTag());
 ///    CCDirector::sharedDirector()->replaceScene(anScene);
 }
 
@@ -191,20 +193,15 @@ void HelloWorld::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
         
         CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
         
-//        CCLog("NEW POS %f size %f", newPos.y, menu->getContentSize().height);
-        
-        //on mac this behaves differently so we will will leave a little play room
-//        if(newPos.y < 0)
-//            newPos.y = 0;
-//
-//        if(newPos.y > menu->getContentSize().height)
-//            newPos.y = menu->getContentSize().height;
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-        if(newPos.y < -100)
-            newPos.y = -100;
+//        CCLog("POS %f - height %f screen %f", newPos.y, menu->getContentSize().height, s.height);
         
-        if(newPos.y > menu->getContentSize().height + 100)
-            newPos.y = menu->getContentSize().height + 100;
+        if(newPos.y < 0)
+            newPos.y = 0;
+
+        if(newPos.y > s.height)
+            newPos.y = s.height;
 
         menu->setPosition(newPos);
     }

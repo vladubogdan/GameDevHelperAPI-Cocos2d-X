@@ -17,27 +17,47 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector *pDirector = CCDirector::sharedDirector();
     
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-    CCSize designSize = CCSizeMake(480, 320);
-    std::vector<std::string> searchPaths;
-    
-    if (screenSize.height > 320)
-    {
-        searchPaths.push_back("hd");
-        searchPaths.push_back("sd");
-        pDirector->setContentScaleFactor(640.0f/designSize.height);
-    }
-    else
-    {
-        searchPaths.push_back("sd");
-        pDirector->setContentScaleFactor(320.0f/designSize.height);
-    }
-    
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
-    
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
+    
+    
+    
+    
+    float scrWidth = CCEGLView::sharedOpenGLView()->getFrameSize().width;
+    float scrHeight= CCEGLView::sharedOpenGLView()->getFrameSize().height;
+    
+    std::vector<std::string> res;
+    
+    if(scrWidth == 480 || scrHeight == 480){
+        
+        res.push_back("sd");
+        
+        CCFileUtils::sharedFileUtils()->setSearchPaths(res);
+        CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
+    }
+    else if(scrWidth == 640 || scrHeight == 640){ //check for both iphone4/4S and iphone5
+        res.push_back("hd");
+        
+        CCFileUtils::sharedFileUtils()->setSearchPaths(res);
+        CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
+    }
+    else if(scrWidth == 1024 || scrHeight == 1024){
+        
+        res.push_back("ipad");
+        CCFileUtils::sharedFileUtils()->setSearchPaths(res);
+        CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
+    }
+    else if(scrWidth == 2048 || scrHeight == 2048){
+        
+        res.push_back("ipadhd");
+        
+        CCFileUtils::sharedFileUtils()->setSearchPaths(res);
+        CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
+    }
+    
+    
+    
+    
+    
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
