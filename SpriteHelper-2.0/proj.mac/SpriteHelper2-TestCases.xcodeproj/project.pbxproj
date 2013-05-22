@@ -26,6 +26,13 @@
 		41CD6C9A15BF77CE005E6F29 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9815BF77CE005E6F29 /* libz.dylib */; };
 		6E383B39174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E383B37174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.cpp */; };
 		6E4FC13B174CB36700565C41 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4FC13A174CB31100565C41 /* libcocos2dx.a */; };
+		6EFB16D7174CF9F40011D5A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D3174CF9F40011D5A5 /* hd */; };
+		6EFB16D8174CF9F40011D5A5 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D4174CF9F40011D5A5 /* ipad */; };
+		6EFB16D9174CF9F40011D5A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D5174CF9F40011D5A5 /* ipadhd */; };
+		6EFB16DA174CF9F40011D5A5 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D6174CF9F40011D5A5 /* sd */; };
+		6EFB16E1174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16DB174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp */; };
+		6EFB16E2174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16DD174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp */; };
+		6EFB16E3174CFA1C0011D5A5 /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16DF174CFA1C0011D5A5 /* TestLayer.cpp */; };
 		ABC96BDA16FE18D00089A41B /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABC96BC516FE18D00089A41B /* app.config.txt */; };
 		ABC96BDB16FE18D00089A41B /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = ABC96BC616FE18D00089A41B /* app.icf */; };
 		ABC96BDD16FE18D00089A41B /* development.icf in Resources */ = {isa = PBXBuildFile; fileRef = ABC96BC816FE18D00089A41B /* development.icf */; };
@@ -76,6 +83,16 @@
 		41CD6C9815BF77CE005E6F29 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6E383B37174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprites_LoadSpriteFromPNGTest.cpp; path = ../Classes/Sprites_LoadSpriteFromPNGTest.cpp; sourceTree = "<group>"; };
 		6E383B38174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprites_LoadSpriteFromPNGTest.h; path = ../Classes/Sprites_LoadSpriteFromPNGTest.h; sourceTree = "<group>"; };
+		6EFB16D3174CF9F40011D5A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
+		6EFB16D4174CF9F40011D5A5 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
+		6EFB16D5174CF9F40011D5A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
+		6EFB16D6174CF9F40011D5A5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		6EFB16DB174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprites_LoadSpriteFromPVRCCZTest.cpp; path = ../Classes/Sprites_LoadSpriteFromPVRCCZTest.cpp; sourceTree = "<group>"; };
+		6EFB16DC174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprites_LoadSpriteFromPVRCCZTest.h; path = ../Classes/Sprites_LoadSpriteFromPVRCCZTest.h; sourceTree = "<group>"; };
+		6EFB16DD174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprites_LoadSpriteFromPVRTest.cpp; path = ../Classes/Sprites_LoadSpriteFromPVRTest.cpp; sourceTree = "<group>"; };
+		6EFB16DE174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprites_LoadSpriteFromPVRTest.h; path = ../Classes/Sprites_LoadSpriteFromPVRTest.h; sourceTree = "<group>"; };
+		6EFB16DF174CFA1C0011D5A5 /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestLayer.cpp; path = ../Classes/TestLayer.cpp; sourceTree = "<group>"; };
+		6EFB16E0174CFA1C0011D5A5 /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestLayer.h; path = ../Classes/TestLayer.h; sourceTree = "<group>"; };
 		ABC96BC516FE18D00089A41B /* app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.config.txt; sourceTree = "<group>"; };
 		ABC96BC616FE18D00089A41B /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		ABC96BC816FE18D00089A41B /* development.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = development.icf; sourceTree = "<group>"; };
@@ -125,6 +142,12 @@
 				41CD6C7415BF76FB005E6F29 /* HelloWorldScene.h */,
 				6E383B37174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.cpp */,
 				6E383B38174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.h */,
+				6EFB16DB174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp */,
+				6EFB16DC174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.h */,
+				6EFB16DD174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp */,
+				6EFB16DE174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.h */,
+				6EFB16DF174CFA1C0011D5A5 /* TestLayer.cpp */,
+				6EFB16E0174CFA1C0011D5A5 /* TestLayer.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -188,6 +211,10 @@
 		ABC96BC316FE18D00089A41B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6EFB16D3174CF9F40011D5A5 /* hd */,
+				6EFB16D4174CF9F40011D5A5 /* ipad */,
+				6EFB16D5174CF9F40011D5A5 /* ipadhd */,
+				6EFB16D6174CF9F40011D5A5 /* sd */,
 				ABC96BC516FE18D00089A41B /* app.config.txt */,
 				ABC96BC616FE18D00089A41B /* app.icf */,
 				ABC96BC816FE18D00089A41B /* development.icf */,
@@ -280,6 +307,10 @@
 				ABC96BDB16FE18D00089A41B /* app.icf in Resources */,
 				ABC96BDD16FE18D00089A41B /* development.icf in Resources */,
 				ABC96BDE16FE18D00089A41B /* Marker Felt.ttf in Resources */,
+				6EFB16D7174CF9F40011D5A5 /* hd in Resources */,
+				6EFB16D8174CF9F40011D5A5 /* ipad in Resources */,
+				6EFB16D9174CF9F40011D5A5 /* ipadhd in Resources */,
+				6EFB16DA174CF9F40011D5A5 /* sd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +326,9 @@
 				41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */,
 				41CD6C7615BF76FB005E6F29 /* HelloWorldScene.cpp in Sources */,
 				6E383B39174CC73800CF095C /* Sprites_LoadSpriteFromPNGTest.cpp in Sources */,
+				6EFB16E1174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp in Sources */,
+				6EFB16E2174CFA1C0011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp in Sources */,
+				6EFB16E3174CFA1C0011D5A5 /* TestLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

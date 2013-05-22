@@ -131,14 +131,19 @@ bool HelloWorld::init()
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
 
-//        CCSize s = CCDirector::sharedDirector()->getWinSize();
+        CCSize s = CCDirector::sharedDirector()->getWinSizeInPixels();
         
         CCMenu* menu = CCMenu::createWithArray(itemsArray);
         menu->alignItemsVertically();
         menu->setTag(MENU_TAG);
         this->addChild(menu);
-        menu->setPosition(CCPoint(menu->getPosition().x,0));
         
+    
+        if(s.height <= menu->getContentSize().height)
+        {
+            menu->setPosition(CCPoint(menu->getPosition().x,  s.height - menu->getContentSize().height));
+        }
+                
 		bRet = true;
 	} while (0);
 
@@ -190,20 +195,21 @@ void HelloWorld::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     
     if(menu){
         CCPoint menuPosition = menu->getPosition();
-        
-        CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
-        
-        CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-//        CCLog("POS %f - height %f screen %f", newPos.y, menu->getContentSize().height, s.height);
+        CCSize s = CCDirector::sharedDirector()->getWinSizeInPixels();
         
-        if(newPos.y < 0)
-            newPos.y = 0;
+        if(s.height <= menu->getContentSize().height)
+        {
+            CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
+            
+            if(newPos.y < 0)
+                newPos.y = 0;
 
-        if(newPos.y > s.height)
-            newPos.y = s.height;
+            if(newPos.y > s.height)
+                newPos.y = s.height;
 
-        menu->setPosition(newPos);
+            menu->setPosition(newPos);
+        }
     }
     
 }

@@ -87,7 +87,7 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect,
     {
         pobTexture->retain();
     }
-
+    
     m_obRectInPixels = rect;
     m_obRect = CC_RECT_PIXELS_TO_POINTS(rect);
     m_obOffsetInPixels = offset;
@@ -103,6 +103,9 @@ bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& 
 {
     m_pobTexture = NULL;
     m_strTextureFilename = filename;
+    
+    CCLog("SPRITE FRAME FILE NAME %s", m_strTextureFilename.c_str());
+    
     m_obRectInPixels = rect;
     m_obRect = CC_RECT_PIXELS_TO_POINTS( rect );
     m_obOffsetInPixels = offset;

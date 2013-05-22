@@ -8,7 +8,7 @@
 
 #include "Sprites_LoadSpriteFromPVRCCZTest.h"
 #include "HelloWorldScene.h"
-
+#include "GameDevHelper.h"
 using namespace cocos2d;
 
 Sprites_LoadSpriteFromPVRCCZTest::~Sprites_LoadSpriteFromPVRCCZTest()
@@ -87,12 +87,11 @@ void Sprites_LoadSpriteFromPVRCCZTest::executeTestCodeAtPosition(CCPoint p)
     //if you want to load color, opacity and other properties set on sprites inside SH
     //you must use a GHSprite to do that.
     //GHSprite is a subclass of CCSprite that adds some helper methods
-    //GHSprite* newSpr = [GHSprite spriteWithSpriteFrameName:sprFrameName];
-    CCSprite* newSpr = CCSprite::createWithSpriteFrameName(sprFrameName.c_str());
+    GHSprite* newSpr = GHSprite::createWithSpriteFrameName(sprFrameName.c_str());
     
     
     //else you can also use a CCSprite
-    //    CCSprite* newSpr = [CCSprite spriteWithSpriteFrameName:sprFrameName];
+    //    CCSprite* newSpr = CCSprite::createWithSpriteFrameName(sprFrameName.c_str());
     
     newSpr->setPosition(p);
     

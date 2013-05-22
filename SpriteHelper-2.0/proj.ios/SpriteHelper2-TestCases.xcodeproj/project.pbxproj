@@ -20,6 +20,7 @@
 		6EFB16CF174CF6FE0011D5A5 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16CB174CF6FE0011D5A5 /* ipad */; };
 		6EFB16D0174CF6FE0011D5A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16CC174CF6FE0011D5A5 /* ipadhd */; };
 		6EFB16D1174CF6FE0011D5A5 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16CD174CF6FE0011D5A5 /* sd */; };
+		6EFB16EC174CFF620011D5A5 /* GHSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -78,6 +79,11 @@
 		6EFB16CB174CF6FE0011D5A5 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		6EFB16CC174CF6FE0011D5A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		6EFB16CD174CF6FE0011D5A5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		6EFB16E7174CFF620011D5A5 /* GameDevHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDevHelper.h; sourceTree = "<group>"; };
+		6EFB16E8174CFF620011D5A5 /* ghConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ghConfig.h; sourceTree = "<group>"; };
+		6EFB16E9174CFF620011D5A5 /* ghMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ghMacros.h; sourceTree = "<group>"; };
+		6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHSprite.cpp; sourceTree = "<group>"; };
+		6EFB16EB174CFF620011D5A5 /* GHSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSprite.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -171,6 +177,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6EFB16E6174CFF620011D5A5 /* GameDevHelperAPI */ = {
+			isa = PBXGroup;
+			children = (
+				6EFB16E7174CFF620011D5A5 /* GameDevHelper.h */,
+				6EFB16E8174CFF620011D5A5 /* ghConfig.h */,
+				6EFB16E9174CFF620011D5A5 /* ghMacros.h */,
+				6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */,
+				6EFB16EB174CFF620011D5A5 /* GHSprite.h */,
+			);
+			name = GameDevHelperAPI;
+			path = ../../GameDevHelperAPI;
+			sourceTree = "<group>";
+		};
 		784521C214EBA449009D533B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +213,7 @@
 		BF23D4E2143315EB00657E08 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6EFB16E6174CFF620011D5A5 /* GameDevHelperAPI */,
 				BF23D4E3143315EB00657E08 /* AppDelegate.cpp */,
 				BF23D4E4143315EB00657E08 /* AppDelegate.h */,
 				BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */,
@@ -321,6 +341,7 @@
 				6EFB1685174CED1C0011D5A5 /* TestLayer.cpp in Sources */,
 				6EFB1688174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp in Sources */,
 				6EFB16C9174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp in Sources */,
+				6EFB16EC174CFF620011D5A5 /* GHSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

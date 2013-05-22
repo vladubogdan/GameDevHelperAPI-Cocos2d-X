@@ -27,7 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     std::vector<std::string> res;
     
-    if(scrWidth == 480 || scrHeight == 480){
+    if(scrWidth == 480 || scrHeight == 480){//very old iphones
         
         res.push_back("sd");
         
@@ -40,22 +40,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
     }
-    else if(scrWidth == 1024 || scrHeight == 1024){
+    else if(scrWidth == 1024 || scrHeight == 1024){ //ipad mini and old ipads
         
         res.push_back("ipad");
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
     }
-    else if(scrWidth == 2048 || scrHeight == 2048){
+    else if(scrWidth == 2048 || scrHeight == 2048){ //ipad retina and mac platform
         
         res.push_back("ipadhd");
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
     }
-    
-    
-    
     
     
     // turn on display FPS

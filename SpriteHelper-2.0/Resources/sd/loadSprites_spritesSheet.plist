@@ -28,7 +28,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{250, 235}, {252, 255}}</string>
 		</dict>
 		<key>banana</key>
 		<dict>
@@ -45,7 +45,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{71, 255}, {58, 255}}</string>
 		</dict>
 		<key>bananabunch</key>
 		<dict>
@@ -62,7 +62,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{249, 77}, {72, 50}}</string>
 		</dict>
 		<key>canteen</key>
 		<dict>
@@ -79,7 +79,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{250, 235}, {252, 255}}</string>
 		</dict>
 		<key>hat</key>
 		<dict>
@@ -96,7 +96,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{250, 235}, {252, 255}}</string>
 		</dict>
 		<key>pineapple</key>
 		<dict>
@@ -113,7 +113,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{250, 235}, {252, 255}}</string>
 		</dict>
 		<key>statue</key>
 		<dict>
@@ -130,7 +130,7 @@
 			<key>tag</key>
 			<integer>0</integer>
 			<key>tint</key>
-			<string>{{252, 243}, {253, 255}}</string>
+			<string>{{250, 235}, {252, 255}}</string>
 		</dict>
 	</dict>
 	<key>metadata</key>
