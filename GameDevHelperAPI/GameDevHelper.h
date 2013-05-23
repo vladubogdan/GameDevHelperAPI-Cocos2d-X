@@ -31,6 +31,9 @@
 #import "ghMacros.h"
 //#import "GHSpriteBatchNode.h"
 #import "GHSprite.h"
+#import "GHAnimationCache.h"
+#import "GHAnimation.h"
+
 //#import "GHSkeleton.h"
 //#import "GHSkeletalAnimationCache.h"
 //#import "GHSkeletalAnimation.h"
@@ -38,7 +41,5 @@
 //#import "GHDebugDrawLayer.h"
 //#import "GHDirector.h"
 
-//#import "GHAnimationCache.h"
-//#import "GHAnimation.h"
 
 #endif//_GameDevHelper_API_h

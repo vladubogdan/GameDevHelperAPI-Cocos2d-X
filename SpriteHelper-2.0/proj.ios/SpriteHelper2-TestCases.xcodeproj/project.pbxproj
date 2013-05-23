@@ -21,6 +21,11 @@
 		6EFB16D0174CF6FE0011D5A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16CC174CF6FE0011D5A5 /* ipadhd */; };
 		6EFB16D1174CF6FE0011D5A5 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16CD174CF6FE0011D5A5 /* sd */; };
 		6EFB16EC174CFF620011D5A5 /* GHSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */; };
+		6EFB16EF174D32490011D5A5 /* GHAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16ED174D32480011D5A5 /* GHAnimation.cpp */; };
+		6EFB16F3174DF42A0011D5A5 /* GHAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16F1174DF42A0011D5A5 /* GHAnimationCache.cpp */; };
+		6EFB16F8174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16F6174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp */; };
+		6EFB16FA174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16F9174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist */; };
+		6EFB16FD174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16FB174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -84,6 +89,15 @@
 		6EFB16E9174CFF620011D5A5 /* ghMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ghMacros.h; sourceTree = "<group>"; };
 		6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHSprite.cpp; sourceTree = "<group>"; };
 		6EFB16EB174CFF620011D5A5 /* GHSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSprite.h; sourceTree = "<group>"; };
+		6EFB16ED174D32480011D5A5 /* GHAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHAnimation.cpp; sourceTree = "<group>"; };
+		6EFB16EE174D32480011D5A5 /* GHAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHAnimation.h; sourceTree = "<group>"; };
+		6EFB16F1174DF42A0011D5A5 /* GHAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHAnimationCache.cpp; sourceTree = "<group>"; };
+		6EFB16F2174DF42A0011D5A5 /* GHAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHAnimationCache.h; sourceTree = "<group>"; };
+		6EFB16F6174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SheetAnimations_LoadAnimationTest.cpp; sourceTree = "<group>"; };
+		6EFB16F7174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetAnimations_LoadAnimationTest.h; sourceTree = "<group>"; };
+		6EFB16F9174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spriteSheetAnimationsTest_SheetAnimations.plist; sourceTree = "<group>"; };
+		6EFB16FB174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp; sourceTree = "<group>"; };
+		6EFB16FC174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetAnimations_GameDevHelperAPI_ComplexAnimation.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -185,6 +199,10 @@
 				6EFB16E9174CFF620011D5A5 /* ghMacros.h */,
 				6EFB16EA174CFF620011D5A5 /* GHSprite.cpp */,
 				6EFB16EB174CFF620011D5A5 /* GHSprite.h */,
+				6EFB16ED174D32480011D5A5 /* GHAnimation.cpp */,
+				6EFB16EE174D32480011D5A5 /* GHAnimation.h */,
+				6EFB16F1174DF42A0011D5A5 /* GHAnimationCache.cpp */,
+				6EFB16F2174DF42A0011D5A5 /* GHAnimationCache.h */,
 			);
 			name = GameDevHelperAPI;
 			path = ../../GameDevHelperAPI;
@@ -197,7 +215,7 @@
 				6EFB16CB174CF6FE0011D5A5 /* ipad */,
 				6EFB16CC174CF6FE0011D5A5 /* ipadhd */,
 				6EFB16CD174CF6FE0011D5A5 /* sd */,
-				6E383B2D174CBA4E00CF095C /* SpriteHelper2-TestCases-Info.plist */,
+				6EFB16F9174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist */,
 				D4EF94ED15BD319D00D803EB /* Icon-144.png */,
 				D4EF94EB15BD319B00D803EB /* Icon-72.png */,
 				D4EF94E915BD319500D803EB /* Icon-114.png */,
@@ -205,6 +223,7 @@
 				782F4617153FEDF0009FC2E5 /* Default.png */,
 				D446FD46161020AB000ADA7B /* Default@2x.png */,
 				D41A0AC5160F14F5004552AE /* Default-568h@2x.png */,
+				6E383B2D174CBA4E00CF095C /* SpriteHelper2-TestCases-Info.plist */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -226,6 +245,10 @@
 				6EFB1687174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.h */,
 				6EFB16C7174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp */,
 				6EFB16C8174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.h */,
+				6EFB16F6174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp */,
+				6EFB16F7174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.h */,
+				6EFB16FB174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp */,
+				6EFB16FC174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -322,6 +345,7 @@
 				6EFB16CF174CF6FE0011D5A5 /* ipad in Resources */,
 				6EFB16D0174CF6FE0011D5A5 /* ipadhd in Resources */,
 				6EFB16D1174CF6FE0011D5A5 /* sd in Resources */,
+				6EFB16FA174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +366,10 @@
 				6EFB1688174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp in Sources */,
 				6EFB16C9174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp in Sources */,
 				6EFB16EC174CFF620011D5A5 /* GHSprite.cpp in Sources */,
+				6EFB16EF174D32490011D5A5 /* GHAnimation.cpp in Sources */,
+				6EFB16F3174DF42A0011D5A5 /* GHAnimationCache.cpp in Sources */,
+				6EFB16F8174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp in Sources */,
+				6EFB16FD174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

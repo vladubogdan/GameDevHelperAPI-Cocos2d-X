@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Bogdan Vladu. All rights reserved.
 //
 
-#ifndef __GAME_DEV_HELPER_SPITE_H__
-#define __GAME_DEV_HELPER_SPITE_H__
+#ifndef __GAME_DEV_HELPER_SPRITE_H__
+#define __GAME_DEV_HELPER_SPRITE_H__
 
 
 #import "cocos2d.h"
@@ -17,7 +17,7 @@
 #import "Box2D.h"
 #endif
 
-//#import "GHAnimation.h"
+#import "GHAnimation.h"
 
 /**
  A GHSprite is an advanced subclass of CCSprite.
@@ -105,16 +105,18 @@ public:
     /**
      Prepares a sprite sheet animation on this sprite using the animation object.
      */
-//     void prepareAnimation(GHAnimation* anim);
+     void prepareAnimation(GHAnimation* anim);
+    
     /**
      Prepares a sprite sheet animation on this sprite using the animation name.
      Animation has to be previously cache using GHAnimationCache.
      */
     void prepareAnimationWithName(const char* animName);
+    
     /**
      Returns the current sprite sheet animation assigned to this sprite object.
      */
-//    -(GHAnimation*)animation;
+    GHAnimation* getAnimation();
     
     /**
      Play's the currently assigned sprite sheet animation.
@@ -155,7 +157,7 @@ public:
      You should consult GHAnimationDelegate to see what method's you have to implement in your class.
      
      */
-//    void setAnimationDelegate:(id<GHAnimationDelegate>)obj;
+    void setAnimationDelegate(GHAnimationDelegate* obj);
     
     
     
@@ -165,6 +167,14 @@ public:
     //add physics methods here
     
 #endif
+    
+    /**
+     Print ready information about this sprite object.
+     */
+    std::string description();
+    
+    
+    virtual void update(float dt);
 
 private:
     
@@ -178,7 +188,7 @@ private:
     b2Body* body;//may be null if sprite has no physical representation
 #endif
     
-//    GHAnimation* activeAnimation;//may be nil
+    GHAnimation* activeAnimation;//may be nil
 };
 
-#endif //__GAME_DEV_HELPER_SPITE_H__
+#endif //__GAME_DEV_HELPER_SPRITE_H__

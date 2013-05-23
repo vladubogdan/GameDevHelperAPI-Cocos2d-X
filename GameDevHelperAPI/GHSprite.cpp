@@ -10,15 +10,8 @@
 //#include "GHDirector.h"
 #include "ghMacros.h"
 
-//#import "GHAnimationCache.h"
+#include "GHAnimationCache.h"
 
-//@interface GHAnimation (GH_ANIMATION_SPRITE_PRIVATE)
-//-(void)setSprite:(GHSprite*)spr;
-//-(void)prepare;
-//-(void)play;
-//-(void)pause;
-//-(void)update:(float)dt;
-//@end
 
 
 GHSprite* GHSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -141,23 +134,22 @@ bool GHSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     return false;
 }
 
-GHSprite::GHSprite(){
+GHSprite::GHSprite():
+imageFile(""),
+spriteFrameName(""),
+name(""),
+activeAnimation(NULL)
+{
     
 }
+
 GHSprite::~GHSprite(){
     
-//    [spriteFrameName release];
-//    spriteFrameName = nil;
-    
-//    [imageFile release];
-//    imageFile = nil;
-    
-//    [activeAnimation setSprite:nil];
-//    [activeAnimation release];
-//    activeAnimation = nil;
-    
-//    [name release];
-//    name = nil;
+    if(activeAnimation){
+        activeAnimation->setSprite(NULL);
+        activeAnimation->release();
+        activeAnimation = NULL;
+    }
     
 #if GH_ENABLE_PHYSICS_INTEGRATION
     [physicsInfo release];
@@ -177,76 +169,79 @@ std::string GHSprite::getImageFile(void)
     return imageFile;
 }
 
-//-(NSString*)description{
-//    return [NSString stringWithFormat:@"GHSprite imageFile: %@ spriteFrameName %@\n", imageFile, spriteFrameName];
-//}
+std::string GHSprite::getSpriteFrameName(void){
+    return spriteFrameName;
+}
 
 void GHSprite::setName(const char* val){
-//    if(val == nil || val == name || [val isEqualToString:name]){
-//        return;
-//    }
-//    
-//    if(name){[name release]; name = nil;}
-//    
-//    name = [[NSString alloc] initWithString:val];
+    if(val){
+        name = std::string(val);
+    }
 }
 std::string GHSprite::getName(){
     return name;
 }
 
-//-(void)prepareAnimation:(GHAnimation*)anim{
-//    if(activeAnimation){
-//        [activeAnimation setSprite:nil];
-//        [activeAnimation release];
-//        activeAnimation = nil;
-//    }
-//    if(anim){
-//        activeAnimation = [anim copy];
-//        [activeAnimation setSprite:self];
-//        [activeAnimation prepare];
-//    }
-//}
-//-(void)prepareAnimationWithName:(NSString*)animName{
-//    GHAnimation* anim = [[GHAnimationCache sharedAnimationCache] animationByName:animName];
-//    if(anim){
-//        [self prepareAnimation:anim];
-//    }
-//    else{
-//        CCLOG(@"GameDevHelperAPI WARNING: Animation with name %@ was could not be prepared because it was not found.", animName);
-//    }
-//}
-//-(GHAnimation*)animation{
-//    return activeAnimation;
-//}
-//
-//-(void)playAnimation{
-//    if(activeAnimation)[activeAnimation play];
-//}
-//-(void)pauseAnimation{
-//    if(activeAnimation)[activeAnimation pause];
-//}
-//-(void)restartAnimation{
-//    
-//}
-//-(void)stopAnimation{
-//    
-//}
-//-(void)stopAnimationAndRestoreOriginalFrame:(BOOL)restore{
-//    
-//}
-//
-//-(void)setAnimationDelegate:(id<GHAnimationDelegate>)obj{
-//    if(activeAnimation){[activeAnimation setDelegate:obj];}
-//}
-//
-//
-//
-//
-//-(void)update:(ccTime)dt{
-//    if(activeAnimation){
-//        [activeAnimation update:dt];
-//    }
-//}
+std::string GHSprite::description(){
+    return "GHSprite imageFile: " + imageFile + " spriteFrameName: " + spriteFrameName;
+}
+
+
+void GHSprite::prepareAnimation(GHAnimation* anim)
+{
+    if(activeAnimation){
+        activeAnimation->setSprite(NULL);
+        activeAnimation->release();
+        activeAnimation = NULL;
+    }
+    if(anim){
+        activeAnimation = GHAnimation::createWithAnimation(anim);
+        activeAnimation->retain();
+        activeAnimation->setSprite(this);
+        activeAnimation->prepare();
+    }
+}
+void GHSprite::prepareAnimationWithName(const char* animName)
+{
+    GHAnimation* anim = GHAnimationCache::sharedAnimationCache()->animationByName(animName);
+    if(anim){
+        this->prepareAnimation(anim);
+    }
+    else{
+        CCLOG("GameDevHelperAPI WARNING: Animation with name %@ was could not be prepared because it was not found.", animName);
+    }
+}
+GHAnimation* GHSprite::getAnimation(){
+    return activeAnimation;
+}
+
+void GHSprite::playAnimation(){
+    if(activeAnimation){activeAnimation->play();};
+}
+void GHSprite::pauseAnimation(){
+    if(activeAnimation)activeAnimation->pause();
+}
+void GHSprite::restartAnimation(){
+
+}
+void GHSprite::stopAnimation(){
+    
+}
+void GHSprite::stopAnimationAndRestoreOriginalFrame(bool restore)
+{
+    
+}
+
+void GHSprite::setAnimationDelegate(GHAnimationDelegate* obj){
+    if(activeAnimation){activeAnimation->setDelegate(obj);}
+}
+
+
+void GHSprite::update(float dt){
+    if(activeAnimation){
+        activeAnimation->update(dt);
+    }
+}
 
 
 

@@ -3,6 +3,9 @@
 #include "Sprites_LoadSpriteFromPNGTest.h"
 #include "Sprites_LoadSpriteFromPVRTest.h"
 #include "Sprites_LoadSpriteFromPVRCCZTest.h"
+#include "SheetAnimations_LoadAnimationTest.h"
+#include "SheetAnimations_GameDevHelperAPI_ComplexAnimation.h"
+
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -73,12 +76,12 @@ bool HelloWorld::init()
         item->setTag(3);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 4", this,
+        item = CCMenuItemFont::create("Sheet Animations - Load Animation from plist", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(4);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 5", this,
+        item = CCMenuItemFont::create("Sheet Animations - Complex animation using GameDevHelperAPI", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(5);
         itemsArray->addObject(item);
@@ -168,11 +171,13 @@ void HelloWorld::menuCallback(CCObject* sender)
             break;
 
         case 4:
+            CCDirector::sharedDirector()->replaceScene(SheetAnimations_LoadAnimationTest::scene());
             
             break;
 
         case 5:
-            
+            CCDirector::sharedDirector()->replaceScene(SheetAnimations_GameDevHelperAPI_ComplexAnimation::scene());
+
             break;
 
         case 6:
