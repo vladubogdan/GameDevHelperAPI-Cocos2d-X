@@ -27,6 +27,7 @@
 		6EFB16FA174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16F9174E00F40011D5A5 /* spriteSheetAnimationsTest_SheetAnimations.plist */; };
 		6EFB16FD174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16FB174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp */; };
 		6EFB1700174E12E90011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16FE174E12E80011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.cpp */; };
+		6EFB1703174E18A10011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB1701174E18A00011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -101,6 +102,8 @@
 		6EFB16FC174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetAnimations_GameDevHelperAPI_ComplexAnimation.h; sourceTree = "<group>"; };
 		6EFB16FE174E12E80011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SheetAnimations_GameDevHelperAPI_RandomFrames.cpp; sourceTree = "<group>"; };
 		6EFB16FF174E12E90011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetAnimations_GameDevHelperAPI_RandomFrames.h; sourceTree = "<group>"; };
+		6EFB1701174E18A00011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp; sourceTree = "<group>"; };
+		6EFB1702174E18A10011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -252,6 +255,8 @@
 				6EFB16F7174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.h */,
 				6EFB16FB174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp */,
 				6EFB16FC174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.h */,
+				6EFB1701174E18A00011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp */,
+				6EFB1702174E18A10011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h */,
 				6EFB16FE174E12E80011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.cpp */,
 				6EFB16FF174E12E90011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.h */,
 			);
@@ -376,6 +381,7 @@
 				6EFB16F8174E006A0011D5A5 /* SheetAnimations_LoadAnimationTest.cpp in Sources */,
 				6EFB16FD174E06090011D5A5 /* SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp in Sources */,
 				6EFB1700174E12E90011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomFrames.cpp in Sources */,
+				6EFB1703174E18A10011D5A5 /* SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

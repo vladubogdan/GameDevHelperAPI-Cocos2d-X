@@ -5,6 +5,7 @@
 #include "Sprites_LoadSpriteFromPVRCCZTest.h"
 #include "SheetAnimations_LoadAnimationTest.h"
 #include "SheetAnimations_GameDevHelperAPI_ComplexAnimation.h"
+#include "SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h"
 #include "SheetAnimations_GameDevHelperAPI_RandomFrames.h"
 using namespace cocos2d;
 
@@ -64,34 +65,41 @@ bool HelloWorld::init()
 		CCMenuItemFont* item = CCMenuItemFont::create("Sprites - Load from PNG", this,
                                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(1);
+        item->setFontSize(12);
         itemsArray->addObject(item);
         
         item = CCMenuItemFont::create("Sprites - Load from PVR", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(2);
+        item->setFontSize(12);
         itemsArray->addObject(item);
 
         item = CCMenuItemFont::create("Sprites - Load from PVR.CCZ", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(3);
+        item->setFontSize(12);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Sheet Animations - Load Animation from plist", this,
+        item = CCMenuItemFont::create("Animations - Cocos2d -> Load Animation from plist", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(4);
+        item->setFontSize(12);
+
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Sheet Animations - Complex animation using GameDevHelperAPI", this,
+        item = CCMenuItemFont::create("Animations - GameDevHelperAPI - Load Animation from plist & notifications", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(5);
+        item->setFontSize(12);
+
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Sheet Animations using GameDevHelperAPI - random frames", this,
+        item = CCMenuItemFont::create("Animations - GameDevHelperAPI - random frames", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(6);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 7", this,
+        item = CCMenuItemFont::create("Animations - GameDevHelperAPI - random repeat time", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(7);
         itemsArray->addObject(item);
@@ -185,7 +193,12 @@ void HelloWorld::menuCallback(CCObject* sender)
             
             break;
 
+        case 7:
+            CCDirector::sharedDirector()->replaceScene(SheetAnimations_GameDevHelperAPI_RandomRepeatTime::scene());
+            break;
+            
         default:
+
             break;
     }
 //    CCLOG("Clicked on menu sprite item %d", menu->getTag());

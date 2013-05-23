@@ -271,6 +271,8 @@ public:
     inline void moveToNextFrame(){this->setActiveFrameWithIndex(currentFrameIdx+1);}
     
     inline int getCurrentFrameIndex(){return currentFrameIdx;}
+
+    inline GHAnimationFrame* getCurrentFrame(){return activeFrame;}
     
 private:
     
