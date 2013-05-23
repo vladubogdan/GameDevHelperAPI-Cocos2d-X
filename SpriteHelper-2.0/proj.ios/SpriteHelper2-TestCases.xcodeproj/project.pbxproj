@@ -77,6 +77,10 @@
 		6EFB179B174E3AE40011D5A5 /* Physics_LoadSpritesWithPhysicalBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB1799174E3AE20011D5A5 /* Physics_LoadSpritesWithPhysicalBody.cpp */; };
 		6EFB179E174E3D740011D5A5 /* GHDebugDrawLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB179C174E3D730011D5A5 /* GHDebugDrawLayer.cpp */; };
 		6EFB17A1174E48A20011D5A5 /* Physics_CollisionFiltering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB179F174E489F0011D5A5 /* Physics_CollisionFiltering.cpp */; };
+		6EFB17A6174E4D480011D5A5 /* GHBone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17A2174E4D440011D5A5 /* GHBone.cpp */; };
+		6EFB17A7174E4D480011D5A5 /* GHBoneSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17A4174E4D460011D5A5 /* GHBoneSkin.cpp */; };
+		6EFB17AA174E60C80011D5A5 /* GHSkeletalAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17A8174E60C60011D5A5 /* GHSkeletalAnimation.cpp */; };
+		6EFB17AD174E6F0C0011D5A5 /* GHPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17AB174E6F080011D5A5 /* GHPoint.cpp */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -252,6 +256,14 @@
 		6EFB179D174E3D730011D5A5 /* GHDebugDrawLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDebugDrawLayer.h; sourceTree = "<group>"; };
 		6EFB179F174E489F0011D5A5 /* Physics_CollisionFiltering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Physics_CollisionFiltering.cpp; sourceTree = "<group>"; };
 		6EFB17A0174E48A00011D5A5 /* Physics_CollisionFiltering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Physics_CollisionFiltering.h; sourceTree = "<group>"; };
+		6EFB17A2174E4D440011D5A5 /* GHBone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHBone.cpp; sourceTree = "<group>"; };
+		6EFB17A3174E4D450011D5A5 /* GHBone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHBone.h; sourceTree = "<group>"; };
+		6EFB17A4174E4D460011D5A5 /* GHBoneSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHBoneSkin.cpp; sourceTree = "<group>"; };
+		6EFB17A5174E4D470011D5A5 /* GHBoneSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHBoneSkin.h; sourceTree = "<group>"; };
+		6EFB17A8174E60C60011D5A5 /* GHSkeletalAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHSkeletalAnimation.cpp; sourceTree = "<group>"; };
+		6EFB17A9174E60C80011D5A5 /* GHSkeletalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSkeletalAnimation.h; sourceTree = "<group>"; };
+		6EFB17AB174E6F080011D5A5 /* GHPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHPoint.cpp; sourceTree = "<group>"; };
+		6EFB17AC174E6F0A0011D5A5 /* GHPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHPoint.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -361,6 +373,14 @@
 				6EFB16F2174DF42A0011D5A5 /* GHAnimationCache.h */,
 				6EFB1706174E2E220011D5A5 /* GHDirector.cpp */,
 				6EFB1707174E2E230011D5A5 /* GHDirector.h */,
+				6EFB17A2174E4D440011D5A5 /* GHBone.cpp */,
+				6EFB17A3174E4D450011D5A5 /* GHBone.h */,
+				6EFB17A4174E4D460011D5A5 /* GHBoneSkin.cpp */,
+				6EFB17A5174E4D470011D5A5 /* GHBoneSkin.h */,
+				6EFB17A8174E60C60011D5A5 /* GHSkeletalAnimation.cpp */,
+				6EFB17A9174E60C80011D5A5 /* GHSkeletalAnimation.h */,
+				6EFB17AB174E6F080011D5A5 /* GHPoint.cpp */,
+				6EFB17AC174E6F0A0011D5A5 /* GHPoint.h */,
 			);
 			name = GameDevHelperAPI;
 			path = ../../GameDevHelperAPI;
@@ -743,6 +763,10 @@
 				6EFB179B174E3AE40011D5A5 /* Physics_LoadSpritesWithPhysicalBody.cpp in Sources */,
 				6EFB179E174E3D740011D5A5 /* GHDebugDrawLayer.cpp in Sources */,
 				6EFB17A1174E48A20011D5A5 /* Physics_CollisionFiltering.cpp in Sources */,
+				6EFB17A6174E4D480011D5A5 /* GHBone.cpp in Sources */,
+				6EFB17A7174E4D480011D5A5 /* GHBoneSkin.cpp in Sources */,
+				6EFB17AA174E60C80011D5A5 /* GHSkeletalAnimation.cpp in Sources */,
+				6EFB17AD174E6F0C0011D5A5 /* GHPoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

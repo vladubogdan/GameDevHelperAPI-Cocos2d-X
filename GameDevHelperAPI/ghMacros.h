@@ -44,8 +44,18 @@ ccp((__box2d_point__).x * GH_METER_RATIO(), (__box2d_point__).y * GH_METER_RATIO
 #endif
 
 
+#define GH_READWRITE_PROPERTY(Type, MemberName, FaceName) \
+            Type get##FaceName() const { \
+                    return MemberName; \
+            }; \
+            void set##FaceName(Type value) { \
+                MemberName = value; \
+            }
 
-
+#define GH_READONLY_PROPERTY(Type, MemberName, FaceName) \
+            Type get##FaceName() const { \
+                return MemberName; \
+            };
 
 
 #endif
