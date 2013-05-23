@@ -5,7 +5,7 @@
 #include "Sprites_LoadSpriteFromPVRCCZTest.h"
 #include "SheetAnimations_LoadAnimationTest.h"
 #include "SheetAnimations_GameDevHelperAPI_ComplexAnimation.h"
-
+#include "SheetAnimations_GameDevHelperAPI_RandomFrames.h"
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -86,7 +86,7 @@ bool HelloWorld::init()
         item->setTag(5);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 6", this,
+        item = CCMenuItemFont::create("Sheet Animations using GameDevHelperAPI - random frames", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(6);
         itemsArray->addObject(item);
@@ -181,6 +181,7 @@ void HelloWorld::menuCallback(CCObject* sender)
             break;
 
         case 6:
+            CCDirector::sharedDirector()->replaceScene(SheetAnimations_GameDevHelperAPI_RandomFrames::scene());
             
             break;
 

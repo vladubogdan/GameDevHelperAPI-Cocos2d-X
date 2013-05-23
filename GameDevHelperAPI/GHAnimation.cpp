@@ -19,11 +19,15 @@ m_userInfo(NULL)
 
 GHAnimationFrame::~GHAnimationFrame()
 {
-    m_spriteFrame->release();
-    m_spriteFrame = NULL;
+    if(m_spriteFrame){
+        m_spriteFrame->release();
+        m_spriteFrame = NULL;
+    }
     
-    m_userInfo->release();
-    m_userInfo = NULL;
+    if(m_userInfo){
+        m_userInfo->release();
+        m_userInfo = NULL;
+    }
 }
 
 GHAnimationFrame* GHAnimationFrame::createWithDictionary(CCDictionary* dict)
@@ -303,10 +307,8 @@ int GHAnimation::randomFrame()
 {
     int from = 0;
     int to = frames->count();
-    
-    float diff = to - from;
-	srand ( time(NULL) );
-    return (((float) (rand() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + from;
+    int diff = to - from;
+    return rand()%(diff)+from;
 }
 
 void GHAnimation::update(float dt)
@@ -325,6 +327,7 @@ void GHAnimation::update(float dt)
 
         if(randomFrames){
             nextFrame = this->randomFrame();;
+            
             while (nextFrame == currentFrameIdx) {
                 nextFrame = this->randomFrame();
                 //in case the random number returns the same frame
