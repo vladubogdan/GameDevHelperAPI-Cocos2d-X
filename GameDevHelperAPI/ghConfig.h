@@ -13,7 +13,7 @@
 change GH_ENABLE_PHYSICS_INTEGRATION to 0 if you don't want to use physics.
 */
 #ifndef GH_ENABLE_PHYSICS_INTEGRATION
-#define GH_ENABLE_PHYSICS_INTEGRATION 0
+#define GH_ENABLE_PHYSICS_INTEGRATION 1
 #endif
 
 

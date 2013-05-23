@@ -7,9 +7,8 @@
 //
 
 #include "GHSprite.h"
-//#include "GHDirector.h"
+#include "GHDirector.h"
 #include "ghMacros.h"
-
 #include "GHAnimationCache.h"
 
 
@@ -97,11 +96,11 @@ bool GHSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 #if GH_ENABLE_PHYSICS_INTEGRATION
                 body = NULL;
 
-                NSDictionary* bodyInfo = [frameInfo objectForKey:@"body"];
+                CCDictionary* bodyInfo = (CCDictionary*)frameInfo->objectForKey("body");
                 if(bodyInfo){
-                    physicsInfo = [[NSDictionary alloc] initWithDictionary:bodyInfo];
-                    
-                    [self createBody];
+                    physicsInfo = CCDictionary::createWithDictionary(bodyInfo);
+                    physicsInfo->retain();
+                    this->createBody();
                 }
 #endif
         }
@@ -140,7 +139,11 @@ spriteFrameName(""),
 name(""),
 activeAnimation(NULL)
 {
-    
+#if GH_ENABLE_PHYSICS_INTEGRATION
+    physicsInfo = NULL;
+    body = NULL;
+#endif
+
 }
 
 GHSprite::~GHSprite(){
@@ -152,8 +155,10 @@ GHSprite::~GHSprite(){
     }
     
 #if GH_ENABLE_PHYSICS_INTEGRATION
-    [physicsInfo release];
-    physicsInfo = nil;
+    if(physicsInfo){
+        physicsInfo->release();
+        physicsInfo = NULL;
+    }
 #endif
     
 }
@@ -246,51 +251,56 @@ void GHSprite::update(float dt){
 
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
--(void)destroyBody{
+void GHSprite::destroyBody(){
     if(body){
         b2World* bWorld = body->GetWorld();
         bWorld->DestroyBody(body);
         body = NULL;
     }
 }
--(void)createBody{
+void GHSprite::createBody(){
     
-    if(physicsInfo == nil)return;
+    if(physicsInfo == NULL)return;
     
-    [self destroyBody];
+    this->destroyBody();
     
-    b2World* world = [[GHDirector sharedDirector] physicalWorld];
+    b2World* world = GHDirector::sharedDirector()->getPhysicalWorld();
 
-    if(world == nil)return;
+    if(world == NULL)return;
     
-    int type = [[physicsInfo objectForKey:@"type"] intValue];
+    int type = physicsInfo->valueForKey("type")->intValue();
     if(type == 3)//NO PHYSICS
         return;
     
     b2BodyDef bodyDef;
 	bodyDef.type = (b2BodyType)type;
 	   
-	bodyDef.position = GH_POINT_TO_METERS([self position]);
+	bodyDef.position = GH_POINT_TO_METERS(this->getPosition());
     
-	bodyDef.angle = CC_DEGREES_TO_RADIANS(-1*self.rotation);;
-    bodyDef.userData = self;
+	bodyDef.angle = CC_DEGREES_TO_RADIANS(-1*this->getRotation());
+    bodyDef.userData = this;
 
     body = world->CreateBody(&bodyDef);
     
-	body->SetFixedRotation([[physicsInfo objectForKey:@"fixed"] boolValue]);
-    body->SetGravityScale([[physicsInfo objectForKey:@"gravityScale"] floatValue]);
-	body->SetSleepingAllowed([[physicsInfo objectForKey:@"sleep"] boolValue]);
-    body->SetBullet([[physicsInfo objectForKey:@"bullet"] boolValue]);
-    body->SetAwake([[physicsInfo objectForKey:@"awake"] boolValue]);
-    body->SetActive([[physicsInfo objectForKey:@"active"] boolValue]);
+	body->SetFixedRotation(physicsInfo->valueForKey("fixed")->boolValue());
+    body->SetGravityScale(physicsInfo->valueForKey("gravityScale")->floatValue());
+	body->SetSleepingAllowed(physicsInfo->valueForKey("sleep")->boolValue());
+    body->SetBullet(physicsInfo->valueForKey("bullet")->boolValue());
+    body->SetAwake(physicsInfo->valueForKey("awake")->boolValue());
+    body->SetActive(physicsInfo->valueForKey("active")->boolValue());
 
-    NSArray* shapesInfo = [physicsInfo objectForKey:@"shapes"];
-    for(NSDictionary* shInfo in shapesInfo)
+    CCArray* shapesInfo = (CCArray*)physicsInfo->objectForKey("shapes");
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(shapesInfo, pObj)
     {
-        float density = [[shInfo objectForKey:@"density"]floatValue];
-        float friction = [[shInfo objectForKey:@"friction"]floatValue];
-        float restitution = [[shInfo objectForKey:@"restitution"]floatValue];
-        bool sensor = [[shInfo objectForKey:@"sensor"]boolValue];
+        CCDictionary *shInfo = (CCDictionary*)pObj;
+
+        float density       = shInfo->valueForKey("density")->floatValue();
+        float friction      = shInfo->valueForKey("friction")->floatValue();
+        float restitution   = shInfo->valueForKey("restitution")->floatValue();
+        bool sensor         = shInfo->valueForKey("sensor")->boolValue();
+
 //        <key>name</key>
 //        <string>backpackShape</string>
 //        <key>sensor</key>
@@ -299,16 +309,16 @@ void GHSprite::update(float dt){
 //        <integer>0</integer>
 //        
         
-        int type = [[shInfo objectForKey:@"type"] intValue];
+        int type = shInfo->valueForKey("type")->intValue();
 
         if(type == 2) //CIRCLE
         {
             b2FixtureDef fixture;
             b2CircleShape circle;
             
-            float circleRadius = [[shInfo objectForKey:@"radius"] floatValue];
-            NSString* offsetStr = [shInfo objectForKey:@"circleOffset"];
-            CGPoint offset = CGPointFromString(offsetStr);
+            float circleRadius  = shInfo->valueForKey("radius")->floatValue();
+            const CCString* offsetStr = shInfo->valueForKey("circleOffset");
+            CCPoint offset = CCPointFromString(offsetStr->getCString());
             
             circle.m_radius = GH_VALUE_TO_METERS(circleRadius)/2.0f;
             
@@ -321,22 +331,26 @@ void GHSprite::update(float dt){
             fixture.restitution = restitution;
             fixture.isSensor = sensor;
             
-            NSNumber* cat = [shInfo objectForKey:@"category"];
-            NSNumber* mask = [shInfo objectForKey:@"mask"];
-            
+            CCObject* cat     = shInfo->objectForKey("category");
+            CCObject* mask    = shInfo->objectForKey("mask");
             if(cat && mask)
             {
-                fixture.filter.categoryBits = [cat intValue];
-                fixture.filter.maskBits = [mask intValue];
+                
+                fixture.filter.categoryBits = ((CCString*)cat)->intValue();
+                fixture.filter.maskBits     = ((CCString*)mask)->intValue();                
             }
                         
             body->CreateFixture(&fixture);
         }
         else{//create using points
-            NSArray* fixtures = [shInfo objectForKey:@"fixtures"];
-            for(NSArray* fixPoints in fixtures)
+            CCArray* fixtures = (CCArray*)shInfo->objectForKey("fixtures");
+            
+            CCObject* pFixObj = NULL;
+            CCARRAY_FOREACH(fixtures, pFixObj)
             {
-                int count = (int)[fixPoints count];
+                CCArray* fixPoints = (CCArray*)pFixObj;
+
+                int count = (int)fixPoints->count();
                 b2Vec2 *verts = new b2Vec2[count];
                 b2PolygonShape shapeDef;
                 
@@ -344,12 +358,12 @@ void GHSprite::update(float dt){
                 int i = count - 1;
                 for(int j = 0; j< count; ++j)
                 {
-                    NSString* pointStr = [fixPoints objectAtIndex:(NSUInteger)j];
-                    CGPoint point = CGPointFromString(pointStr);
+                    CCString* pointStr = (CCString*)fixPoints->objectAtIndex(j);
+                    CCPoint point = CCPointFromString(pointStr->getCString());
 
                     //flip y for cocos2d coordinate system
-                    point.y =  [self textureRect].size.height - point.y;
-                    point.y = point.y - [self textureRect].size.height;
+                    point.y =  this->getTextureRect().size.height - point.y;
+                    point.y = point.y - this->getTextureRect().size.height;
                     
                     verts[i] = GH_POINT_TO_METERS(point);                    
                     i = i-1;
@@ -364,13 +378,12 @@ void GHSprite::update(float dt){
                 fixture.restitution = restitution;
                 fixture.isSensor = sensor;
                 
-                NSNumber* cat = [shInfo objectForKey:@"category"];
-                NSNumber* mask = [shInfo objectForKey:@"mask"];
-                
+                CCObject* cat     = shInfo->objectForKey("category");
+                CCObject* mask    = shInfo->objectForKey("mask");
                 if(cat && mask)
                 {
-                    fixture.filter.categoryBits = [cat intValue];
-                    fixture.filter.maskBits = [mask intValue];
+                    fixture.filter.categoryBits = ((CCString*)cat)->intValue();
+                    fixture.filter.maskBits     = ((CCString*)mask)->intValue();
                 }
                 
                 fixture.shape = &shapeDef;
@@ -386,55 +399,57 @@ void GHSprite::update(float dt){
 // this method will only get called if the sprite is batched.
 // return YES if the physics values (angles, position ) changed
 // If you return NO, then nodeToParentTransform won't be called.
--(BOOL) dirty
+bool GHSprite::isDirty(void)
 {
-	return YES;
+	return true;
 }
 
 // returns the transform matrix according the Chipmunk Body values
--(CGAffineTransform) nodeToParentTransform
+CCAffineTransform GHSprite::nodeToParentTransform(void)
 {
     if(body){
-        CGPoint pos = GH_METERS_TO_POINT(body->GetPosition());
+        CCPoint pos = GH_METERS_TO_POINT(body->GetPosition());
 	
-        if ( ignoreAnchorPointForPosition_ ) {
-            pos.x += anchorPointInPoints_.x;
-            pos.y += anchorPointInPoints_.y;
+        if(m_bIgnoreAnchorPointForPosition){
+            pos.x += m_obAnchorPointInPoints.x;
+            pos.y += m_obAnchorPointInPoints.y;
         }
         
         // Make matrix
         float radians = body->GetAngle();
         float c = cosf(radians);
         float s = sinf(radians);
-        
-        if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-            pos.x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-            pos.y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
+
+        if(!(m_obAnchorPointInPoints.x == 0 && m_obAnchorPointInPoints.y == 0)){
+            pos.x += c*-m_obAnchorPointInPoints.x + -s*-m_obAnchorPointInPoints.y;
+            pos.y += s*-m_obAnchorPointInPoints.x + c*-m_obAnchorPointInPoints.y;
         }
         
         // Rot, Translate Matrix
-        transform_ = CGAffineTransformMake( c,  s,
+        
+        m_sTransform = CCAffineTransformMake( c,  s,
                                            -s,	c,
                                            pos.x,	pos.y);
         
-        return transform_;
+        return m_sTransform;
     }
     
-    return [super nodeToParentTransform];
+    return CCSprite::nodeToParentTransform();
 }
 
--(void)setPosition:(CGPoint)pos
+void GHSprite::setPosition(const CCPoint& pos)
 {
-    [super setPosition:pos];
+    CCSprite::setPosition(pos);
     if(body){
-        body->SetTransform(GH_POINT_TO_METERS(pos), CC_DEGREES_TO_RADIANS(-1*super.rotation));
+        body->SetTransform(GH_POINT_TO_METERS(pos), CC_DEGREES_TO_RADIANS(-1*this->getRotation()));
     }
 }
 
--(void)setRotation:(float)rot{
-    [super setRotation:rot];
+void GHSprite::setRotation(float rot)
+{
+    CCSprite::setRotation(rot);
     if(body){
-        body->SetTransform(GH_POINT_TO_METERS(self.position), CC_DEGREES_TO_RADIANS(-1*rot));
+        body->SetTransform(GH_POINT_TO_METERS(this->getPosition()), CC_DEGREES_TO_RADIANS(-1*rot));
     }
 }
 

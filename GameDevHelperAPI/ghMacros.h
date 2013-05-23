@@ -17,7 +17,7 @@
  @def GH_METER_RATIO
  Returns currently used points to meter ratio.
  */
-#define GH_METER_RATIO() GHDirector::sharedDirector()->pointToMeterRatio()
+#define GH_METER_RATIO() GHDirector::sharedDirector()->getPointToMeterRatio()
 
 /**
  @def GH_POINT_TO_METERS
@@ -38,7 +38,7 @@ b2Vec2((__point__).x / GH_METER_RATIO(), (__point__).y / GH_METER_RATIO())
  Transforms a Box2d point to a Cocos2d point.
  */
 #define GH_METERS_TO_POINT(__box2d_point__) \
-CGPointMake((__box2d_point__).x * GH_METER_RATIO(), (__box2d_point__).y * GH_METER_RATIO())
+ccp((__box2d_point__).x * GH_METER_RATIO(), (__box2d_point__).y * GH_METER_RATIO())
 
 
 #endif

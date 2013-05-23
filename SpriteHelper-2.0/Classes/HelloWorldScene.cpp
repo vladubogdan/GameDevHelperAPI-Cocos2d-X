@@ -7,6 +7,8 @@
 #include "SheetAnimations_GameDevHelperAPI_ComplexAnimation.h"
 #include "SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h"
 #include "SheetAnimations_GameDevHelperAPI_RandomFrames.h"
+#include "Physics_LoadSpritesWithPhysicalBody.h"
+#include "Physics_CollisionFiltering.h"
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -62,25 +64,25 @@ bool HelloWorld::init()
         CCArray* itemsArray = CCArray::create();
         
 
-		CCMenuItemFont* item = CCMenuItemFont::create("Sprites - Load from PNG", this,
+		CCMenuItemFont* item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PNG", this,
                                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(1);
         item->setFontSize(12);
         itemsArray->addObject(item);
         
-        item = CCMenuItemFont::create("Sprites - Load from PVR", this,
+        item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PVR", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(2);
         item->setFontSize(12);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Sprites - Load from PVR.CCZ", this,
+        item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PVR.CCZ", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(3);
         item->setFontSize(12);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Animations - Cocos2d -> Load Animation from plist", this,
+        item = CCMenuItemFont::create("Animations - Cocos2d-x -> Load Animation from plist", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(4);
         item->setFontSize(12);
@@ -104,12 +106,12 @@ bool HelloWorld::init()
         item->setTag(7);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 8", this,
+        item = CCMenuItemFont::create("Physics - GameDevHelperAPI - load sprites with physical body", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(8);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 9", this,
+        item = CCMenuItemFont::create("Physics - GameDevHelperAPI - physics collision filtering", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(9);
         itemsArray->addObject(item);
@@ -195,6 +197,14 @@ void HelloWorld::menuCallback(CCObject* sender)
 
         case 7:
             CCDirector::sharedDirector()->replaceScene(SheetAnimations_GameDevHelperAPI_RandomRepeatTime::scene());
+            break;
+            
+        case 8:
+            CCDirector::sharedDirector()->replaceScene(Physics_LoadSpritesWithPhysicalBody::scene());
+            break;
+            
+        case 9:
+            CCDirector::sharedDirector()->replaceScene(Physics_CollisionFiltering::scene());
             break;
             
         default:

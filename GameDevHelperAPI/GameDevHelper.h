@@ -27,19 +27,20 @@
 
 
 // all GameDevHelepr API include files
-#import "ghConfig.h"	//should be included first
-#import "ghMacros.h"
-//#import "GHSpriteBatchNode.h"
-#import "GHSprite.h"
-#import "GHAnimationCache.h"
-#import "GHAnimation.h"
+#include "ghConfig.h"	//should be included first
+#include "ghMacros.h"
+#include "GHDirector.h"
+//#include "GHSpriteBatchNode.h"
+#include "GHSprite.h"
+#include "GHAnimationCache.h"
+#include "GHAnimation.h"
 
-//#import "GHSkeleton.h"
-//#import "GHSkeletalAnimationCache.h"
-//#import "GHSkeletalAnimation.h"
-//#import "GHDirector.h"
-//#import "GHDebugDrawLayer.h"
-//#import "GHDirector.h"
+//#include "GHSkeleton.h"
+//#include "GHSkeletalAnimationCache.h"
+//#include "GHSkeletalAnimation.h"
+//#include "GHDirector.h"
+#include "GHDebugDrawLayer.h"
+
 
 
 #endif//_GameDevHelper_API_h

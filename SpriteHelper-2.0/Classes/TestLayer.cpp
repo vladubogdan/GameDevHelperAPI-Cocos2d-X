@@ -61,7 +61,6 @@ bool TestLayer::init()
         
         CCArray* itemsArray = CCArray::create();
         
-        
 		CCMenuItemFont* item = CCMenuItemFont::create("Back", this,
                                                       menu_selector(TestLayer::menuCallback));
         item->setTag(1);

@@ -164,8 +164,22 @@ public:
 #if GH_ENABLE_PHYSICS_INTEGRATION
 #pragma mark PHYSICS
     
-    //add physics methods here
+    /**
+     Destroy the physical body created on this sprite.
+     */
+    void destroyBody();
+    /**
+     Creates the physical body as defined in SpriteHelper.
+     */
+    void createBody();
+
     
+    virtual bool isDirty(void);
+    
+    virtual CCAffineTransform nodeToParentTransform(void);
+    
+    virtual void setPosition(const CCPoint& pos);
+    virtual void setRotation(float fRotation);
 #endif
     
     /**
@@ -184,7 +198,7 @@ private:
     
     
 #if GH_ENABLE_PHYSICS_INTEGRATION
-    NSDictionary* physicsInfo;//may be nil - contains all physical information
+    CCDictionary* physicsInfo;//may be nil - contains all physical information
     b2Body* body;//may be null if sprite has no physical representation
 #endif
     
