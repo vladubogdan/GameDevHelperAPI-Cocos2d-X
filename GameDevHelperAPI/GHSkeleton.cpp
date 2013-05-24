@@ -714,14 +714,17 @@ void GHSkeleton::update(float dt)
         }
     }
     
-    /*
-
+    
          
     {//handle skin connections        
-        GHSkeletalAnimationFrame* beginFrame = nil;
+        GHSkeletalAnimationFrame* beginFrame = NULL;
         
-        for(GHSkeletalAnimationFrame* frm in [animation skinConnectionFrames]){
-            if([frm time] <= time){
+        CCObject* pSkinFrmObj = NULL;
+        CCARRAY_FOREACH(animation->getSkinConnectionFrames(), pSkinFrmObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pSkinFrmObj;
+         
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
         }
@@ -729,34 +732,42 @@ void GHSkeleton::update(float dt)
         //we have the last frame with smaller time
         if(beginFrame){
             
-            NSDictionary* connections = [beginFrame skinConnections];
+            CCDictionary* connections = beginFrame->getSkinConnections();
             
-            for(GHBoneSkin* skin in skins)
+            
+            CCObject* pSkinObj = NULL;
+            CCARRAY_FOREACH(skins, pSkinObj)
             {
-                GHSprite* sprite = [skin sprite];
+                GHBoneSkin* skin = (GHBoneSkin*)pSkinObj;
+                
+                GHSprite* sprite = skin->getSprite();
                 if(sprite){
-                    NSString* sprName = [sprite name];
-                    if(sprName){
-                        GHSkeletalSkinConnectionInfo* connectionInfo = [connections objectForKey:sprName];
+                    std::string sprName = sprite->getName();
+                    if(sprName != ""){
+                        GHSkeletalSkinConnectionInfo* connectionInfo = (GHSkeletalSkinConnectionInfo*)connections->objectForKey(sprName);
                         
                         if(connectionInfo)
                         {
-                            NSString* boneName = [connectionInfo boneName];
-                                                    
-                            [skin setAngleOffset:[connectionInfo angleOffset]];
-                            [skin setPositionOffset:[connectionInfo positionOffset]];
-                            [skin setConnectionAngle:[connectionInfo connectionAngle]];
+                            std::string boneName = connectionInfo->getBoneName();
+                                                        
+                            skin->setAngleOffset(connectionInfo->getAngleOffset());
+                            skin->setPositionOffset(connectionInfo->getPositionOffset());
+                            skin->setConnectionAngle(connectionInfo->getConnectionAngle());
                          
                             
-                            if(!boneName)//we may not have a bone
+                            if(boneName == "")//we may not have a bone
                             {
-                                [skin setBone:nil];
+                                skin->setBone(NULL);
                             }
                             else{
-                                for(GHBone* bone in [self allBones])
+                                
+                                CCObject* pBoneObj = NULL;
+                                CCARRAY_FOREACH(allBones, pBoneObj)
                                 {
-                                    if([[bone name] isEqualToString:boneName]){
-                                        [skin setBone:bone];
+                                    GHBone* bone = (GHBone*)pBoneObj;
+
+                                    if(bone->getName() == boneName){
+                                        skin->setBone(bone);
                                         break;//exit for loop
                                     }
                                 }
@@ -772,29 +783,34 @@ void GHSkeleton::update(float dt)
 
     
     {//handle skin sprites
+        GHSkeletalAnimationFrame* beginFrame = NULL;
         
-        
-        GHSkeletalAnimationFrame* beginFrame = nil;
-        
-        for(GHSkeletalAnimationFrame* frm in [animation skinSpriteFrames]){
-            if([frm time] <= time){
+        CCObject* pFrmObj = NULL;
+        CCARRAY_FOREACH(animation->getSkinSpriteFrames(), pFrmObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pFrmObj;
+         
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
         }
         
         //we have the last frame with smaller time
         if(beginFrame){
-            NSMutableDictionary* info = [beginFrame skinSprites];
+            CCDictionary* info = beginFrame->getSkinSprites();
             if(info){
                 
-                for(GHBoneSkin* skin in skins)
+                CCObject* pSkinObj = NULL;
+                CCARRAY_FOREACH(skins, pSkinObj)
                 {
-                    NSString* newSprFrameName = [info objectForKey:[skin name]];                        
+                    GHBoneSkin* skin = (GHBoneSkin*)pSkinObj;
+                    
+                    CCString* newSprFrameName = (CCString*)info->objectForKey(skin->getName());
                     if(newSprFrameName){
                         
-                        CCSpriteFrame* frame =  [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:newSprFrameName];
+                        CCSpriteFrame* frame =  CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(newSprFrameName->getCString());
                         if(frame){
-                            [[skin sprite] setDisplayFrame:frame];
+                            skin->getSprite()->setDisplayFrame(frame);
                         }
                     }
                 }
@@ -802,32 +818,38 @@ void GHSkeleton::update(float dt)
         }
     }
     
-    
+  
     {//handle sprites visibility
 
-        GHSkeletalAnimationFrame* beginFrame = nil;
+        GHSkeletalAnimationFrame* beginFrame = NULL;
         
-        for(GHSkeletalAnimationFrame* frm in [animation visibilityFrames]){
-            if([frm time] <= time){
+        
+        CCObject* pFrmObj = NULL;
+        CCARRAY_FOREACH(animation->getVisibilityFrames(), pFrmObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pFrmObj;
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
         }
         
         //we have the last frame with smaller time
         if(beginFrame){
-            NSMutableDictionary* info = [beginFrame spritesVisibility];
+            CCDictionary* info = beginFrame->getSpritesVisibility();
             
             if(info){
                 
-                for(GHSprite* sprite in [batchNode_ children])
+                CCObject* pSprObj = NULL;
+                CCARRAY_FOREACH(batchNode_->getChildren(), pSprObj)
                 {
-                    NSString* sprFrmName = [sprite name];
+                    GHSprite* sprite = (GHSprite*)pSprObj;
+
+                    std::string sprFrmName = sprite->getName();
                     
-                    if(sprFrmName){
-                        NSNumber* val = [info objectForKey:sprFrmName];
-//                        NSLog(@"SPR FRM NAME %@ %@ ", sprFrmName, val);
+                    if(sprFrmName != ""){
+                        CCString* val = (CCString*)info->objectForKey(sprFrmName);
                         if(val){
-                            [sprite setVisible:[val boolValue]];
+                            sprite->setVisible(val->boolValue());
                         }
                     }
                 }
@@ -838,88 +860,91 @@ void GHSkeleton::update(float dt)
     
     
     { //handle sprites transform
-        GHSkeletalAnimationFrame* beginFrame = nil;
-        GHSkeletalAnimationFrame* endFrame = nil;
-                    
-        for(GHSkeletalAnimationFrame* frm in [animation spritesTransformFrames]){
-            if([frm time] <= time){
+        GHSkeletalAnimationFrame* beginFrame = NULL;
+        GHSkeletalAnimationFrame* endFrame = NULL;
+        
+        CCObject* pFrmObj = NULL;
+        CCARRAY_FOREACH(animation->getSpritesTransformFrames(), pFrmObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pFrmObj;
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
             
-            if([frm time] > time){
+            if(frm->getTime() > time){
                 endFrame = frm;
                 break;//exit for
             }
         }
-        
+                
         if(beginFrame && endFrame){
             
-            float beginTime = [beginFrame time];
-            float endTime = [endFrame time];
+            float beginTime = beginFrame->getTime();
+            float endTime   = endFrame->getTime();
             
             float framesTimeDistance = endTime - beginTime;
             float timeUnit = (time-beginTime)/framesTimeDistance; //a value between 0 and 1
             
-            NSMutableDictionary* beginFrameInfo = [beginFrame spritesTransform];
-            NSMutableDictionary* endFrameInfo = [endFrame spritesTransform];
+            CCDictionary* beginFrameInfo = beginFrame->getSpritesTransform();
+            CCDictionary* endFrameInfo   = endFrame->getSpritesTransform();
              
-            if(beginFrameInfo == nil || endFrameInfo == nil)
+            if(beginFrameInfo == NULL || endFrameInfo == NULL)
                 return;
             
-            for(GHBoneSkin* skin in skins)
-            {
-                GHSkeletalSkinConnectionInfo* beginInfo = [beginFrameInfo objectForKey:[skin name]];
-                GHSkeletalSkinConnectionInfo* endInfo = [endFrameInfo objectForKey:[skin name]];
             
+            CCObject* pSkinObj = NULL;
+            CCARRAY_FOREACH(skins, pSkinObj)
+            {
+                GHBoneSkin* skin = (GHBoneSkin*)pSkinObj;
                 
-                
-                if([skin sprite] && beginInfo && endInfo)
+                GHSkeletalSkinConnectionInfo* beginInfo = (GHSkeletalSkinConnectionInfo*)beginFrameInfo->objectForKey(skin->getName());
+                GHSkeletalSkinConnectionInfo* endInfo   = (GHSkeletalSkinConnectionInfo*)endFrameInfo->objectForKey(skin->getName());
+            
+                if(skin->getSprite() && beginInfo && endInfo)
                 {
                 
                     //set position
-                    CGPoint beginPos = [beginInfo position];
-                    CGPoint endPos = [endInfo position];
+                    CCPoint beginPos    = beginInfo->getPosition();
+                    CCPoint endPos      = endInfo->getPosition();
                     float newX = beginPos.x + (endPos.x - beginPos.x)*timeUnit;
                     float newY = beginPos.y + (endPos.y - beginPos.y)*timeUnit;
                     
-                    [[skin sprite] setPosition:ccp(newX, newY)];
-                   
+                    skin->getSprite()->setPosition(ccp(newX, newY));
 
                     //set angle
-                    float beginAngle = [beginInfo angle];
-                    float endAngle = [endInfo angle];
-                    float newAngle = beginAngle + (endAngle - beginAngle)*timeUnit;
-                    [[skin sprite] setRotation:newAngle];
-                 
+                    float beginAngle = beginInfo->getAngle();
+                    float endAngle   = endInfo->getAngle();
+                    float newAngle   = beginAngle + (endAngle - beginAngle)*timeUnit;
+                    skin->getSprite()->setRotation(newAngle);
                     
                     //set angle at skin time
-                    float beginSkinAngle = [beginInfo connectionAngle];
-                    float endSkinAngle = [endInfo connectionAngle];
-                    float newSkinAngle = beginSkinAngle + (endSkinAngle - beginSkinAngle)*timeUnit;
-                    [skin setConnectionAngle:newSkinAngle];
+                    float beginSkinAngle= beginInfo->getConnectionAngle();
+                    float endSkinAngle  = endInfo->getConnectionAngle();
+                    float newSkinAngle  = beginSkinAngle + (endSkinAngle - beginSkinAngle)*timeUnit;
+                    skin->setConnectionAngle(newSkinAngle);
 
                     
                     {
-                    //set skin angle
-                    float beginAngle = [beginInfo angleOffset];
-                    float endAngle = [endInfo angleOffset];
-                    float newAngle = beginAngle + (endAngle - beginAngle)*timeUnit;
-                    [skin setAngleOffset:newAngle];
-                    
-                    //set skin position offset
-                    CGPoint beginPosOff = [beginInfo positionOffset];
-                    CGPoint endPosOff = [endInfo positionOffset];
-                    
-                    float newX = beginPosOff.x + (endPosOff.x - beginPosOff.x)*timeUnit;
-                    float newY = beginPosOff.y + (endPosOff.y - beginPosOff.y)*timeUnit;
-                    [skin setPositionOffset:ccp(newX, newY)];                        
+                        //set skin angle
+                        float beginAngle= beginInfo->getAngleOffset();
+                        float endAngle  = endInfo->getAngleOffset();
+                        float newAngle  = beginAngle + (endAngle - beginAngle)*timeUnit;
+                        skin->setAngleOffset(newAngle);
+                        
+                        //set skin position offset
+                        CCPoint beginPosOff = beginInfo->getPositionOffset();
+                        CCPoint endPosOff   = endInfo->getPositionOffset();
+                        
+                        float newX = beginPosOff.x + (endPosOff.x - beginPosOff.x)*timeUnit;
+                        float newY = beginPosOff.y + (endPosOff.y - beginPosOff.y)*timeUnit;
+                        skin->setPositionOffset(ccp(newX, newY));
                     }
                 }
             }
         }
     }
         
-*/
+
     this->transformSkins();
     
     currentTranstionTime += dt;

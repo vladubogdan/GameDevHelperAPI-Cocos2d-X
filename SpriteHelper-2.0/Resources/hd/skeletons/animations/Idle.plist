@@ -306,45 +306,45 @@
 			<key>bones</key>
 			<dict>
 				<key>RootBone</key>
-				<string>{-4, 5}</string>
+				<string>{-4, 17}</string>
 				<key>head</key>
-				<string>{12, 158}</string>
+				<string>{12, 171}</string>
 				<key>leftFoot</key>
-				<string>{35, -100}</string>
+				<string>{35, -88}</string>
 				<key>leftHand</key>
-				<string>{40, 6}</string>
+				<string>{40, 19}</string>
 				<key>leftLowerArm</key>
-				<string>{27, 20}</string>
+				<string>{27, 32}</string>
 				<key>leftLowerLeg</key>
-				<string>{11, -98}</string>
+				<string>{11, -86}</string>
 				<key>leftPelvis</key>
-				<string>{15, 0}</string>
+				<string>{15, 13}</string>
 				<key>leftShoulder</key>
-				<string>{11, 93}</string>
+				<string>{11, 105}</string>
 				<key>leftUpperArm</key>
-				<string>{21, 49}</string>
+				<string>{21, 62}</string>
 				<key>leftUpperLeg</key>
-				<string>{23, -42}</string>
+				<string>{23, -30}</string>
 				<key>neck</key>
-				<string>{-1, 124}</string>
+				<string>{-1, 137}</string>
 				<key>rightFoot</key>
-				<string>{-10, -100}</string>
+				<string>{-10, -87}</string>
 				<key>rightHand</key>
-				<string>{-16, -10}</string>
+				<string>{-16, 2}</string>
 				<key>rightLowerArm</key>
-				<string>{-31, 7}</string>
+				<string>{-31, 19}</string>
 				<key>rightLowerLeg</key>
-				<string>{-31, -97}</string>
+				<string>{-31, -85}</string>
 				<key>rightPelvis</key>
-				<string>{-22, -1}</string>
+				<string>{-22, 11}</string>
 				<key>rightShoulder</key>
-				<string>{-27, 94}</string>
+				<string>{-27, 107}</string>
 				<key>rightUpperArm</key>
-				<string>{-33, 45}</string>
+				<string>{-33, 58}</string>
 				<key>rightUpperLeg</key>
-				<string>{-22, -46}</string>
+				<string>{-22, -34}</string>
 				<key>torso</key>
-				<string>{-1, 101}</string>
+				<string>{-1, 114}</string>
 			</dict>
 			<key>time</key>
 			<real>0.0</real>
@@ -353,23 +353,25 @@
 			<key>bones</key>
 			<dict>
 				<key>head</key>
-				<string>{14, 158}</string>
+				<string>{14, 171}</string>
+				<key>leftHand</key>
+				<string>{40, 18}</string>
 				<key>leftLowerArm</key>
-				<string>{28, 19}</string>
+				<string>{28, 31}</string>
 				<key>leftShoulder</key>
-				<string>{12, 92}</string>
+				<string>{12, 104}</string>
 				<key>leftUpperArm</key>
-				<string>{22, 48}</string>
+				<string>{22, 61}</string>
 				<key>neck</key>
-				<string>{2, 124}</string>
+				<string>{2, 137}</string>
 				<key>rightHand</key>
-				<string>{-17, -11}</string>
+				<string>{-17, 2}</string>
+				<key>rightLowerArm</key>
+				<string>{-31, 20}</string>
 				<key>rightShoulder</key>
-				<string>{-25, 95}</string>
-				<key>rightUpperArm</key>
-				<string>{-33, 46}</string>
+				<string>{-25, 107}</string>
 				<key>torso</key>
-				<string>{1, 101}</string>
+				<string>{1, 114}</string>
 			</dict>
 			<key>time</key>
 			<real>0.52421873807907104</real>
@@ -377,22 +379,26 @@
 		<dict>
 			<key>bones</key>
 			<dict>
+				<key>head</key>
+				<string>{14, 170}</string>
+				<key>leftHand</key>
+				<string>{40, 19}</string>
 				<key>leftLowerArm</key>
-				<string>{27, 20}</string>
+				<string>{27, 32}</string>
 				<key>leftShoulder</key>
-				<string>{11, 93}</string>
+				<string>{11, 105}</string>
 				<key>leftUpperArm</key>
-				<string>{21, 49}</string>
+				<string>{21, 62}</string>
 				<key>neck</key>
-				<string>{0, 124}</string>
+				<string>{0, 137}</string>
 				<key>rightHand</key>
-				<string>{-18, -12}</string>
+				<string>{-18, 0}</string>
+				<key>rightLowerArm</key>
+				<string>{-31, 19}</string>
 				<key>rightShoulder</key>
-				<string>{-27, 94}</string>
-				<key>rightUpperArm</key>
-				<string>{-33, 45}</string>
+				<string>{-27, 107}</string>
 				<key>torso</key>
-				<string>{-1, 101}</string>
+				<string>{-1, 114}</string>
 			</dict>
 			<key>time</key>
 			<real>0.98917967081069946</real>
@@ -401,11 +407,11 @@
 			<key>bones</key>
 			<dict>
 				<key>head</key>
-				<string>{12, 158}</string>
+				<string>{12, 171}</string>
 				<key>neck</key>
-				<string>{-1, 124}</string>
+				<string>{-1, 137}</string>
 				<key>rightHand</key>
-				<string>{-16, -10}</string>
+				<string>{-16, 2}</string>
 			</dict>
 			<key>time</key>
 			<real>1.5</real>
@@ -489,7 +495,7 @@
 					<key>posOff</key>
 					<string>{29, -31}</string>
 					<key>position</key>
-					<string>{23, 150}</string>
+					<string>{23, 162}</string>
 				</dict>
 				<key>foot_LEFT.png</key>
 				<dict>
@@ -502,7 +508,7 @@
 					<key>posOff</key>
 					<string>{9, 0}</string>
 					<key>position</key>
-					<string>{14, -92}</string>
+					<string>{14, -80}</string>
 				</dict>
 				<key>foot_RIGHT.png</key>
 				<dict>
@@ -515,7 +521,7 @@
 					<key>posOff</key>
 					<string>{8, -1}</string>
 					<key>position</key>
-					<string>{-22, -96}</string>
+					<string>{-22, -84}</string>
 				</dict>
 				<key>forearm_L_outline.png</key>
 				<dict>
@@ -528,7 +534,7 @@
 					<key>posOff</key>
 					<string>{0, 18}</string>
 					<key>position</key>
-					<string>{23, 30}</string>
+					<string>{23, 42}</string>
 				</dict>
 				<key>forearm_R_outline.png</key>
 				<dict>
@@ -541,7 +547,7 @@
 					<key>posOff</key>
 					<string>{2, 20}</string>
 					<key>position</key>
-					<string>{-31, 27}</string>
+					<string>{-31, 39}</string>
 				</dict>
 				<key>gun-belt.png</key>
 				<dict>
@@ -554,7 +560,7 @@
 					<key>posOff</key>
 					<string>{2, -20}</string>
 					<key>position</key>
-					<string>{-3, 25}</string>
+					<string>{-3, 37}</string>
 				</dict>
 				<key>gun-holster.png</key>
 				<dict>
@@ -567,7 +573,7 @@
 					<key>posOff</key>
 					<string>{-24, -15}</string>
 					<key>position</key>
-					<string>{-28, 19}</string>
+					<string>{-28, 32}</string>
 				</dict>
 				<key>gun.png</key>
 				<dict>
@@ -580,7 +586,7 @@
 					<key>posOff</key>
 					<string>{-32, -24}</string>
 					<key>position</key>
-					<string>{-36, 29}</string>
+					<string>{-36, 41}</string>
 				</dict>
 				<key>hair.png</key>
 				<dict>
@@ -593,7 +599,7 @@
 					<key>posOff</key>
 					<string>{10, -39}</string>
 					<key>position</key>
-					<string>{4, 158}</string>
+					<string>{4, 170}</string>
 				</dict>
 				<key>hand_L_outline.png</key>
 				<dict>
@@ -606,7 +612,7 @@
 					<key>posOff</key>
 					<string>{4, 6}</string>
 					<key>position</key>
-					<string>{33, 7}</string>
+					<string>{33, 19}</string>
 				</dict>
 				<key>hand_R_outline.png</key>
 				<dict>
@@ -619,7 +625,7 @@
 					<key>posOff</key>
 					<string>{9, 9}</string>
 					<key>position</key>
-					<string>{-22, -1}</string>
+					<string>{-22, 12}</string>
 				</dict>
 				<key>hat.png</key>
 				<dict>
@@ -632,7 +638,7 @@
 					<key>posOff</key>
 					<string>{10, -67}</string>
 					<key>position</key>
-					<string>{6, 185}</string>
+					<string>{6, 198}</string>
 				</dict>
 				<key>head.png</key>
 				<dict>
@@ -645,7 +651,7 @@
 					<key>posOff</key>
 					<string>{12, -30}</string>
 					<key>position</key>
-					<string>{6, 149}</string>
+					<string>{6, 162}</string>
 				</dict>
 				<key>leg_lower_L_outline.png</key>
 				<dict>
@@ -658,7 +664,7 @@
 					<key>posOff</key>
 					<string>{-9, 23}</string>
 					<key>position</key>
-					<string>{11, -71}</string>
+					<string>{11, -59}</string>
 				</dict>
 				<key>leg_lower_R_outline.png</key>
 				<dict>
@@ -671,7 +677,7 @@
 					<key>posOff</key>
 					<string>{-5, 21}</string>
 					<key>position</key>
-					<string>{-27, -65}</string>
+					<string>{-27, -52}</string>
 				</dict>
 				<key>leg_upper_L_outline.png</key>
 				<dict>
@@ -684,7 +690,7 @@
 					<key>posOff</key>
 					<string>{0, 18}</string>
 					<key>position</key>
-					<string>{15, -18}</string>
+					<string>{15, -5}</string>
 				</dict>
 				<key>leg_upper_R_outline.png</key>
 				<dict>
@@ -697,7 +703,7 @@
 					<key>posOff</key>
 					<string>{1, 17}</string>
 					<key>position</key>
-					<string>{-21, -18}</string>
+					<string>{-21, -6}</string>
 				</dict>
 				<key>mouth.png</key>
 				<dict>
@@ -710,7 +716,7 @@
 					<key>posOff</key>
 					<string>{32, -9}</string>
 					<key>position</key>
-					<string>{26, 129}</string>
+					<string>{26, 141}</string>
 				</dict>
 				<key>muzzleFlash.png</key>
 				<dict>
@@ -723,7 +729,7 @@
 					<key>posOff</key>
 					<string>{54, 32}</string>
 					<key>position</key>
-					<string>{22, -24}</string>
+					<string>{22, -11}</string>
 				</dict>
 				<key>neck_outline.png</key>
 				<dict>
@@ -736,7 +742,7 @@
 					<key>posOff</key>
 					<string>{-3, -14}</string>
 					<key>position</key>
-					<string>{-4, 115}</string>
+					<string>{-4, 127}</string>
 				</dict>
 				<key>pelvis.png</key>
 				<dict>
@@ -749,7 +755,7 @@
 					<key>posOff</key>
 					<string>{0, -9}</string>
 					<key>position</key>
-					<string>{-4, 13}</string>
+					<string>{-4, 26}</string>
 				</dict>
 				<key>shoulder_L_outline.png</key>
 				<dict>
@@ -762,7 +768,7 @@
 					<key>posOff</key>
 					<string>{3, 26}</string>
 					<key>position</key>
-					<string>{14, 66}</string>
+					<string>{14, 79}</string>
 				</dict>
 				<key>shoulder_R_outline.png</key>
 				<dict>
@@ -775,7 +781,7 @@
 					<key>posOff</key>
 					<string>{-3, 26}</string>
 					<key>position</key>
-					<string>{-30, 69}</string>
+					<string>{-30, 81}</string>
 				</dict>
 				<key>tennisBall.png</key>
 				<dict>
@@ -788,7 +794,7 @@
 					<key>posOff</key>
 					<string>{0, 0}</string>
 					<key>position</key>
-					<string>{-5, 19}</string>
+					<string>{-5, 32}</string>
 				</dict>
 				<key>torso_outline.png</key>
 				<dict>
@@ -801,7 +807,7 @@
 					<key>posOff</key>
 					<string>{7, -65}</string>
 					<key>position</key>
-					<string>{2, 70}</string>
+					<string>{2, 82}</string>
 				</dict>
 			</dict>
 		</dict>
@@ -813,7 +819,9 @@
 		<dict>
 			<key>sprites</key>
 			<dict>
-				<key>eyes_OPEN.png</key>
+				<key>angry_mouth.png</key>
+				<true/>
+				<key>eyes_ANGRY.png</key>
 				<true/>
 				<key>foot_LEFT.png</key>
 				<true/>
@@ -846,8 +854,6 @@
 				<key>leg_upper_L_outline.png</key>
 				<true/>
 				<key>leg_upper_R_outline.png</key>
-				<true/>
-				<key>mouth.png</key>
 				<true/>
 				<key>muzzleFlash.png</key>
 				<false/>

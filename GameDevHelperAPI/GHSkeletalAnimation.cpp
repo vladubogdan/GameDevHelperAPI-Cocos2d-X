@@ -50,6 +50,12 @@ GHSkeletalSkinConnectionInfo* GHSkeletalSkinConnectionInfo::copyWithZone(CCZone 
     GHSkeletalSkinConnectionInfo *pCopy = new GHSkeletalSkinConnectionInfo();
     
     pCopy->initSkinConnectionInfoWithBoneName(boneName.c_str());
+    pCopy->setAngleOffset(angleOffset);
+    pCopy->setConnectionAngle(connectionAngle);
+    pCopy->setPositionOffset(positionOffset);
+    pCopy->setPosition(position);
+    pCopy->setAngle(angle);
+    
     return pCopy;
 }
 
@@ -240,8 +246,6 @@ void GHSkeletalAnimationFrame::setSkinConnectionsWithDictionary(CCDictionary* co
             posOff.x /= CC_CONTENT_SCALE_FACTOR();
             posOff.y /= CC_CONTENT_SCALE_FACTOR();
             
-            CCLog("BONE NAME %p", boneName);
-
             GHSkeletalSkinConnectionInfo* skinInfo = NULL;
             if(boneName)
                 skinInfo = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(boneName->getCString());

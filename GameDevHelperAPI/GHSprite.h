@@ -74,27 +74,33 @@ public:
     
 #pragma mark VARIOUS_PROPERTIES
     /**
-     Set the name of current sprite object.
+     * Set the name of current sprite object.
+     * @param  value A null terminated string which indicates the sprite name.
+     * @return  Nothing.
      */
-     void setName(const char* val);
+     void setName(const char* value);
     
     /**
-     Get the name of current sprite object.
+     * Get the name of current sprite object.
+     @return The name of the sprite.
      */
     std::string getName(void);
 
     /**
-     Set the image file name from where the texture of this sprite was created.
+     * Set the image file name from where the texture of this sprite was created.
+     * @param value A null terminated string which indicates the image file.
      */
     void setImageFile(const char *value);
 
     /**
      Get the image file name from where the texture of this sprite was created.
+     @return The sprite image file name.
      */
     std::string getImageFile(void);
     
     /**
      The sprite frame name used to create the texture rectangle of this sprite.
+     @return The Cocos2d sprite frame name.
      */
     std::string getSpriteFrameName(void);
     
