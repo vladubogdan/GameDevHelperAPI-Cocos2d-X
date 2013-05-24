@@ -8,7 +8,8 @@
 
 #include "GHPoint.h"
 
-GHPoint* GHPoint::createPoint(float x, float y){
+
+GHPoint* GHPoint::createWithValues(float x, float y){
     
     GHPoint *pobNode = new GHPoint();
 	if (pobNode && pobNode->initWithValues(x, y))
@@ -26,9 +27,33 @@ bool GHPoint::initWithValues(float x, float y){
 }
 
 
+
+GHPoint* GHPoint::createWithPoint(GHPoint* pt){
+    
+    GHPoint *pobNode = new GHPoint();
+	if (pobNode && pobNode->initWithPoint(pt))
+    {
+	    pobNode->autorelease();
+        return pobNode;
+    }
+    CC_SAFE_DELETE(pobNode);
+	return NULL;
+    
+}
+bool GHPoint::initWithPoint(GHPoint* pt){
+    setPoint(pt->x, pt->y);
+    return true;
+}
+
+
+
 GHPoint::GHPoint(void)
 {
     setPoint(0.0f, 0.0f);
+}
+
+GHPoint::~GHPoint(){
+    
 }
 
 GHPoint::GHPoint(float x, float y)

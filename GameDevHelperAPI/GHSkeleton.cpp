@@ -6,466 +6,496 @@
 //
 //
 
-#import "GHSkeleton.h"
-#import "GHSprite.h"
-#import "GHBoneSkin.h"
-#import "GHSkeletalAnimationCache.h"
-#import "GHSkeletalAnimation.h"
+#include "GHSkeleton.h"
+#include "GHSprite.h"
+#include "GHBoneSkin.h"
+#include "GHSkeletalAnimationCache.h"
+#include "GHSkeletalAnimation.h"
+#include "GHPoint.h"
+GHSkeleton::GHSkeleton():
 
-@interface GHSkeleton()
--(void)loadSprites:(NSArray*)spritesInfo;
--(void)loadBones:(NSDictionary*)rootBoneInfo;
-#ifdef GH_DEBUG
--(void)initShader;
+rootBone(NULL),
+batchNode_(NULL),
+poses(NULL),
+skins(NULL),
+#if GH_DEBUG
+colorLocation_(0),
 #endif
-@end
-
-
-@interface GHBone(GHSkeletonBonePrivate)
--(void)updateMovement;
-@end
-
-@implementation GHBone(GHSkeletonBonePrivate)
-
--(void)updateMovement{
-    if(self.rigid){
-        [self setPosition:self.position parent:nil];
-    }
-    
-    for(GHBone* bone in self.children){
-        [bone updateMovement];
-    }
-}
-@end
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-@implementation GHSkeleton
-
--(void)dealloc{
-    delegate = nil;
-#ifdef GH_DEBUG
-    shaderProgram_ = nil;
-#endif
-    [self unscheduleAllSelectors];
-    [self unscheduleUpdate];
-    
-    [rootBone release];
-    [poses release];
-    [transitionTime release];
-    transitionTime = nil;
-    
-    [animation release];
-    animation = nil;
-    
-    [super dealloc];
-}
--(id)initWithFile:(NSString*)file{
-    
-    self = [super init];
-    if(self){
-     
-        //maybe the file has or does not have extension given - we do this little trick
-        NSString* plistFile = [file stringByDeletingPathExtension];
-        plistFile = [plistFile stringByAppendingPathExtension:@"plist"];
-
-        //maye the user has given a suffix - not necessary
-        plistFile =  [[CCFileUtils sharedFileUtils] removeSuffixFromFile:plistFile];
-        NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plistFile];
-        
-        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-        
-        NSString* pathToSkeleton = [file stringByDeletingLastPathComponent];
-        NSString* pathToSheet = [pathToSkeleton stringByDeletingLastPathComponent];
-        
-        NSString* sheetName = [dict objectForKey:@"sheet"];
-        if(sheetName)
-        {
-        NSString* sheetFile = [pathToSheet stringByAppendingPathComponent:sheetName];        
-            batchNode_ = [CCSpriteBatchNode batchNodeWithFile:sheetFile];
-            [self addChild:batchNode_ z:-1];//this way debug drawing will be 0
-            [batchNode_ setPosition:ccp(0,0)];
-            
-            NSString* sheetPlist = [sheetFile stringByDeletingPathExtension];
-            sheetPlist = [sheetPlist stringByAppendingPathExtension:@"plist"];
-            [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:sheetPlist];
-        }
-
-        [self loadBones:[dict objectForKey:@"root"]];
-        [self loadSprites:[dict objectForKey:@"sprites"]];
-        [self updateSkins];
-        
-        
-        NSDictionary* posesDict = [dict objectForKey:@"poses"];
-        if(posesDict){
-            poses = [[NSDictionary alloc] initWithDictionary:posesDict];
-        }
-        
-#ifdef GH_DEBUG
-        [self initShader];
-#endif
-        
-    }
-    return self;
-}
-
-+(id)skeletonWithFile:(NSString*)file{
-    return [[[self alloc] initWithFile:file] autorelease];
-}
-
-
--(void)loadSprites:(NSArray*)spritesInfo
+animation(NULL),
+transitionTime(NULL),
+currentTranstionTime(0),
+delegate(NULL)
 {
-    if(spritesInfo == nil)return;
     
-    NSMutableArray* allBones = [NSMutableArray arrayWithArray:[self allBones]];
+}
+GHSkeleton::~GHSkeleton(){
+ 
+    delegate = NULL;
     
-    for(NSDictionary* sprInfo in spritesInfo)
+#ifdef GH_DEBUG
+    m_pShaderProgram = NULL;
+#endif
+    
+    this->unscheduleAllSelectors();
+    this->unscheduleUpdate();
+
+    CC_SAFE_RELEASE(rootBone);
+    CC_SAFE_RELEASE(poses);
+    CC_SAFE_RELEASE(transitionTime);
+    CC_SAFE_RELEASE(animation);
+}
+
+GHSkeleton* GHSkeleton::createWithFile(const char* file){
+    
+    GHSkeleton *pobNode = new GHSkeleton();
+	if (pobNode && pobNode->initWithFile(file))
     {
+	    pobNode->autorelease();
+        return pobNode;
+    }
+    CC_SAFE_DELETE(pobNode);
+	return NULL;
+}
+
+bool GHSkeleton::initWithFile(const char* file){
+    
+    if(!file)return false;
+    
+    //maybe the file has or does not have extension given - we do this little trick
+//    std::string plistFile = [file stringByDeletingPathExtension];
+//    plistFile = [plistFile stringByAppendingPathExtension:@"plist"];
+//    
+//    //maye the user has given a suffix - not necessary
+//    plistFile =  [[CCFileUtils sharedFileUtils] removeSuffixFromFile:plistFile];
+//    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plistFile];
+//
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(file);
+    
+    
+    CCDictionary *dict = CCDictionary::createWithContentsOfFile(path.c_str());
+    
+    std::string pathToSkeleton = "";// [file stringByDeletingLastPathComponent];
+    std::string pathToSheet = "";//[pathToSkeleton stringByDeletingLastPathComponent];
+    
+    CCString* sheetName = (CCString*)dict->objectForKey("sheet");
+    if(sheetName)
+    {
+       // std::string sheetFile = "";//[pathToSheet stringByAppendingPathComponent:sheetName];
+        batchNode_ = CCSpriteBatchNode::create(sheetName->getCString());
+        this->addChild(batchNode_, -1);//this way debug drawing will be 0
+        batchNode_->setPosition(ccp(0,0));
+        
+        std::string sheetPlist = "";//[sheetFile stringByDeletingPathExtension];
+        sheetPlist = "";//[sheetPlist stringByAppendingPathExtension:@"plist"];
+        
+        
+        
+        //lets find the plist file
+        std::string sheetImgFile = std::string(sheetName->getCString());        
+        size_t lastslash = sheetImgFile.find_last_of("/");
+        if (lastslash != std::string::npos)
+        {
+            sheetImgFile = sheetImgFile.substr(lastslash+1, sheetImgFile.size() - lastslash-1);
+        }
+        std::string fileNameNoExt = sheetImgFile;
+        size_t firstDot = sheetImgFile.find_first_of(".");
+        if (firstDot != std::string::npos)
+        {
+            fileNameNoExt = sheetImgFile.substr(0, firstDot);
+        }
+        std::string plistFile = fileNameNoExt + ".plist";
+                
+        
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistFile.c_str());
+    }
+    
+    this->loadBones((CCDictionary*)dict->objectForKey("root"));
+    this->loadSprites((CCArray*)dict->objectForKey("sprites"));
+    this->updateSkins();
+    
+    
+    CCDictionary* posesDict = (CCDictionary*)dict->objectForKey("poses");
+    if(posesDict){
+        poses = CCDictionary::createWithDictionary(posesDict);
+        poses->retain();
+    }
+    
+#if GH_DEBUG
+    this->initShader();
+#endif
+
+    return true;
+}
+
+void GHSkeleton::loadSprites(CCArray* spritesInfo)
+{
+    if(!spritesInfo)return;
+    
+    CCArray* allBones = this->getAllBones();//CCArray::createWithArray(this->getAllBones());
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(spritesInfo, pObj)
+    {
+        CCDictionary* sprInfo = (CCDictionary*)pObj;
+
         //name
         //angle
         //localPos
         //visible
-        CGPoint localPos = CGPointMake(0, 0);
+        CCPoint localPos = CCPointMake(0, 0);
         
-        id sprPos = [sprInfo objectForKey:@"localPos"];
+        CCString* sprPos = (CCString*)sprInfo->objectForKey("localPos");
         if(sprPos){
-            localPos = CGPointFromString(sprPos);
+            localPos = CCPointFromString(sprPos->getCString());
         }
         localPos.x /=CC_CONTENT_SCALE_FACTOR();
         localPos.y /=CC_CONTENT_SCALE_FACTOR();
         
         
         float angle = 0;
-        id sprAngle = [sprInfo objectForKey:@"angle"];
+        CCString* sprAngle = (CCString*)sprInfo->objectForKey("angle");
         if(sprAngle){
-            angle = [sprAngle floatValue];
+            angle = sprAngle->floatValue();
         }
         
         bool visible = true;
-        id sprVis = [sprInfo objectForKey:@"visible"];
+        CCString* sprVis = (CCString*)sprInfo->objectForKey("visible");
         if(sprVis){
-            visible = [sprVis boolValue];
+            visible = sprVis->boolValue();
         }
         
-        NSString* boneUUID = [sprInfo objectForKey:@"boneUUID"];
+        CCString* boneUUID = (CCString*)sprInfo->objectForKey("boneUUID");
         
-        NSString* skinName = [sprInfo objectForKey:@"skinName"];
-        NSString* skinUUID = [sprInfo objectForKey:@"skinUUID"];
+        CCString* skinName = (CCString*)sprInfo->objectForKey("skinName");
+        CCString* skinUUID = (CCString*)sprInfo->objectForKey("skinUUID");
         
-        NSString* sprName = [sprInfo objectForKey:@"sprName"];
+        CCString* sprName = (CCString*)sprInfo->objectForKey("sprName");
         if(sprName){
-            GHSprite* newSpr = [GHSprite spriteWithSpriteFrameName:sprName];
-            [newSpr setName:skinName];
-            [newSpr setPosition:localPos];
-            [newSpr setRotation:angle];
-            [newSpr setColor:ccc3(255, 255, 255)];
-            [newSpr setVisible:visible];
-            if(batchNode_ != nil){
-                [batchNode_ addChild:newSpr];
+            GHSprite* newSpr = GHSprite::createWithSpriteFrameName(sprName->getCString());
+            newSpr->setName(skinName->getCString());
+            newSpr->setPosition(localPos);
+            newSpr->setRotation(angle);
+            newSpr->setColor(ccc3(255, 255, 255));
+            newSpr->setVisible(visible);
+            if(batchNode_ != NULL){
+                batchNode_->addChild(newSpr);
             }
             
             if(boneUUID){
-                for(GHBone* bone in allBones)
+                CCObject* pBoneObj = NULL;
+                CCARRAY_FOREACH(allBones, pBoneObj)
                 {
-                    if([[bone uuid] isEqualToString:boneUUID]){
-                        [self addSkin:[GHBoneSkin skinWithSprite:newSpr bone:bone name:skinName uuid:skinUUID]];
+                    GHBone* bone = (GHBone*)pBoneObj;
+
+                    if(bone->getUuid() == boneUUID->getCString())
+                    {
+                        this->addSkin(GHBoneSkin::createSkinWithSprite(newSpr,
+                                                                       bone,
+                                                                       skinName->getCString(),
+                                                                       skinUUID->getCString()));
                         break;//exit for loop
                     }
                 }
             }
             else{
-                [self addSkin:[GHBoneSkin skinWithSprite:newSpr bone:nil name:skinName uuid:skinUUID]];
+                this->addSkin(GHBoneSkin::createSkinWithSprite(newSpr,
+                                                               NULL,
+                                                               skinName->getCString(),
+                                                               skinUUID->getCString()));
             }
         }
     }
 }
 
--(void)loadBones:(NSDictionary*)rootBoneInfo
+void GHSkeleton::loadBones(CCDictionary* rootBoneInfo)
 {
     if(!rootBoneInfo)return;
-    rootBone = [[GHBone alloc] initWithDictionary:rootBoneInfo];
+    rootBone = GHBone::createBoneWithDictionary(rootBoneInfo);
 }
 
--(NSArray*)allBones{
+CCArray* GHSkeleton::getAllBones()
+{
+    CCArray* array = CCArray::create();
     
-    NSMutableArray* array = [NSMutableArray array];
-    
-    [array addObject:rootBone];
-    for(GHBone* bone in [rootBone children])
+    array->addObject(rootBone);
+
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(rootBone->getChildren(), pObj)
     {
-        [array addObjectsFromArray:[bone allBones]];
+        GHBone* bone = (GHBone*)pObj;
+        array->addObjectsFromArray(bone->getAllBones());
     }
     
     return array;
 }
 
--(GHBone*)rootBone{
-    return rootBone;
-}
-
--(void)setDelegate:(id<GHSkeletonDelegate>)del{
-    delegate = del;
-}
-
--(void)setPosition:(CGPoint)location forBoneNamed:(NSString*)boneName{
-    
-    GHBone* bone = [rootBone boneWithName:boneName];
+void GHSkeleton::setPositionForBoneNamed(CCPoint location, const char * boneName)
+{
+    GHBone* bone = rootBone->getBoneWithName(boneName);
 
     if(bone){
-        CGPoint localPoint = ccp(location.x - [self position].x,
-                                 location.y - [self position].y);
-        [bone setPosition:localPoint parent:nil];
+        CCPoint localPoint = ccp(location.x - this->getPosition().x,
+                                 location.y - this->getPosition().y);
+        bone->setBonePosition(localPoint, NULL);
     }
-    [rootBone updateMovement];
-    [self transformSkins];
+    rootBone->updateMovement();
+    this->transformSkins();
 }
 
--(void)setPoseWithName:(NSString*)poseName{
-    NSAssert( poses != nil, @"\n\nERROR: Skeleton has no poses or poses were not publish.\n\n");
+void GHSkeleton::setPoseWithName(const char* poseName)
+{
+    CCAssert( poses != NULL, "\n\nERROR: Skeleton has no poses or poses were not publish.\n\n");
 
-    NSDictionary* poseInfo = [poses objectForKey:poseName];
-    NSAssert( poseInfo != nil, @"\n\nERROR: Skeleton has no pose with the given \"poseName\" argument.\n\n");
+    CCDictionary* poseInfo = (CCDictionary*)poses->objectForKey(poseName);
+    CCAssert( poseInfo != NULL, "\n\nERROR: Skeleton has no pose with the given \"poseName\" argument.\n\n");
         
-    NSDictionary* visibility = [poseInfo objectForKey:@"visibility"];
-    NSAssert( visibility != nil, @"\n\nERROR: Skeleton pose is in wrong format. Skin visibilities were not found.\n\n");
+    CCDictionary* visibility = (CCDictionary*)poseInfo->objectForKey("visibility");
+    CCAssert( visibility != NULL, "\n\nERROR: Skeleton pose is in wrong format. Skin visibilities were not found.\n\n");
     
-    NSDictionary* zOrder = [poseInfo objectForKey:@"zOrder"];
-    NSAssert( visibility != nil, @"\n\nERROR: Skeleton pose is in wrong format. Skin z orders were not found.\n\n");
+    CCDictionary* zOrder = (CCDictionary*)poseInfo->objectForKey("zOrder");
+    CCAssert( visibility != NULL, "\n\nERROR: Skeleton pose is in wrong format. Skin z orders were not found.\n\n");
     
-    NSDictionary* skinTex = [poseInfo objectForKey:@"skinTex"];
-    NSAssert( skinTex != nil, @"\n\nERROR: Skeleton pose is in wrong format. Skin sprite frame names were not found.\n\n");
+    CCDictionary* skinTex = (CCDictionary*)poseInfo->objectForKey("skinTex");
+    CCAssert( skinTex != NULL, "\n\nERROR: Skeleton pose is in wrong format. Skin sprite frame names were not found.\n\n");
     
-    NSDictionary* connections = [poseInfo objectForKey:@"connections"];
-    NSAssert( connections != nil, @"\n\nERROR: Skeleton pose is in wrong format. Skin connections were not found.\n\n");
+    CCDictionary* connections = (CCDictionary*)poseInfo->objectForKey("connections");
+    CCAssert( connections != NULL, "\n\nERROR: Skeleton pose is in wrong format. Skin connections were not found.\n\n");
     
-    NSArray* allBones = [self allBones];
+    CCArray* allBones = this->getAllBones();
     
-    for(GHBoneSkin* skin in skins){
-        
-        [[skin sprite] setVisible:YES];
-        NSNumber* value = [visibility objectForKey:[skin uuid]];
-                
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(skins, pObj)
+    {
+        GHBoneSkin* skin = (GHBoneSkin*)pObj;
+
+        skin->getSprite()->setVisible(true);
+
+        CCString* value = (CCString*)visibility->objectForKey(skin->getUUID());
         if(value){
-            [[skin sprite] setVisible:NO];
+            skin->getSprite()->setVisible(false);
         }
 
-        NSNumber* zValue = [zOrder objectForKey:[skin uuid]];
+        CCString* zValue = (CCString*)zOrder->objectForKey(skin->getUUID());
         if(zValue){
-            [batchNode_ reorderChild:[skin sprite] z:[zValue integerValue]];
+            batchNode_->reorderChild(skin->getSprite(), zValue->intValue());
         }
         
-        NSString* spriteFrameName = [skinTex objectForKey:[skin uuid]];
+        CCString* spriteFrameName = (CCString*)skinTex->objectForKey(skin->getUUID());
         if(spriteFrameName){
-            CCSpriteFrame* frame =  [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+            CCSpriteFrame* frame =  CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName->getCString());
             if(frame){
-                [[skin sprite] setDisplayFrame:frame];
+                skin->getSprite()->setDisplayFrame(frame);
             }
         }
         
-        NSDictionary* connectionInfo = [connections objectForKey:[skin uuid]];
+        CCDictionary* connectionInfo = (CCDictionary*)connections->objectForKey(skin->getUUID());
         if(connectionInfo){
             //angleOff
             //boneUUID //this may be missing if no connection
             //conAngle
             //posOff
             
-            NSString* boneUUID = [connectionInfo objectForKey:@"boneUUID"];
+            CCString* boneUUID = (CCString*)connectionInfo->objectForKey("boneUUID");
             if(boneUUID)
             {
                 //check if the current bone is already our connection bone - if not change it
-                if(!([skin bone] && [[[skin bone] uuid] isEqualToString:boneUUID]))
+                if(!(skin->getBone() && skin->getBone()->getUuid() == boneUUID->getCString()))
                 {
-                    for(GHBone* bone in allBones)
+                    CCObject* pBoneObj = NULL;
+                    CCARRAY_FOREACH(allBones, pBoneObj)
                     {
-                        if([[bone uuid] isEqualToString:boneUUID]){
-                            [skin setBone:bone];
+                        GHBone* bone = (GHBone*)pBoneObj;
+
+                        if(bone->getUuid() == boneUUID->getCString())
+                        {
+                            skin->setBone(bone);
                             break;
                         }
                     }
                 }
             }
             else{
-                [skin setBone:nil];
-            }
-                        
-            NSNumber* angleOff = [connectionInfo objectForKey:@"angleOff"];
-            if(angleOff){
-                [skin setAngleOffset:[angleOff floatValue]];
+                skin->setBone(NULL);
             }
             
-            NSString* posOff = [connectionInfo objectForKey:@"posOff"];
+            CCString* angleOff = (CCString*)connectionInfo->objectForKey("angleOff");
+            if(angleOff){
+                skin->setAngleOffset(angleOff->floatValue());
+            }
+            
+            CCString* posOff = (CCString*)connectionInfo->objectForKey("posOff");
             if(posOff)
             {
-                CGPoint newPos = CGPointFromString(posOff);
+                CCPoint newPos = CCPointFromString(posOff->getCString());
                 newPos.x /= CC_CONTENT_SCALE_FACTOR();
                 newPos.y /= CC_CONTENT_SCALE_FACTOR();
-                [skin setPositionOffset:newPos];
+                skin->setPositionOffset(newPos);
             }
     
-            NSNumber* connectionAngle = [connectionInfo objectForKey:@"conAngle"];
+            CCString* connectionAngle = (CCString*)connectionInfo->objectForKey("conAngle");
             if(connectionAngle){
-                [skin setConnectionAngle:[connectionAngle floatValue]];
+                skin->setConnectionAngle(connectionAngle->floatValue());
             }
         }
     }
 
     
-    NSDictionary* positions = [poseInfo objectForKey:@"positions"];
-    NSAssert( positions != nil, @"\n\nERROR: Skeleton pose is in wrong format. Bone positions were not found.\n\n");
-        
-    for(GHBone* bone in allBones)
+    CCDictionary* positions = (CCDictionary*)poseInfo->objectForKey("positions");
+    CCAssert( positions != NULL, "\n\nERROR: Skeleton pose is in wrong format. Bone positions were not found.\n\n");
+    
+    CCObject* pBoneObj = NULL;
+    CCARRAY_FOREACH(allBones, pBoneObj)
     {
-        NSString* uuid = [bone uuid];
-        NSAssert( uuid != nil, @"\n\nERROR: Bone has no UUID.\n\n");
+        GHBone* bone = (GHBone*)pBoneObj;
+
+        std::string uuid = bone->getUuid();
+        CCAssert( uuid != "", "\n\nERROR: Bone has no UUID.\n\n");
         
-        NSString* bonePos = [positions objectForKey:uuid];
-        NSAssert( bonePos != nil, @"\n\nERROR: Bone pose does not have a position value. Must be in a wrong format.\n\n");
+        CCString* bonePos = (CCString*)positions->objectForKey(uuid);
+        CCAssert( bonePos != NULL, "\n\nERROR: Bone pose does not have a position value. Must be in a wrong format.\n\n");
         
-        CGPoint newPos = CGPointFromString(bonePos);
+        CCPoint newPos = CCPointFromString(bonePos->getCString());
         newPos.x /= CC_CONTENT_SCALE_FACTOR();
         newPos.y /= CC_CONTENT_SCALE_FACTOR();
-        bone.position = newPos;
+        bone->setPosition(newPos);
     }
     
-
-
-    [self transformSkins];
+    this->transformSkins();
     
-    if(delegate){
-        if([delegate respondsToSelector:@selector(didLoadPoseWithName:onSkeleton:)])
-        {
-            [delegate didLoadPoseWithName:poseName onSkeleton:self];
-        }
+    if(delegate)
+    {
+        delegate->didLoadPoseWithNameOnSkeleton(poseName, this);
     }
 }
 
 
--(void)addSkin:(GHBoneSkin*)skin{
-    if(nil == skin)return;
+void GHSkeleton::addSkin(GHBoneSkin* skin)
+{
+    if(!skin)return;
     
-    if(nil == skins){
-        skins = [[NSMutableArray alloc] init];
+    if(!skins){
+        skins = CCArray::create();
+        skins->retain();
     }
-    [skins addObject:skin];
+    skins->addObject(skin);
 }
--(void)removeSkin:(GHBoneSkin*)skin{
-    [skins removeObject:skin];
-}
--(NSArray*)skins{
-    return skins;
+void GHSkeleton::removeSkin(GHBoneSkin* skin)
+{
+    if(skins)
+        skins->removeObject(skin);
 }
 
 
--(void)playAnimation:(GHSkeletalAnimation*)anim{
-    if(nil == anim)return;
+void GHSkeleton::playAnimation(GHSkeletalAnimation* anim)
+{
+    if(NULL == anim)return;
     
-    [self stopAnimation];
+    this->stopAnimation();
 
-    if(transitionTime){[transitionTime release]; transitionTime = nil;}
+    CC_SAFE_RELEASE(transitionTime);
+    
     currentTranstionTime = 0;
     
-    animation = anim;
-    [animation retain];
+    animation = GHSkeletalAnimation::createWithAnimation(anim);
+    animation->retain();
     
-    [anim setCurrentTime:0];
-    [anim setCurrentLoop:0];
+    animation->setCurrentTime(0);
+    animation->setCurrentLoop(0);
     
     if(delegate){
-        if([delegate respondsToSelector:@selector(didStartAnimation:onSkeleton:)])
-        {
-            [delegate didStartAnimation:anim onSkeleton:self];
-        }
+        delegate->didStartAnimationOnSkeleton(animation, this);
     }
-    [self scheduleUpdate];
-}
--(void)playAnimationWithName:(NSString*)animName{
-    GHSkeletalAnimation* anim = [[GHSkeletalAnimationCache sharedSkeletalAnimationCache] skeletalAnimationWithName:animName];
-    [self playAnimation:anim];
+    this->scheduleUpdate();
 }
 
--(GHSkeletalAnimation*)animation{
-    return animation;
+void GHSkeleton::playAnimationWithName(const char* animName)
+{
+    GHSkeletalAnimation* anim = GHSkeletalAnimationCache::sharedSkeletalAnimationCache()->skeletalAnimationWithName(animName);
+    this->playAnimation(anim);
 }
 
--(void)transitionToAnimation:(GHSkeletalAnimation*)anim inTime:(float)time{
+void GHSkeleton::transitionToAnimationInTime(GHSkeletalAnimation* anim, float time)
+{
+    if(NULL == anim)return;
+
+    CCArray* allBones = this->getAllBones();
     
-    if(nil == anim)return;
-
-    NSArray* allBones = [self allBones];
-    for(GHBone* bone in allBones){
-        [bone savePosition];
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(allBones, pObj)
+    {
+        GHBone* bone = (GHBone*)pObj;
+        bone->savePosition();
     }
+
+    this->playAnimation(anim);//this will also rmeove any previous transition time
     
-    [self playAnimation:anim];//this will also rmeove any previous transition time
-    
-    transitionTime = [[NSNumber numberWithFloat:time] retain];
+    transitionTime = CCFloat::create(time);
+    transitionTime->retain();
     currentTranstionTime = 0;
 }
 
--(void)transitionToAnimationWithName:(NSString*)animName inTime:(float)time{
-    GHSkeletalAnimation* anim = [[GHSkeletalAnimationCache sharedSkeletalAnimationCache] skeletalAnimationWithName:animName];
-    [self transitionToAnimation:anim inTime:time];
+void GHSkeleton::transitionToAnimationWithNameInTime(const char* animName, float time)
+{
+    GHSkeletalAnimation* anim = GHSkeletalAnimationCache::sharedSkeletalAnimationCache()->skeletalAnimationWithName(animName);
+    this->transitionToAnimationInTime(anim, time);
 }
 
 
--(void)stopAnimation{
-    if(animation){
-        [animation release];
-    }
-    animation = nil;
-    [self unscheduleUpdate];
+void GHSkeleton::stopAnimation(){
+    CC_SAFE_RELEASE(animation);
+    this->unscheduleUpdate();
 }
--(void) update: (ccTime) dt
+
+void GHSkeleton::update(float dt)
 {
     float time = 0;
     
-    if(transitionTime != nil)
+    if(transitionTime != NULL)
     {
-        if([transitionTime floatValue] < currentTranstionTime)
+        if(transitionTime->getValue() < currentTranstionTime)
         {
-            [transitionTime release];
-            transitionTime = nil;
-            [animation setCurrentTime:dt];
-            [animation setCurrentLoop:0];
+            CC_SAFE_RELEASE(transitionTime);
+
+            animation->setCurrentTime(dt);
+            animation->setCurrentLoop(0);
             currentTranstionTime = 0;
             time = dt;
             
             if(delegate){
-                if([delegate respondsToSelector:@selector(didFinishTransitionToAnimation:onSkeleton:)]){
-                    [delegate didFinishTransitionToAnimation:animation onSkeleton:self];
-                }
+                delegate->didFinishTransitionToAnimationOnSkeleton(animation, this);
             }
         }
         time = currentTranstionTime;
         currentTranstionTime += dt;
     }
     else{
-        time = [animation currentTime];
+        time = animation->getCurrentTime();
         
-        if([animation reversed]){
-            [animation setCurrentTime:[animation currentTime] - dt];
+        if(animation->getReversed()){
+            animation->setCurrentTime(animation->getCurrentTime() - dt);
         }else{
-            [animation setCurrentTime:[animation currentTime] + dt];
+            animation->setCurrentTime(animation->getCurrentTime() + dt);
         }
     }
 
     
-    if([animation reversed] && transitionTime == nil)
+    if(animation->getReversed() && transitionTime == NULL)
     {
         if(time <= 0){
             
-            switch ([animation playMode]) {
+            switch (animation->getPlayMode()) {
                 case GH_SKELETAL_ANIM_PLAY_NORMAL:
                 case GH_SKELETAL_ANIM_PLAY_LOOP:
-                    [animation setCurrentTime:[animation totalTime]];
+                {
+                    animation->setCurrentTime(animation->getTotalTime());
+                }
                     break;
                     
                 case GH_SKELETAL_ANIM_PLAY_PINGPONG:
-                    [animation setCurrentTime:0];
-                    [animation setReversed:NO];
+                {
+                    animation->setCurrentTime(0);
+                    animation->setReversed(false);
+                }
                     break;
                     
                 default:
@@ -473,54 +503,64 @@
             }
             
             if(delegate){
-                if([delegate respondsToSelector:@selector(didFinishLoopInAnimation:onSkeleton:)]){
-                    [delegate didFinishLoopInAnimation:animation onSkeleton:self];
-                }
+                delegate->didFinishLoopInAnimationOnSkeleton(animation, this);
             }
-            [animation setCurrentLoop:[animation currentLoop]+1];
+            animation->setCurrentLoop(animation->getCurrentLoop() + 1);
         }
     }
     else{
-        if(time >= [animation totalTime]){
+        if(time >= animation->getTotalTime()){
             
-            switch ([animation playMode]) {
+            switch(animation->getPlayMode())
+            {
                 case GH_SKELETAL_ANIM_PLAY_NORMAL:
                 case GH_SKELETAL_ANIM_PLAY_LOOP:
-                    [animation setCurrentTime:0];
+                {
+                    animation->setCurrentTime(0);
+                }
                     break;
 
                 case GH_SKELETAL_ANIM_PLAY_PINGPONG:
-                    [animation setCurrentTime:[animation totalTime]];
-                    [animation setReversed:YES];
+                {
+                    animation->setCurrentTime(animation->getTotalTime());
+                    animation->setReversed(true);
+                }
                     break;
 
                 default:
                     break;
             }
-            [animation setCurrentLoop:[animation currentLoop]+1];
+            animation->setCurrentLoop(animation->getCurrentLoop()+1);
             if(delegate){
-                if([delegate respondsToSelector:@selector(didFinishLoopInAnimation:onSkeleton:)]){
-                    [delegate didFinishLoopInAnimation:animation onSkeleton:self];
-                }
+                delegate->didFinishLoopInAnimationOnSkeleton(animation, this);
             }
         }
     }
     
-    if([animation numberOfLoops] != 0 && [animation currentLoop] >= [animation numberOfLoops]){
-        [self stopAnimation];
+    if(animation->getNumberOfLoops() != 0 && animation->getCurrentLoop() >= animation->getNumberOfLoops())
+    {
+        this->stopAnimation();
     }
     
+    
+    CCArray* allBones = this->getAllBones();
+
+    
     { //handle positions
-        GHSkeletalAnimationFrame* beginFrame = nil;
-        GHSkeletalAnimationFrame* endFrame = nil;
+        GHSkeletalAnimationFrame* beginFrame = NULL;
+        GHSkeletalAnimationFrame* endFrame = NULL;
         
-        for(GHSkeletalAnimationFrame* frm in [animation bonePositionFrames]){
-                        
-            if([frm time] <= time){
+        
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(animation->getBonePositionFrames(), pObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pObj;
+            
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
             
-            if([frm time] > time){
+            if(frm->getTime() > time){
                 endFrame = frm;
                 break;//exit for
             }
@@ -528,105 +568,109 @@
         
         if(transitionTime)
         {
-            NSArray* positionFrames = [animation bonePositionFrames];
+            CCArray* positionFrames = animation->getBonePositionFrames();
             
-            if([positionFrames count] > 0)
-                beginFrame = [positionFrames objectAtIndex:0];
+            if(positionFrames->count() > 0)
+                beginFrame = (GHSkeletalAnimationFrame*)positionFrames->objectAtIndex(0);
             
             
             float beginTime = 0;
-            float endTime = [transitionTime floatValue];
+            float endTime = transitionTime->getValue();
             
             float framesTimeDistance = endTime - beginTime;
             float timeUnit = (time-beginTime)/framesTimeDistance; //a value between 0 and 1
                         
-            NSMutableDictionary* beginBonesInfo = [beginFrame bonePositions];
+            CCDictionary* beginBonesInfo = beginFrame->getBonePositions();
             
-            if(nil == beginBonesInfo)
+            if(NULL == beginBonesInfo)
                 return;
-            
-            NSArray* allBones = [self allBones];
-            
-            for(GHBone* bone in allBones)
+                        
+            CCObject* pBoneObj = NULL;
+            CCARRAY_FOREACH(allBones, pBoneObj)
             {
-                NSValue* beginValue = [beginBonesInfo objectForKey:[bone name]];
+                GHBone* bone = (GHBone*)pBoneObj;
+
+                GHPoint* beginValue = (GHPoint*)beginBonesInfo->objectForKey(bone->getName());
                 
-                CGPoint beginPosition = [bone previousPosition];
-                CGPoint endPosition = [bone position];
+                CCPoint beginPosition = bone->getPreviousPosition();
+                CCPoint endPosition = bone->getPosition();
                 
                 if(beginValue){
-                    endPosition = [beginValue CGPointValue];
+                    endPosition = beginValue->getPoint();
                 }
                 
                 //lets calculate the position of the bone based on the start - end and unit time
                 float newX = beginPosition.x + (endPosition.x - beginPosition.x)*timeUnit;
                 float newY = beginPosition.y + (endPosition.y - beginPosition.y)*timeUnit;
                 
-                CGPoint newPos = CGPointMake(newX, newY);
-                bone.position = newPos;
-                [self transformSkins];
+                CCPoint newPos = ccp(newX, newY);
+                bone->setPosition(newPos);
+                this->transformSkins();
             }
-            [rootBone updateMovement];
+            rootBone->updateMovement();
         }
         else if(beginFrame && endFrame){
             
-            float beginTime = [beginFrame time];
-            float endTime = [endFrame time];
+            float beginTime = beginFrame->getTime();
+            float endTime   = endFrame->getTime();
 
             float framesTimeDistance = endTime - beginTime;
             float timeUnit = (time-beginTime)/framesTimeDistance; //a value between 0 and 1
 
-            NSMutableDictionary* beginBonesInfo = [beginFrame bonePositions];
-            NSMutableDictionary* endBonesInfo = [endFrame bonePositions];
+            CCDictionary* beginBonesInfo  = beginFrame->getBonePositions();
+            CCDictionary* endBonesInfo    = endFrame->getBonePositions();
 
-            if(nil == beginBonesInfo || endBonesInfo == nil)
+            if(NULL == beginBonesInfo || endBonesInfo == NULL)
                 return;
             
-            NSArray* allBones = [self allBones];
-            
-            for(GHBone* bone in allBones)
-            {                
-                NSValue* beginValue = [beginBonesInfo objectForKey:[bone name]];
-                NSValue* endValue = [endBonesInfo objectForKey:[bone name]];
+            CCObject* pBoneObj = NULL;
+            CCARRAY_FOREACH(allBones, pBoneObj)
+            {
+                GHBone* bone = (GHBone*)pBoneObj;
+                
+                GHPoint* beginValue = (GHPoint*)beginBonesInfo->objectForKey(bone->getName());
+                GHPoint* endValue   = (GHPoint*)endBonesInfo->objectForKey(bone->getName());
                 
                 
-                CGPoint beginPosition = [bone position];
-                CGPoint endPosition = [bone position];
+                CCPoint beginPosition   = bone->getPosition();
+                CCPoint endPosition     = bone->getPosition();
                 
                 if(beginValue){
-                    beginPosition = [beginValue CGPointValue];
+                    beginPosition = beginValue->getPoint();
                 }
                 
                 if(endValue){
-                    endPosition = [endValue CGPointValue];
+                    endPosition = endValue->getPoint();
                 }
                 
                 //lets calculate the position of the bone based on the start - end and unit time
                 
                 float newX = beginPosition.x + (endPosition.x - beginPosition.x)*timeUnit;
                 float newY = beginPosition.y + (endPosition.y - beginPosition.y)*timeUnit;
-                                
-                CGPoint newPos = CGPointMake(newX, newY);
-                bone.position = newPos;
+                
+                CCPoint newPos = ccp(newX, newY);
+                bone->setPosition(newPos);
             }
-            [rootBone updateMovement];
+            rootBone->updateMovement();
         }
         else if(beginFrame)
         {
-            NSMutableDictionary* beginBonesInfo = [beginFrame bonePositions];
-            NSArray* allBones = [self allBones];
+            CCDictionary* beginBonesInfo = beginFrame->getBonePositions();
             
-            for(GHBone* bone in allBones)
+            CCObject* pBoneObj = NULL;
+            CCARRAY_FOREACH(allBones, pBoneObj)
             {
-                NSValue* beginValue = [beginBonesInfo objectForKey:[bone name]];
+                GHBone* bone = (GHBone*)pBoneObj;
 
-                CGPoint beginPosition = [bone position];
+                GHPoint* beginValue = (GHPoint*)beginBonesInfo->objectForKey(bone->getName());
+
+                CCPoint beginPosition = bone->getPosition();
                 if(beginValue){
-                    beginPosition = [beginValue CGPointValue];
+                    beginPosition = beginValue->getPoint();
                 }
-                bone.position = beginPosition;
+                bone->setPosition(beginPosition);
             }
-            [rootBone updateMovement];
+            rootBone->updateMovement();
         }
     }
     
@@ -636,10 +680,13 @@
     
     {//handle sprites z order
         
-        GHSkeletalAnimationFrame* beginFrame = nil;
+        GHSkeletalAnimationFrame* beginFrame = NULL;
         
-        for(GHSkeletalAnimationFrame* frm in [animation spriteZOrderFrames]){
-            if([frm time] <= time){
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(animation->getSpriteZOrderFrames(), pObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pObj;
+            if(frm->getTime() <= time){
                 beginFrame = frm;
             }
         }
@@ -647,24 +694,27 @@
         //we have the last frame with smaller time
         if(beginFrame){
             
-            NSDictionary* zOrderInfo = [beginFrame spritesZOrder];
+            CCDictionary* zOrderInfo = beginFrame->getSpritesZOrder();
             
-            for(GHSprite* sprite in [batchNode_ children])
+            CCObject* pSprObj = NULL;
+            CCARRAY_FOREACH(batchNode_->getChildren(), pSprObj)
             {
-                NSString* sprName = [sprite name];
-                if(sprName){
+                GHSprite* sprite = (GHSprite*)pSprObj;
+                
+                std::string sprName = sprite->getName();
+                if(sprName != ""){
                     
-                    NSNumber* zNum = [zOrderInfo objectForKey:sprName];
+                    CCString* zNum = (CCString*)zOrderInfo->objectForKey(sprName);
                     if(zNum)
                     {
-                        [batchNode_ reorderChild:sprite z:[zNum intValue]];
+                        batchNode_->reorderChild(sprite, zNum->intValue());
                     }
                 }
             }
         }
     }
     
-    
+    /*
 
          
     {//handle skin connections        
@@ -869,8 +919,8 @@
         }
     }
         
-
-    [self transformSkins];
+*/
+    this->transformSkins();
     
     currentTranstionTime += dt;
 }
@@ -878,60 +928,76 @@
 
 
 
--(void)updateSkins{
-    for(GHBoneSkin* skin in skins){
-        [skin setupTransformations];
+void GHSkeleton::updateSkins(){
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(skins, pObj)
+    {
+        GHBoneSkin* skin = (GHBoneSkin*)pObj;
+        skin->setupTransformations();
     }
 }
 
--(void)transformSkins
+void GHSkeleton::transformSkins()
 {
-    for(GHBoneSkin* skin in skins){
-        [skin transform];
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(skins, pObj)
+    {
+        GHBoneSkin* skin = (GHBoneSkin*)pObj;
+        skin->transform();
     }
 }
 
 
-#ifdef GH_DEBUG
+#if GH_DEBUG
 
--(void)initShader
+void GHSkeleton::initShader()
 {
-	shaderProgram_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
-	
-	colorLocation_ = glGetUniformLocation( shaderProgram_->program_, "u_color");
+    CCLog("INIT SHADER");
+	m_pShaderProgram = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
+	colorLocation_ = glGetUniformLocation( m_pShaderProgram->getProgram(), "u_color");
 }
 
--(void)debugDrawBone:(GHBone*)bone
+void GHSkeleton::debugDrawBone(GHBone* bone)
 {
-    if([bone rigid]){
-        [shaderProgram_ setUniformLocation:colorLocation_ withF1:0 f2:0 f3:1 f4:1];
+    if(bone->getRigid()){
+        m_pShaderProgram->setUniformLocationWith4f(colorLocation_, 0, 0, 1, 1);
     }
     else{
-        [shaderProgram_ setUniformLocation:colorLocation_ withF1:0 f2:1 f3:0 f4:1];
+        m_pShaderProgram->setUniformLocationWith4f(colorLocation_, 0, 1, 0, 1);
     }
     
-    for(GHBone* child in [bone children])
+    CCArray* boneChildren = bone->getChildren();
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(boneChildren, pObj)
     {
-        GLfloat	vertices[] = {
-            bone.position.x, bone.position.y,
-            child.position.x, child.position.y
-        };
-        
-        glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-        
-        glDrawArrays(GL_LINES, 0, 2);
-        
-        [self debugDrawBone:child];
+        GHBone* child = (GHBone*)pObj;
+        if(child)
+        {
+            GLfloat	vertices[] = {
+                bone->getPosition().x, bone->getPosition().y,
+                child->getPosition().x, child->getPosition().y
+            };
+            
+            CCLog("1 BONE %f %f, child %f %f", bone->getPosition().x, bone->getPosition().y, child->getPosition().x, child->getPosition().y);
+            CCLog("2 BONE %f %f, child %f %f", vertices[0], vertices[1], vertices[2], vertices[3]);
+            
+            
+            glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+            
+            glDrawArrays(GL_LINES, 0, 2);
+            this->debugDrawBone(child);
+        }
     }
 }
 
--(void) draw{
-    if(!shaderProgram_)return;
+void GHSkeleton::draw(){
+    if(!m_pShaderProgram)return;
     
-    [shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];
-
-    [self debugDrawBone:rootBone];
+    m_pShaderProgram->use();
+    m_pShaderProgram->setUniformsForBuiltins();
+    
+    
+    this->debugDrawBone(rootBone);
     
     CC_INCREMENT_GL_DRAWS(1);
 	CHECK_GL_ERROR_DEBUG();
@@ -939,5 +1005,3 @@
 
 #endif
 
-
-@end

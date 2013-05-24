@@ -24,11 +24,18 @@ class CC_DLL GHPoint : public CCObject
 public:
     float x;
     float y;
-    
-    static GHPoint* createPoint(float x, float y);
-    virtual bool initWithValues(float x, float y);
-    
+
     GHPoint();
+    virtual ~GHPoint();
+    
+    static GHPoint* createWithValues(float x, float y);
+    virtual bool initWithValues(float x, float y);
+
+    static GHPoint* createWithPoint(GHPoint* pt);
+    virtual bool initWithPoint(GHPoint* pt);
+
+    CCPoint getPoint(){return ccp(x, y);}
+    
     GHPoint(float x, float y);
     GHPoint(const GHPoint& other);
     GHPoint(const CCPoint& other);

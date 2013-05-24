@@ -6,132 +6,126 @@
 //
 //
 
-#import "GHSkeletalAnimationCache.h"
-#import "cocos2d.h"
-#import "GHSkeletalAnimation.h"
-
-@interface GHSkeletalAnimationCache ()
-- (void) addSkeletalAnimationWithDictionary:(NSDictionary*)dictionary;
-@end
+#include "GHSkeletalAnimationCache.h"
+#include "GHSkeletalAnimation.h"
 
 
-@implementation GHSkeletalAnimationCache
+#pragma mark CCAnimationCache - Alloc, Init & Dealloc
 
+GHSkeletalAnimationCache* GHSkeletalAnimationCache::s_pSharedAnimationCache = NULL;
 
-#pragma mark GHSkeletalAnimationCache - Alloc, Init & Dealloc
-
-static GHSkeletalAnimationCache *sharedSkeletalAnimationCache_=nil;
-
-+ (GHSkeletalAnimationCache *)sharedSkeletalAnimationCache
+GHSkeletalAnimationCache* GHSkeletalAnimationCache::sharedSkeletalAnimationCache(void)
 {
-	if (!sharedSkeletalAnimationCache_)
-		sharedSkeletalAnimationCache_ = [[GHSkeletalAnimationCache alloc] init];
+    if (! s_pSharedAnimationCache)
+    {
+        s_pSharedAnimationCache = new GHSkeletalAnimationCache();
+        s_pSharedAnimationCache->init();
+    }
     
-	return sharedSkeletalAnimationCache_;
+    return s_pSharedAnimationCache;
 }
 
-+(id)alloc
+void GHSkeletalAnimationCache::purgeSharedSkeletalAnimationCache(void)
 {
-	NSAssert(sharedSkeletalAnimationCache_ == nil, @"Attempted to allocate a second instance of a singleton.");
-	return [super alloc];
+    CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 }
 
-+(void)purgeSharedSkeletalAnimationCache
+bool GHSkeletalAnimationCache::init()
 {
-	[sharedSkeletalAnimationCache_ release];
-	sharedSkeletalAnimationCache_ = nil;
+    return true;
 }
 
--(id) init
+GHSkeletalAnimationCache::GHSkeletalAnimationCache()
 {
-	if( (self=[super init]) ) {
-		skeletalAnimations_ = [[NSMutableDictionary alloc] initWithCapacity: 10];
-		loadedFilenames_ = [[NSMutableSet alloc] initWithCapacity:30];
-	}
-    
-	return self;
+    skeletalAnimations_ = CCDictionary::create();
+    skeletalAnimations_->retain();
+    loadedFilenames_ = CCDictionary::create();
+    loadedFilenames_->retain();
 }
 
-- (NSString*) description
+GHSkeletalAnimationCache::~GHSkeletalAnimationCache()
 {
-	return [NSString stringWithFormat:@"<%@ = %p | num of sprite frames =  %lu>", [self class], self, (unsigned long)[skeletalAnimations_ count]];
+    CCLOGINFO("GameDevHelperAPI: deallocing %p", this);
+    CC_SAFE_RELEASE(skeletalAnimations_);
+    CC_SAFE_RELEASE(loadedFilenames_);
 }
 
--(void) dealloc
+//- (NSString*) description
+//{
+//	return [NSString stringWithFormat:@"<%@ = %p | num of sprite frames =  %lu>", [self class], self, (unsigned long)[skeletalAnimations_ count]];
+//}
+
+void GHSkeletalAnimationCache::addSkeletalAnimationWithFile(const char* plist)
 {
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
-    
-	[skeletalAnimations_ release];
-	[loadedFilenames_ release];
-    
-	[super dealloc];
-}
-
-
--(void) addSkeletalAnimationWithFile:(NSString*)plist{
-
-    NSAssert(plist, @"plist filename should not be nil");
+    CCAssert( plist, "Invalid plist file name");
 	
-	if( ! [loadedFilenames_ member:plist] ) {
+    if(! loadedFilenames_->objectForKey(std::string(plist)))
+    {
+        std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
         
-		NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
-        [self addSkeletalAnimationWithDictionary:dict];
+        CCDictionary* dict = CCDictionary::createWithContentsOfFile(path.c_str());
+        
+        this->addSkeletalAnimationWithDictionary(dict);
 		
-		[loadedFilenames_ addObject:plist];
-	}
+        loadedFilenames_->setObject(CCString::create(plist), plist);
+    }
 	else
 		CCLOGINFO(@"GameDevHelper: GHSkeletalAnimationCache: file already loaded: %@", plist);
-
 }
 
-- (void) addSkeletalAnimationWithDictionary:(NSDictionary*)dictionary{
-    if(nil == dictionary)return;
-    GHSkeletalAnimation* anim = [GHSkeletalAnimation animationWithDictionary:dictionary];
-    [skeletalAnimations_ setObject:anim forKey:anim.name];
-}
-
--(void) removeSkeletalAnimations{
+void GHSkeletalAnimationCache::addSkeletalAnimationWithDictionary(CCDictionary* dictionary)
+{
+    if(NULL == dictionary)return;
     
-    [skeletalAnimations_ removeAllObjects];
-	[loadedFilenames_ removeAllObjects];
+    GHSkeletalAnimation* anim = GHSkeletalAnimation::createWithDictionary(dictionary);
+    skeletalAnimations_->setObject(anim, anim->getName());
 }
 
--(void) removeUnusedSkeletalAnimations{
+void GHSkeletalAnimationCache::removeSkeletalAnimations()
+{
+    skeletalAnimations_->removeAllObjects();
+    loadedFilenames_->removeAllObjects();
+}
+
+void GHSkeletalAnimationCache::removeUnusedSkeletalAnimations()
+{
     
-	NSArray *keys = [skeletalAnimations_ allKeys];
-	for( id key in keys ) {
-		id value = [skeletalAnimations_ objectForKey:key];
-		if( [value retainCount] == 1 ) {
-			CCLOG(@"GameDevHelper: GHSkeletalAnimationCache: removing unused frame: %@", key);
+	CCArray *keys = skeletalAnimations_->allKeys();
+    
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(keys, pObj)
+    {
+        CCString* key = (CCString*)pObj;
+        GHSkeletalAnimation* value = (GHSkeletalAnimation*)skeletalAnimations_->objectForKey(key->getCString());
+        
+        if(value && value->retainCount() == 1){
+            CCLOG("GameDevHelper: GHSkeletalAnimationCache: removing unused frame: %@", key);
             
-//            [loadedFilenames_ removeObject:<#(id)#>
-			[skeletalAnimations_ removeObjectForKey:key];
-		}
-	}
+            skeletalAnimations_->removeObjectForKey(key->getCString());
+        }
+    }
 }
 
--(void) removeSkeletalAnimationWithName:(NSString*)name{
-    
+void GHSkeletalAnimationCache::removeSkeletalAnimationWithName(const char* name)
+{
     // explicit nil handling
 	if( ! name )
 		return;
     
-    [skeletalAnimations_ removeObjectForKey:name];
+    skeletalAnimations_->removeObjectForKey(name);
 	
+
 	// XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-	[loadedFilenames_ removeAllObjects];
+    loadedFilenames_->removeAllObjects();
 }
 
--(GHSkeletalAnimation*) skeletalAnimationWithName:(NSString*)name{
-    
-    GHSkeletalAnimation *anim = [skeletalAnimations_ objectForKey:name];
+GHSkeletalAnimation* GHSkeletalAnimationCache::skeletalAnimationWithName(const char* name)
+{    
+    GHSkeletalAnimation *anim = (GHSkeletalAnimation*)skeletalAnimations_->objectForKey(name);
 	if( ! anim ) {
-			CCLOG(@"GameDevHelper: GHSkeletalAnimationCache: Animation '%@' not found", name);
+			CCLOG("GameDevHelper: GHSkeletalAnimationCache: Animation '%@' not found", name);
 	}
     
 	return anim;
 }
 
-@end

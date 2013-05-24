@@ -115,6 +115,9 @@ private:
     CCArray* neighboursDistances;
     
     CCPoint previousPosition;//used when transitioning
+    
+    friend class GHSkeleton;
+    void updateMovement();
 };
 
 #endif //__GAME_DEV_HELPER_BONE_H__

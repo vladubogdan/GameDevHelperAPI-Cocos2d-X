@@ -35,10 +35,9 @@
 #include "GHAnimationCache.h"
 #include "GHAnimation.h"
 
-//#include "GHSkeleton.h"
-//#include "GHSkeletalAnimationCache.h"
-//#include "GHSkeletalAnimation.h"
-//#include "GHDirector.h"
+#include "GHSkeleton.h"
+#include "GHSkeletalAnimationCache.h"
+#include "GHSkeletalAnimation.h"
 #include "GHDebugDrawLayer.h"
 
 

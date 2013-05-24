@@ -248,3 +248,18 @@ CCPoint GHBone::getPreviousPosition(){
     return previousPosition;
 }
 
+
+void GHBone::updateMovement()
+{
+    if(this->getRigid()){
+        this->setBonePosition(this->getPosition(), NULL);
+    }
+    
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(this->getChildren(), pObj)
+    {
+        GHBone* bone = (GHBone*)pObj;
+        bone->updateMovement();
+    }
+}
+

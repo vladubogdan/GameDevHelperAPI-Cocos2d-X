@@ -69,10 +69,10 @@ GHSkeletalAnimationFrame::~GHSkeletalAnimationFrame(){
     CC_SAFE_RELEASE_NULL(spritesTransform_);    
 }
 
-GHSkeletalAnimationFrame* GHSkeletalAnimationFrame::createFrameWithTime(float tm){
+GHSkeletalAnimationFrame* GHSkeletalAnimationFrame::createWithTime(float tm){
 
     GHSkeletalAnimationFrame *pobNode = new GHSkeletalAnimationFrame();
-	if (pobNode && pobNode->initFrameWithTime(tm))
+	if (pobNode && pobNode->initWithTime(tm))
     {
 	    pobNode->autorelease();
         return pobNode;
@@ -80,10 +80,90 @@ GHSkeletalAnimationFrame* GHSkeletalAnimationFrame::createFrameWithTime(float tm
     CC_SAFE_DELETE(pobNode);
 	return NULL;
 }
-bool GHSkeletalAnimationFrame::initFrameWithTime(float tm){
+bool GHSkeletalAnimationFrame::initWithTime(float tm){
     time_ = tm;
     return true;
 }
+
+
+GHSkeletalAnimationFrame* GHSkeletalAnimationFrame::createWithFrame(GHSkeletalAnimationFrame* frm){
+
+    GHSkeletalAnimationFrame *pobNode = new GHSkeletalAnimationFrame();
+	if (pobNode && pobNode->initWithFrame(frm))
+    {
+	    pobNode->autorelease();
+        return pobNode;
+    }
+    CC_SAFE_DELETE(pobNode);
+	return NULL;
+}
+bool GHSkeletalAnimationFrame::initWithFrame(GHSkeletalAnimationFrame* frm){
+
+    if(!frm)return false;
+    
+    time_ = frm->getTime();
+    
+    
+    {//copy positions
+        CCDictionary* bonePoses = frm->getBonePositions();
+        if(bonePoses){
+            CC_SAFE_RELEASE_NULL(bonePositions_);
+            bonePositions_ = CCDictionary::createWithDictionary(bonePoses);
+            bonePositions_->retain();
+        }
+    }
+    
+    {//copy sprites z order
+        CCDictionary* zOrders = frm->getSpritesZOrder();
+        if(zOrders){
+            CC_SAFE_RELEASE_NULL(spritesZOrder_);
+            spritesZOrder_ = CCDictionary::createWithDictionary(zOrders);
+            spritesZOrder_->retain();
+        }
+    }
+    
+    {//copy skin connections
+        CCDictionary* skinCon = frm->getSkinConnections();
+        if(skinCon){
+            CC_SAFE_RELEASE_NULL(skinConnections_);
+            skinConnections_ = CCDictionary::createWithDictionary(skinCon);
+            skinConnections_->retain();
+        }
+    }
+    
+    {//copy skin sprites
+        CCDictionary* skinSpr = frm->getSkinSprites();
+        if(skinSpr){
+            CC_SAFE_RELEASE_NULL(skinSprites_);
+            skinSprites_ = CCDictionary::createWithDictionary(skinSpr);
+            skinSprites_->retain();
+        }
+    }
+    
+    {//copy sprites visibility
+        CCDictionary* sprVis = frm->getSpritesVisibility();
+        if(sprVis){
+            CC_SAFE_RELEASE_NULL(spritesVisibility_);
+            spritesVisibility_ = CCDictionary::createWithDictionary(sprVis);
+            spritesVisibility_->retain();
+        }
+    }
+    
+    {//copy sprites transform
+        CCDictionary* sprTrans = frm->getSpritesTransform();
+        if(sprTrans)
+        {
+            CC_SAFE_RELEASE_NULL(spritesTransform_);
+            spritesTransform_ = CCDictionary::createWithDictionary(sprTrans);
+            spritesTransform_->retain();
+        }
+    }
+    
+    return true;
+}
+
+
+
 
 void GHSkeletalAnimationFrame::setBonePositionsWithDictionary(CCDictionary* bones){
     
@@ -110,7 +190,7 @@ void GHSkeletalAnimationFrame::setBonePositionsWithDictionary(CCDictionary* bone
             position.x /= CC_CONTENT_SCALE_FACTOR();
             position.y /= CC_CONTENT_SCALE_FACTOR();
             
-            bonePositions_->setObject(GHPoint::createPoint(position.x, position.y),
+            bonePositions_->setObject(GHPoint::createWithValues(position.x, position.y),
                                       std::string(boneName->getCString()));
         }
     }
@@ -253,6 +333,24 @@ reversed_(false),
 paused_(false)
 {
     
+    bonePositionFrames_ = CCArray::create();
+    bonePositionFrames_->retain();
+    
+    spriteZOrderFrames_ = CCArray::create();
+    spriteZOrderFrames_->retain();
+    
+    skinConnectionFrames_ = CCArray::create();
+    skinConnectionFrames_->retain();
+    
+    skinSpriteFrames_ = CCArray::create();
+    skinSpriteFrames_->retain();
+    
+    visibilityFrames_ = CCArray::create();
+    visibilityFrames_->retain();
+    
+    spritesTransformFrames_ = CCArray::create();
+    spritesTransformFrames_->retain();
+    
 }
 GHSkeletalAnimation::~GHSkeletalAnimation(){
     
@@ -280,25 +378,6 @@ GHSkeletalAnimation* GHSkeletalAnimation::createWithDictionary(CCDictionary* dic
 }
 bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
     if(!dict)return false;
-    
-    
-    bonePositionFrames_ = CCArray::create();
-    bonePositionFrames_->retain();
-    
-    spriteZOrderFrames_ = CCArray::create();
-    spriteZOrderFrames_->retain();
-    
-    skinConnectionFrames_ = CCArray::create();
-    skinConnectionFrames_->retain();
-    
-    skinSpriteFrames_ = CCArray::create();
-    skinSpriteFrames_->retain();
-    
-    visibilityFrames_ = CCArray::create();
-    visibilityFrames_->retain();
-    
-    spritesTransformFrames_ = CCArray::create();
-    spritesTransformFrames_->retain();
     
     
     paused_ = false;
@@ -329,7 +408,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setBonePositionsWithDictionary((CCDictionary*)frmInfo->objectForKey("bones"));
             
             bonePositionFrames_->addObject(frm);
@@ -348,7 +427,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setSpritesZOrderWithDictionary((CCDictionary*)frmInfo->objectForKey("sprites"));
             spriteZOrderFrames_->addObject(frm);
         }
@@ -364,7 +443,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setSkinConnectionsWithDictionary((CCDictionary*)frmInfo->objectForKey("connections"));
             skinConnectionFrames_->addObject(frm);
         }
@@ -380,7 +459,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setSkinSpritesWithDictionary((CCDictionary*)frmInfo->objectForKey("skins"));
             skinSpriteFrames_->addObject(frm);
         }
@@ -395,7 +474,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setSpritesVisibilityWithDictionary((CCDictionary*)frmInfo->objectForKey("sprites"));
             visibilityFrames_->addObject(frm);
         }
@@ -411,7 +490,7 @@ bool GHSkeletalAnimation::initWithDictionary(CCDictionary* dict){
             
             float frmTime = frmInfo->valueForKey("time")->floatValue();
             
-            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createFrameWithTime(frmTime);
+            GHSkeletalAnimationFrame* frm = GHSkeletalAnimationFrame::createWithTime(frmTime);
             frm->setSpritesTransformWithDictionary((CCDictionary*)frmInfo->objectForKey("transform"));
             spritesTransformFrames_->addObject(frm);
         }
@@ -537,32 +616,37 @@ GHSkeletalAnimation* GHSkeletalAnimation::createWithAnimation(GHSkeletalAnimatio
 	return NULL;
 }
 
+void GHSkeletalAnimation::copyFramesFrom(CCArray* otherArray, CCArray* toArray)
+{
+    if(otherArray){
+        
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(otherArray, pObj)
+        {
+            GHSkeletalAnimationFrame* frm = (GHSkeletalAnimationFrame*)pObj;
+            if(frm){
+                toArray->addObject(GHSkeletalAnimationFrame::createWithFrame(frm));
+            }
+        }
+    }
+}
+
 bool GHSkeletalAnimation::initWithAnimation(GHSkeletalAnimation* other)
 {
     //WE SHOULD CREATE NEW FRAMES FROM THIS ANIMATIONS FRAMES IN CASE THE USER CHANGES THE TIME
     //OF AN ANIMATION TO NOT CHANGE ON ALL SAME ANIMATIONS
-    if(other->getBonePositionFrames()){
-//        bonePositionFrames_ = [[NSMutableArray alloc] initWithArray:positionFramesArray];
-    }
+
+    this->copyFramesFrom(other->getBonePositionFrames(), bonePositionFrames_);
     
-    if(other->getSpriteZOrderFrames()){
-//        spriteZOrderFrames_ = [[NSMutableArray alloc] initWithArray:zOrderFramesArray];
-    }
-    
-    if(other->getSkinConnectionFrames()){
-//        skinConnectionFrames_ = [[NSMutableArray alloc] initWithArray:skinConnectionsArray];
-    }
-    
-    if(other->getSkinSpriteFrames()){
-//        skinSpriteFrames_ =[[NSMutableArray alloc] initWithArray:skinSpritesArray];
-    }
-    if(other->getVisibilityFrames()){
-//        visibilityFrames_ = [[NSMutableArray alloc] initWithArray:visibilityFramesArray];
-    }
-    if(other->getSpritesTransformFrames()){
-//        spritesTransformFrames_ = [[NSMutableArray alloc] initWithArray:spriteTransformFramesArray];
-    }
-    
+    this->copyFramesFrom(other->getSpriteZOrderFrames(), spriteZOrderFrames_);
+
+    this->copyFramesFrom(other->getSkinConnectionFrames(), skinConnectionFrames_);
+
+    this->copyFramesFrom(other->getSkinSpriteFrames(), skinSpriteFrames_);
+
+    this->copyFramesFrom(other->getVisibilityFrames(), visibilityFrames_);
+   
+    this->copyFramesFrom(other->getSpritesTransformFrames(), spritesTransformFrames_);
     
     totalTime_ = other->getTotalTime();
     name_ = std::string(other->getName());
@@ -572,7 +656,6 @@ bool GHSkeletalAnimation::initWithAnimation(GHSkeletalAnimation* other)
     this->setPlayMode(other->getPlayMode());
     this->setCurrentTime(other->getCurrentTime());
     this->setReversed(other->getReversed());
-
     
     return true;
 }

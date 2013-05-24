@@ -18,9 +18,11 @@ change GH_ENABLE_PHYSICS_INTEGRATION to 0 if you don't want to use physics.
 
 
 /**
- Comment this line if you dont want debug drawing and logs.
+ change GH_DEBUG to 0 if you don't want to use debuging code .
  */
-#define GH_DEBUG
+#ifndef GH_DEBUG
+#define GH_DEBUG 0
+#endif
 
 
 #endif//GAME_DEV_HELPER_API_ghConfig_h

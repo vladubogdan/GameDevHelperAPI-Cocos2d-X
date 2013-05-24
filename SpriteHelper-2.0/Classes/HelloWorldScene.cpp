@@ -9,6 +9,8 @@
 #include "SheetAnimations_GameDevHelperAPI_RandomFrames.h"
 #include "Physics_LoadSpritesWithPhysicalBody.h"
 #include "Physics_CollisionFiltering.h"
+#include "Skeletons_LoadTest.h"
+#include "Skeletons_LoadPoseTest.h"
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -116,13 +118,15 @@ bool HelloWorld::init()
         item->setTag(9);
         itemsArray->addObject(item);
 
-        item = CCMenuItemFont::create("Test 10", this,
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - load skeleton", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
+        item->setTag(10);
 
-        item = CCMenuItemFont::create("Test 11", this,
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - load skeleton pose", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
+        item->setTag(11);
 
         item = CCMenuItemFont::create("Test 12", this,
                                       menu_selector(HelloWorld::menuCallback));
@@ -207,6 +211,13 @@ void HelloWorld::menuCallback(CCObject* sender)
             CCDirector::sharedDirector()->replaceScene(Physics_CollisionFiltering::scene());
             break;
             
+        case 10:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_LoadTest::scene());
+            break;
+            
+        case 11:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_LoadPoseTest::scene());
+            break;
         default:
 
             break;

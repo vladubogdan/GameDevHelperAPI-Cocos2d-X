@@ -5,48 +5,63 @@
 //  Created by Bogdan Vladu on 4/8/13.
 //
 //
+#ifndef __GAME_DEV_HELPER_SKELETAL_ANIM_CACHE_H__
+#define __GAME_DEV_HELPER_SKELETAL_ANIM_CACHE_H__
 
-#import <Foundation/Foundation.h>
 
-@class GHSkeletalAnimation;
+#include "cocos2d.h"
+using namespace cocos2d;
+
+class GHSkeletalAnimation;
 
 /** Singleton that manages the GHSkeletalAnimation objects.
  It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
  
  */
-@interface GHSkeletalAnimationCache : NSObject
+class GHSkeletalAnimationCache : public CCObject
 {
-	NSMutableDictionary *skeletalAnimations_;
-	NSMutableSet		*loadedFilenames_;
-}
+public:
+    
+    GHSkeletalAnimationCache();
+    ~GHSkeletalAnimationCache();
+    /** Returns ths shared instance of the Skeletal Animation cache */
+    static GHSkeletalAnimationCache* sharedSkeletalAnimationCache(void);
+    
+    /** Purges the cache. It releases all the Skeletal Animations and the retained instance.*/
+    static void purgeSharedSkeletalAnimationCache(void);
+    
+    
+    /** Adds a skeleton animation in cache given the file name.*/
+    void  addSkeletalAnimationWithFile(const char* plist);
+    
+    
+    /** Purges the dictionary of loaded skeletal animations.*/
+    void removeSkeletalAnimations();
+    
+    /** Removes unused skeletal animations.
+     * Skeletal Animations that have a retain count of 1 will be deleted.
+     * It is convinient to call this method when starting a new Scene.
+     */
+    void removeUnusedSkeletalAnimations();
+    
+    /** Deletes a skeleton animation from the the cache.*/
+    void removeSkeletalAnimationWithName(const char* name);
+    
+    
+    /** Returns a Skeleton Animation that was previously added.
+     If the name is not found it will return nil.
+     You should retain the returned copy if you are going to use it.
+     */
+    GHSkeletalAnimation* skeletalAnimationWithName(const char* name);
 
-/** Returns ths shared instance of the Skeletal Animation cache */
-+ (GHSkeletalAnimationCache *) sharedSkeletalAnimationCache;
+    bool init(void);
+private:
+	CCDictionary *skeletalAnimations_;
+	CCDictionary *loadedFilenames_;
+    
+    static GHSkeletalAnimationCache* s_pSharedAnimationCache;
+    
+    void addSkeletalAnimationWithDictionary(CCDictionary* dictionary);
+};
 
-/** Purges the cache. It releases all the Skeletal Animations and the retained instance.*/
-+(void)purgeSharedSkeletalAnimationCache;
-
-/** Adds a skeleton animation in cache given the file name.*/
--(void) addSkeletalAnimationWithFile:(NSString*)plist;
-
-
-/** Purges the dictionary of loaded skeletal animations.*/
--(void) removeSkeletalAnimations;
-
-/** Removes unused skeletal animations.
- * Skeletal Animations that have a retain count of 1 will be deleted.
- * It is convinient to call this method when starting a new Scene.
- */
--(void) removeUnusedSkeletalAnimations;
-
-/** Deletes a skeleton animation from the the cache.*/
--(void) removeSkeletalAnimationWithName:(NSString*)name;
-
-
-/** Returns a Skeleton Animation that was previously added.
- If the name is not found it will return nil.
- You should retain the returned copy if you are going to use it.
- */
--(GHSkeletalAnimation*) skeletalAnimationWithName:(NSString*)name;
-
-@end
+#endif //__GAME_DEV_HELPER_SKELETAL_ANIM_CACHE_H__

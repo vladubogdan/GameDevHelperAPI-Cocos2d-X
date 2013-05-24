@@ -6,8 +6,8 @@
 //
 //
 
-#import "GHAnimationCache.h"
-#import "GHAnimation.h"
+#include "GHAnimationCache.h"
+#include "GHAnimation.h"
 
 #pragma mark CCAnimationCache - Alloc, Init & Dealloc
 

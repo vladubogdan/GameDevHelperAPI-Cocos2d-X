@@ -68,9 +68,11 @@ public:
     GHSkeletalAnimationFrame();
     virtual ~GHSkeletalAnimationFrame();
     
-    static GHSkeletalAnimationFrame* createFrameWithTime(float tm);
-    virtual bool initFrameWithTime(float tm);
+    static GHSkeletalAnimationFrame* createWithTime(float tm);
+    virtual bool initWithTime(float tm);
     
+    static GHSkeletalAnimationFrame* createWithFrame(GHSkeletalAnimationFrame* frm);
+    virtual bool initWithFrame(GHSkeletalAnimationFrame* frm);
     
     float getTime(){return time_;}
     void setTime(float val){time_ = val;}
@@ -227,7 +229,8 @@ private:
     
     int goToNextFrameUsingFramesArray(CCArray* array);
     int goToPreviousFrameUsingFramesArray(CCArray* array);
-
+    
+    void copyFramesFrom(CCArray* otherArray, CCArray* toArray);
 };
 
 #endif //__GAME_DEV_HELPER_SKELETAL_ANIMATION_H__
