@@ -48,6 +48,7 @@ std::string Skeletons_LoadPoseTest::initTest()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     glClearColor(1, 1, 1, 1.0f);
+    CCLayer::draw ();
     
     this->executeTestCodeAtPosition(ccp(s.width/2, s.height/2));
     
@@ -67,8 +68,6 @@ void Skeletons_LoadPoseTest::executeTestCodeAtPosition(CCPoint p)
 }
 
 void Skeletons_LoadPoseTest::changePose(){
-    
-    glClearColor(1, 1, 1, 1.0f);
     
     std::vector<std::string> poseNames;
     poseNames.push_back("DefaultPose");

@@ -48,6 +48,7 @@ std::string Skeletons_LoadTest::initTest()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     glClearColor(0.5, 0.5, 0.5, 1.0f);
+    CCLayer::draw ();
     
     this->executeTestCodeAtPosition(ccp(s.width/2, s.height/2));
     

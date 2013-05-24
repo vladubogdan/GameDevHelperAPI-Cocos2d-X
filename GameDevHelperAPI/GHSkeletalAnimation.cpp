@@ -38,13 +38,20 @@ GHSkeletalSkinConnectionInfo* GHSkeletalSkinConnectionInfo::createSkinConnection
 
 bool GHSkeletalSkinConnectionInfo::initSkinConnectionInfoWithBoneName(const char* name)
 {
-    if(!name)return false;
-    
-    boneName = std::string(name);
+    if(name)
+        boneName = std::string(name);
 
     return true;
 }
 
+GHSkeletalSkinConnectionInfo* GHSkeletalSkinConnectionInfo::copyWithZone(CCZone *pZone)
+{
+    CC_UNUSED_PARAM(pZone);
+    GHSkeletalSkinConnectionInfo *pCopy = new GHSkeletalSkinConnectionInfo();
+    
+    pCopy->initSkinConnectionInfoWithBoneName(boneName.c_str());
+    return pCopy;
+}
 
 
 
@@ -232,13 +239,23 @@ void GHSkeletalAnimationFrame::setSkinConnectionsWithDictionary(CCDictionary* co
             CCPoint posOff      = CCPointFromString(connectionInfo->valueForKey("posOff")->getCString());
             posOff.x /= CC_CONTENT_SCALE_FACTOR();
             posOff.y /= CC_CONTENT_SCALE_FACTOR();
+            
+            CCLog("BONE NAME %p", boneName);
 
-            GHSkeletalSkinConnectionInfo* skinInfo = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(boneName->getCString());
-            skinInfo->setAngleOffset(angleOff);
-            skinInfo->setConnectionAngle(connAngle);
-            skinInfo->setPositionOffset(posOff);
-       
-            skinConnections_->setObject(skinInfo, std::string(sprName->getCString()));
+            GHSkeletalSkinConnectionInfo* skinInfo = NULL;
+            if(boneName)
+                skinInfo = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(boneName->getCString());
+            else
+                skinInfo = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(NULL);
+            
+            CCLog("SKIN INFO %p angleoff %f connangle %f posOff %f %f", angleOff, connAngle, posOff.x, posOff.y);
+            if(skinInfo){
+                skinInfo->setAngleOffset(angleOff);
+                skinInfo->setConnectionAngle(connAngle);
+                skinInfo->setPositionOffset(posOff);
+           
+                skinConnections_->setObject(skinInfo, std::string(sprName->getCString()));
+            }
         }
     }
 }
@@ -295,15 +312,18 @@ void GHSkeletalAnimationFrame::setSpritesTransformWithDictionary(CCDictionary* d
             
             GHSkeletalSkinConnectionInfo* transform = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(NULL);
 
+            CCLog("spr transf %p", transform);
             
-            transform->setAngleOffset(angleOff);
-            transform->setConnectionAngle(connAngle);
-            transform->setPositionOffset(posOff);
-            
-            transform->setAngle(angle);
-            transform->setPosition(position);
-            
-            spritesTransform_->setObject(transform, std::string(sprName->getCString()));
+            if(transform){
+                transform->setAngleOffset(angleOff);
+                transform->setConnectionAngle(connAngle);
+                transform->setPositionOffset(posOff);
+                
+                transform->setAngle(angle);
+                transform->setPosition(position);
+                
+                spritesTransform_->setObject(transform, std::string(sprName->getCString()));
+            }
         }
     }
 }

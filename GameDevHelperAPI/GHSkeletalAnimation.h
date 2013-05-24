@@ -44,6 +44,7 @@ public:
     float getAngle(){return angle;}
     void setAngle(float val){angle = val;}
     
+    virtual GHSkeletalSkinConnectionInfo* copyWithZone(CCZone *pZone);
 private:
     //used with skin connections
     std::string boneName;//may be nil;

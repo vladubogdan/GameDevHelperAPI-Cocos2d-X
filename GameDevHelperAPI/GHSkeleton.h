@@ -30,6 +30,9 @@ class GHSkeleton;
 class GHSkeletonDelegate
 {
 public:
+    
+    GHSkeletonDelegate(){}
+    virtual ~GHSkeletonDelegate(){}
     /**
      Receive load pose notification. Returns the skeleton on which the new pose was loaded and the pose name.
      */
@@ -38,22 +41,22 @@ public:
     /**
      Called when a skeleton animation just started. Returns the skeleton on which the animation started and the skeletal animation object.
      */
-    virtual void didStartAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){};
+    virtual void didStartAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){}
 
     /**
      Called when a skeleton transitioned to a new animaton. Returns the skeleton and the skeletal animation object.
      */
-    virtual void didFinishTransitionToAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){};
+    virtual void didFinishTransitionToAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){}
 
     /**
      Called when a skeleton animation just stoped. Returns the skeleton and the skeletal animation object.
      */
-    virtual void didStopAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton);
+    virtual void didStopAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){}
 
     /**
      Called when a skeleton animation just finished a loop. Returns the skeleton and the skeletal animation object.
      */
-    virtual void didFinishLoopInAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton);
+    virtual void didFinishLoopInAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){}
     
 };
 

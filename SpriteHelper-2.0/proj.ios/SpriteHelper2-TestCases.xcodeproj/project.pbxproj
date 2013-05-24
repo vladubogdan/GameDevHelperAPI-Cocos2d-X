@@ -85,6 +85,7 @@
 		6EFB17B6174F478F0011D5A5 /* GHSkeletalAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17B4174F478E0011D5A5 /* GHSkeletalAnimationCache.cpp */; };
 		6EFB17BB174F76990011D5A5 /* Skeletons_LoadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17B9174F76970011D5A5 /* Skeletons_LoadTest.cpp */; };
 		6EFB17BE174F84C50011D5A5 /* Skeletons_LoadPoseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17BC174F84C10011D5A5 /* Skeletons_LoadPoseTest.cpp */; };
+		6EFB17C1174F87F50011D5A5 /* Skeletons_AnimationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB17BF174F87F00011D5A5 /* Skeletons_AnimationTest.cpp */; };
 		782F4619153FEDF0009FC2E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 782F4617153FEDF0009FC2E5 /* Default.png */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -276,6 +277,8 @@
 		6EFB17BA174F76990011D5A5 /* Skeletons_LoadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeletons_LoadTest.h; sourceTree = "<group>"; };
 		6EFB17BC174F84C10011D5A5 /* Skeletons_LoadPoseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skeletons_LoadPoseTest.cpp; sourceTree = "<group>"; };
 		6EFB17BD174F84C30011D5A5 /* Skeletons_LoadPoseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeletons_LoadPoseTest.h; sourceTree = "<group>"; };
+		6EFB17BF174F87F00011D5A5 /* Skeletons_AnimationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skeletons_AnimationTest.cpp; sourceTree = "<group>"; };
+		6EFB17C0174F87F20011D5A5 /* Skeletons_AnimationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeletons_AnimationTest.h; sourceTree = "<group>"; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -610,6 +613,8 @@
 				6EFB17BA174F76990011D5A5 /* Skeletons_LoadTest.h */,
 				6EFB17BC174F84C10011D5A5 /* Skeletons_LoadPoseTest.cpp */,
 				6EFB17BD174F84C30011D5A5 /* Skeletons_LoadPoseTest.h */,
+				6EFB17BF174F87F00011D5A5 /* Skeletons_AnimationTest.cpp */,
+				6EFB17C0174F87F20011D5A5 /* Skeletons_AnimationTest.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -791,6 +796,7 @@
 				6EFB17B6174F478F0011D5A5 /* GHSkeletalAnimationCache.cpp in Sources */,
 				6EFB17BB174F76990011D5A5 /* Skeletons_LoadTest.cpp in Sources */,
 				6EFB17BE174F84C50011D5A5 /* Skeletons_LoadPoseTest.cpp in Sources */,
+				6EFB17C1174F87F50011D5A5 /* Skeletons_AnimationTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

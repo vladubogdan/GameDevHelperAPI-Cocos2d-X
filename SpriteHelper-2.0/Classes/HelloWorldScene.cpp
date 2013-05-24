@@ -11,6 +11,7 @@
 #include "Physics_CollisionFiltering.h"
 #include "Skeletons_LoadTest.h"
 #include "Skeletons_LoadPoseTest.h"
+#include "Skeletons_AnimationTest.h"
 using namespace cocos2d;
 
 HelloWorld::~HelloWorld()
@@ -128,9 +129,10 @@ bool HelloWorld::init()
         itemsArray->addObject(item);
         item->setTag(11);
 
-        item = CCMenuItemFont::create("Test 12", this,
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - skeletal animation test", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
+        item->setTag(12);
 
         item = CCMenuItemFont::create("Test 13", this,
                                       menu_selector(HelloWorld::menuCallback));
@@ -217,6 +219,10 @@ void HelloWorld::menuCallback(CCObject* sender)
             
         case 11:
             CCDirector::sharedDirector()->replaceScene(Skeletons_LoadPoseTest::scene());
+            break;
+            
+        case 12:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_AnimationTest::scene());
             break;
         default:
 
