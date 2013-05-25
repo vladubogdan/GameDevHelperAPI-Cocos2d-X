@@ -38,7 +38,7 @@ iOS<br>
 Mac OS<br>
 <b>SpriteHelper-2.0/proj.mac/SpriteHelper2-TestCases.xcodeproj</b> in Xcode and run.
 <br>
-While the code is compatible with all other system projects (android, blackberry,...) - the projects have not been updated.
+While the code is compatible with all other systems (android, blackberry,...) - the projects have not been updated.
 <br>
 <br>
 Test who's names starts with:<br>
@@ -50,5 +50,5 @@ Test who's names starts with:<br>
 <br>
 If you need help with the project, please <a href="http://www.gamedevhelper.com/contact/" target="_blank">contact me</a>.
 <br><br>
-I wish you a great experience using this product. I work hard to make my products as good as they can possibly be. I really hope you enjoy using them!
+I wish you a great experience using this product.<br>I work hard to make my products as good as they can possibly be. I really hope you enjoy using them!
 
