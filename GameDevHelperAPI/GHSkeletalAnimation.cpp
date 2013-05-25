@@ -252,7 +252,6 @@ void GHSkeletalAnimationFrame::setSkinConnectionsWithDictionary(CCDictionary* co
             else
                 skinInfo = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(NULL);
             
-            CCLog("SKIN INFO %p angleoff %f connangle %f posOff %f %f", angleOff, connAngle, posOff.x, posOff.y);
             if(skinInfo){
                 skinInfo->setAngleOffset(angleOff);
                 skinInfo->setConnectionAngle(connAngle);
@@ -316,8 +315,6 @@ void GHSkeletalAnimationFrame::setSpritesTransformWithDictionary(CCDictionary* d
             
             GHSkeletalSkinConnectionInfo* transform = GHSkeletalSkinConnectionInfo::createSkinConnectionInfoWithBoneName(NULL);
 
-            CCLog("spr transf %p", transform);
-            
             if(transform){
                 transform->setAngleOffset(angleOff);
                 transform->setConnectionAngle(connAngle);

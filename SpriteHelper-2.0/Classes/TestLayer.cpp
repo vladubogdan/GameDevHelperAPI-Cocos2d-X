@@ -51,9 +51,7 @@ bool TestLayer::init()
 		//////////////////////////////////////////////////////////////////////////
 		// super init first
 		//////////////////////////////////////////////////////////////////////////
-        
-		CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(0,0,0,255) ) );
-        
+                
 		//////////////////////////////////////////////////////////////////////////
 		// add your codes below...
 		//////////////////////////////////////////////////////////////////////////
@@ -74,6 +72,21 @@ bool TestLayer::init()
         
         std::string message = this->initTest();
         
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
+        
+        float fontSize = 14;
+        if(s.height > 1024)
+        {
+            fontSize = 34;
+        }
+
+        
+        CCLabelTTF* label =  CCLabelTTF::create(message.c_str(), "Arial", fontSize);
+        
+        CCSize labelSize = label->getContentSize();
+        
+        label->setPosition(ccp(s.width/2, labelSize.height));
+        this->addChild(label, -2);
         
 		bRet = true;
 	} while (0);

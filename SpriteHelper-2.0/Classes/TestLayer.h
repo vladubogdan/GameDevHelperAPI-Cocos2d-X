@@ -12,7 +12,7 @@
 
 #include "cocos2d.h"
 
-class TestLayer : public cocos2d::CCLayerColor
+class TestLayer : public cocos2d::CCLayer
 {
 public:
 	TestLayer();

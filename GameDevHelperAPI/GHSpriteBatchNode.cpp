@@ -6,12 +6,14 @@
 //
 //
 
-#import "GHSpriteBatchNode.h"
-#import "GHSprite.h"
-@implementation GHSpriteBatchNode
+#include "GHSpriteBatchNode.h"
+#include "GHSprite.h"
+
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
 
 
 #endif//GH_ENABLE_PHYSICS_INTEGRATION
-@end
+
+
+

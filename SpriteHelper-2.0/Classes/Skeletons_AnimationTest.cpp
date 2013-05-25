@@ -47,9 +47,7 @@ std::string Skeletons_AnimationTest::initTest()
     skeleton = NULL;
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    glClearColor(1, 1, 1, 1.0f);
-    CCLayer::draw ();
-    
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames();
     
     GHSkeletalAnimationCache* cache = GHSkeletalAnimationCache::sharedSkeletalAnimationCache();
     cache->addSkeletalAnimationWithFile("skeletons/animations/BallPlay.plist");
@@ -67,7 +65,7 @@ std::string Skeletons_AnimationTest::initTest()
     
     this->executeTestCodeAtPosition(ccp(s.width/2, s.height/2));
     
-    return "Tap screen to create sprites";
+    return "Demonstrate skeletal animations.\nTap to change animation.\nWatch console for notifications.";
 }
 
 void Skeletons_AnimationTest::executeTestCodeAtPosition(CCPoint p)
@@ -110,3 +108,19 @@ void Skeletons_AnimationTest::changeAnimation(){
         skeleton->playAnimationWithName(finalAnimName.c_str());
     }
 }
+
+
+void Skeletons_AnimationTest::didStartAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){
+    CCLog("DID START ANIMATION NAMED %s ON SKELETON %p", animation->getName().c_str(), skeleton);
+}
+
+void Skeletons_AnimationTest::didStopAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){
+    
+    CCLog("DID STOP ANIMATION NAMED %s ON SKELETON %p", animation->getName().c_str(), skeleton);
+}
+
+void Skeletons_AnimationTest::didFinishLoopInAnimationOnSkeleton(GHSkeletalAnimation* animation, GHSkeleton* skeleton){
+    
+    CCLog("DID FINISH LOOP IN ANIMATION NAMED %s ON SKELETON %p", animation->getName().c_str(), skeleton);
+}
+

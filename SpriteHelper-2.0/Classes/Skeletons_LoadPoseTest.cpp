@@ -47,12 +47,11 @@ std::string Skeletons_LoadPoseTest::initTest()
     skeleton = NULL;
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    glClearColor(1, 1, 1, 1.0f);
-    CCLayer::draw ();
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames();
     
     this->executeTestCodeAtPosition(ccp(s.width/2, s.height/2));
     
-    return "Tap screen to create sprites";
+    return "Demonstrate loading skeleton poses.\nClick for next random pose...";
 }
 
 void Skeletons_LoadPoseTest::executeTestCodeAtPosition(CCPoint p)

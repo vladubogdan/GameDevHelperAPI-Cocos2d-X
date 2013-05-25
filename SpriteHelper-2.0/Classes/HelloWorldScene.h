@@ -3,7 +3,10 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::CCLayerColor
+
+using namespace cocos2d;
+
+class HelloWorld : public cocos2d::CCLayer
 {
 public:
 	HelloWorld();
@@ -18,11 +21,13 @@ public:
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(HelloWorld);
-
+    
     void ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 
 
     void menuCallback(CCObject* sender);
+    
+    float menuHeight;
 protected:
     
 

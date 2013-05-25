@@ -6,9 +6,18 @@
 //
 //
 
-#import "CCSpriteBatchNode.h"
-#import "ghConfig.h"
+#ifndef __GAME_DEV_HELPER_SPRITE_BATCH_NODE_H__
+#define __GAME_DEV_HELPER_SPRITE_BATCH_NODE_H__
 
-@interface GHSpriteBatchNode : CCSpriteBatchNode
+#include "cocos2d.h"
+using namespace cocos2d;
 
-@end
+#include "ghConfig.h"
+
+class GHSpriteBatchNode : public CCSpriteBatchNode
+{
+public:
+    
+};
+
+#endif //__GAME_DEV_HELPER_SPRITE_BATCH_NODE_H__

@@ -12,7 +12,9 @@
 #include "Skeletons_LoadTest.h"
 #include "Skeletons_LoadPoseTest.h"
 #include "Skeletons_AnimationTest.h"
+#include "Skeletons_AnimateAndMoveTest.h"
 using namespace cocos2d;
+
 
 HelloWorld::~HelloWorld()
 {
@@ -57,7 +59,6 @@ bool HelloWorld::init()
 		// super init first
 		//////////////////////////////////////////////////////////////////////////
 
-		CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(0,0,0,255) ) );
 
 		//////////////////////////////////////////////////////////////////////////
 		// add your codes below...
@@ -66,42 +67,57 @@ bool HelloWorld::init()
         
         CCArray* itemsArray = CCArray::create();
         
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
+        CCMenuItemFont::setFontSize(14);
+
+        if(s.height > 1024)
+        {
+            CCMenuItemFont::setFontSize(34);
+        }
+        
+        std::string emptyMenu = "************************************************************************";
 
 		CCMenuItemFont* item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PNG", this,
                                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(1);
-        item->setFontSize(12);
+
         itemsArray->addObject(item);
         
         item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PVR", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(2);
-        item->setFontSize(12);
+
         itemsArray->addObject(item);
 
         item = CCMenuItemFont::create("Sprites - cocos2d-x - Load from PVR.CCZ", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(3);
-        item->setFontSize(12);
+        
         itemsArray->addObject(item);
+        
+        item = CCMenuItemFont::create(emptyMenu.c_str(), this,
+                                      menu_selector(HelloWorld::menuCallback));
+        item->setTag(-1);
+        itemsArray->addObject(item);
+
 
         item = CCMenuItemFont::create("Animations - Cocos2d-x -> Load Animation from plist", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(4);
-        item->setFontSize(12);
 
         itemsArray->addObject(item);
 
         item = CCMenuItemFont::create("Animations - GameDevHelperAPI - Load Animation from plist & notifications", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(5);
-        item->setFontSize(12);
+    
 
         itemsArray->addObject(item);
 
         item = CCMenuItemFont::create("Animations - GameDevHelperAPI - random frames", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(6);
+
         itemsArray->addObject(item);
 
         item = CCMenuItemFont::create("Animations - GameDevHelperAPI - random repeat time", this,
@@ -109,59 +125,60 @@ bool HelloWorld::init()
         item->setTag(7);
         itemsArray->addObject(item);
 
+        
+        item = CCMenuItemFont::create(emptyMenu.c_str(), this,
+                                      menu_selector(HelloWorld::menuCallback));
+        item->setTag(-1);
+        itemsArray->addObject(item);
+
+        
+        
         item = CCMenuItemFont::create("Physics - GameDevHelperAPI - load sprites with physical body", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(8);
         itemsArray->addObject(item);
-
+        
         item = CCMenuItemFont::create("Physics - GameDevHelperAPI - physics collision filtering", this,
                                       menu_selector(HelloWorld::menuCallback));
         item->setTag(9);
         itemsArray->addObject(item);
-
+        
+        item = CCMenuItemFont::create(emptyMenu.c_str(), this,
+                                      menu_selector(HelloWorld::menuCallback));
+        item->setTag(-1);
+        itemsArray->addObject(item);
+        
         item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - load skeleton", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
         item->setTag(10);
-
+        
         item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - load skeleton pose", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
         item->setTag(11);
-
+        
         item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - skeletal animation test", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
         item->setTag(12);
 
-        item = CCMenuItemFont::create("Test 13", this,
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - skeletal animate and move test", this,
                                       menu_selector(HelloWorld::menuCallback));
         itemsArray->addObject(item);
+        item->setTag(13);
 
-        item = CCMenuItemFont::create("Test 14", this,
-                                      menu_selector(HelloWorld::menuCallback));
-        itemsArray->addObject(item);
-
-        item = CCMenuItemFont::create("Test 15", this,
-                                      menu_selector(HelloWorld::menuCallback));
-        itemsArray->addObject(item);
-
-        item = CCMenuItemFont::create("Test 16", this,
-                                      menu_selector(HelloWorld::menuCallback));
-        itemsArray->addObject(item);
-
-        CCSize s = CCDirector::sharedDirector()->getWinSizeInPixels();
         
+        
+        
+        CCSize size = item->getContentSize();
+        menuHeight = itemsArray->count()* (size.height+5);
+                
         CCMenu* menu = CCMenu::createWithArray(itemsArray);
         menu->alignItemsVertically();
         menu->setTag(MENU_TAG);
         this->addChild(menu);
         
-    
-        if(s.height <= menu->getContentSize().height)
-        {
-            menu->setPosition(CCPoint(menu->getPosition().x,  s.height - menu->getContentSize().height));
-        }
                 
 		bRet = true;
 	} while (0);
@@ -224,6 +241,13 @@ void HelloWorld::menuCallback(CCObject* sender)
         case 12:
             CCDirector::sharedDirector()->replaceScene(Skeletons_AnimationTest::scene());
             break;
+            
+        case 13:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_AnimateAndMoveTest::scene());
+            break;
+        
+            
+            
         default:
 
             break;
@@ -236,26 +260,28 @@ void HelloWorld::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCTouch* touch = (CCTouch*)( pTouches->anyObject() );
 	CCPoint delta = touch->getDelta();
-    
+
     CCMenu* menu = (CCMenu*)this->getChildByTag(MENU_TAG);
-    
+
     if(menu){
         CCPoint menuPosition = menu->getPosition();
 
         CCSize s = CCDirector::sharedDirector()->getWinSizeInPixels();
         
-        if(s.height <= menu->getContentSize().height)
+        CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
+      
+        if(menuHeight > s.height)
         {
-            CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
+            if(newPos.y < s.height - menuHeight/2)
+                newPos.y = s.height - menuHeight/2;
             
-            if(newPos.y < 0)
-                newPos.y = 0;
-
-            if(newPos.y > s.height)
-                newPos.y = s.height;
+            if(newPos.y > menuHeight/2)
+                newPos.y = menuHeight/2;
 
             menu->setPosition(newPos);
         }
-    }
-    
+    }    
 }
+
+
+

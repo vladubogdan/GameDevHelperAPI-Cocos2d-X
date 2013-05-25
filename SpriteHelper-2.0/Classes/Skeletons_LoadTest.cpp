@@ -47,13 +47,13 @@ std::string Skeletons_LoadTest::initTest()
     skeleton = NULL;
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
-    glClearColor(0.5, 0.5, 0.5, 1.0f);
     CCLayer::draw ();
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames();
     
     this->executeTestCodeAtPosition(ccp(s.width/2, s.height/2));
     
     
-    return "Tap screen to create sprites";
+    return "Demonstrate loading a skeleton.\nTouch and drag to move the left hand.";
 }
 
 void Skeletons_LoadTest::executeTestCodeAtPosition(CCPoint p)
