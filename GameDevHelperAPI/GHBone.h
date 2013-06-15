@@ -49,7 +49,6 @@ public:
      Get the rigid state of this bone.
      */
     inline bool getRigid(){return m_rigid;}
-
     
     /**
      Returns an array which includes self and all children bones.

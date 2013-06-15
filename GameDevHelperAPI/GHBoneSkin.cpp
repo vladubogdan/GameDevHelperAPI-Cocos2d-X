@@ -87,13 +87,16 @@ void GHBoneSkin::transform()
 {
     if(sprite == NULL || bone == NULL)return;
     
+    
     float degrees = bone->degrees();
     
-    CCPoint posOffset = positionOffset;
     
+    CCPoint posOffset = positionOffset;
+
+
     CCPoint bonePos = ccp(((GHBone*)bone->getParent())->getPosition().x,
                           ((GHBone*)bone->getParent())->getPosition().y);
-    
+
     
     CCAffineTransform transformOffset = CCAffineTransformTranslate(CCAffineTransformMakeIdentity(), bonePos.x, bonePos.y);
    
@@ -111,20 +114,21 @@ void GHBoneSkin::transform()
                                                            CC_DEGREES_TO_RADIANS(degrees - angleOffset - connectionAngle));
     
     posOffset = CCPointApplyAffineTransform(posOffset, transform3);
-    
+
+
     origin = CCPointApplyAffineTransform(origin, transform);
     upward = CCPointApplyAffineTransform(upward, transform);
     
+    
     origin = CCPointApplyAffineTransform(origin, transformOffset);
     upward = CCPointApplyAffineTransform(upward, transformOffset);
-    
+
     
     //now that we have the 2 points - lets calculate the angle
     float newAngle = (atan2(upward.y - origin.y,
                             upward.x - origin.x)*180.0)/M_PI + 90.0;
     
-    
     sprite->setPosition(ccp(origin.x + posOffset.x, origin.y - posOffset.y));
-    sprite->setRotation(newAngle);    
+    sprite->setRotation(newAngle);
 }
 

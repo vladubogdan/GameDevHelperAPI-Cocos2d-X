@@ -3293,6 +3293,8 @@
 	</dict>
 	<key>sheet</key>
 	<string>Officer_Officer.png</string>
+	<key>sheetAtlas</key>
+	<string>Officer_Officer.plist</string>
 	<key>sprites</key>
 	<array>
 		<dict>

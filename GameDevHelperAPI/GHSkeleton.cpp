@@ -358,6 +358,8 @@ void GHSkeleton::setPoseWithName(const char* poseName)
         newPos.x /= CC_CONTENT_SCALE_FACTOR();
         newPos.y /= CC_CONTENT_SCALE_FACTOR();
         bone->setPosition(newPos);
+        
+//        CCLog("BONE %s setPos %f %f", bone->getName().c_str(), newPos.x, newPos.y);
     }
     
     this->transformSkins();
@@ -682,6 +684,9 @@ void GHSkeleton::update(float dt)
         
         GHSkeletalAnimationFrame* beginFrame = NULL;
         
+        //for loop in reverse and break when you find the first frame
+        //TODO optimize code here
+        
         CCObject* pObj = NULL;
         CCARRAY_FOREACH(animation->getSpriteZOrderFrames(), pObj)
         {
@@ -977,7 +982,6 @@ void GHSkeleton::transformSkins()
 
 void GHSkeleton::initShader()
 {
-    CCLog("INIT SHADER");
 	m_pShaderProgram = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_Position_uColor);
 	colorLocation_ = glGetUniformLocation( m_pShaderProgram->getProgram(), "u_color");
 }
@@ -1002,10 +1006,7 @@ void GHSkeleton::debugDrawBone(GHBone* bone)
                 bone->getPosition().x, bone->getPosition().y,
                 child->getPosition().x, child->getPosition().y
             };
-            
-            CCLog("1 BONE %f %f, child %f %f", bone->getPosition().x, bone->getPosition().y, child->getPosition().x, child->getPosition().y);
-            CCLog("2 BONE %f %f, child %f %f", vertices[0], vertices[1], vertices[2], vertices[3]);
-            
+                        
             
             glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
             

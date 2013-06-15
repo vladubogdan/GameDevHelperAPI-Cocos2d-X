@@ -69,12 +69,12 @@ void Skeletons_LoadPoseTest::executeTestCodeAtPosition(CCPoint p)
 void Skeletons_LoadPoseTest::changePose(){
     
     std::vector<std::string> poseNames;
-    poseNames.push_back("DefaultPose");
-    poseNames.push_back("BowPose");
-    poseNames.push_back("DeathPose");
+//    poseNames.push_back("DefaultPose");
+//    poseNames.push_back("BowPose");
+//    poseNames.push_back("DeathPose");
     poseNames.push_back("HatWave");
-    poseNames.push_back("IdlePose");
-    poseNames.push_back("PushPose");
+//    poseNames.push_back("IdlePose");
+//    poseNames.push_back("PushPose");
     poseNames.push_back("ShootPose");
     
     int poseNameIdx = arc4random() % poseNames.size();

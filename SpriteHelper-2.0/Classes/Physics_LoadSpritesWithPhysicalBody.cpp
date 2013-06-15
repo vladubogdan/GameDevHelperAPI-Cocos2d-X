@@ -99,9 +99,12 @@ void Physics_LoadSpritesWithPhysicalBody::executeTestCodeAtPosition(CCPoint p)
     //in case you have multiple worlds just set the coresponding world before creating the sprites
     //CAREFULL - when deleting the box2d world you should also pass NULL to this method
     GHDirector::sharedDirector()->setPhysicalWorld(world);
+
+    CCLog("PTM IS %d", PTM_RATIO );
     
     //set your custom PTM_RATIO
     GHDirector::sharedDirector()->setPointToMeterRatio(PTM_RATIO);
+
 
     
     

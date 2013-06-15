@@ -140,7 +140,7 @@ void GHBone::addChild(GHBone* child)
 }
 
 CCArray* GHBone::getAllBones(){
-    
+
     CCArray* array = CCArray::create();
     
     array->addObject(this);

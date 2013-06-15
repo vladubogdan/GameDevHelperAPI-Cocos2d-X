@@ -12,8 +12,10 @@
 #include "ghConfig.h"
 #include "cocos2d.h"
 
-class GHSprite;
+//class GHSprite;
 class GHBone;
+
+#include "GHSprite.h"
 
 using namespace cocos2d;
 
@@ -54,7 +56,7 @@ public:
     /**
      Set the position offset that is used when transforming a sprite based on bone movement.
      */
-    inline void setPositionOffset(const CCPoint& val){positionOffset = val;}
+    inline void setPositionOffset(const CCPoint& val){positionOffset = val; }
 
     /**
      Get the angle offset that is used when transforming a sprite based on bone movement.
@@ -72,7 +74,7 @@ public:
     /**
      Set the original angle at which the sprite was connected to the bone.
      */
-    inline void setConnectionAngle(const float& val){connectionAngle = val;}
+    inline void setConnectionAngle(const float& val){connectionAngle = val; }
 
     /**
      Get the name of this skin connection.
