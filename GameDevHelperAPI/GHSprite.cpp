@@ -322,9 +322,9 @@ void GHSprite::createBody(){
             
             circle.m_radius = GH_VALUE_TO_METERS(circleRadius)/2.0f;
 
-//            circle.m_radius /= CC_CONTENT_SCALE_FACTOR();
-//            offset.x /= CC_CONTENT_SCALE_FACTOR();
-//            offset.y /= CC_CONTENT_SCALE_FACTOR();
+            circle.m_radius /= CC_CONTENT_SCALE_FACTOR();
+            offset.x /= CC_CONTENT_SCALE_FACTOR();
+            offset.y /= CC_CONTENT_SCALE_FACTOR();
             
             circle.m_p = GH_POINT_TO_METERS(offset);
             
@@ -365,8 +365,8 @@ void GHSprite::createBody(){
                     CCString* pointStr = (CCString*)fixPoints->objectAtIndex(j);
                     CCPoint point = CCPointFromString(pointStr->getCString());
 
-//                    point.x /= CC_CONTENT_SCALE_FACTOR();
-//                    point.y /= CC_CONTENT_SCALE_FACTOR();
+                    point.x /= CC_CONTENT_SCALE_FACTOR();
+                    point.y /= CC_CONTENT_SCALE_FACTOR();
                     
                     //flip y for cocos2d coordinate system
                     point.y =  this->getTextureRect().size.height - point.y;

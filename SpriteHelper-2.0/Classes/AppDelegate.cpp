@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         res.push_back("hd");
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
-        CCDirector::sharedDirector()->setContentScaleFactor(1.0f);//why does cocos2d resize the sprites and make them really small with content scaling 2??? is it a bug in cocos2d-x?
+        CCDirector::sharedDirector()->setContentScaleFactor(2.0f);//why does cocos2d resize the sprites and make them really small with content scaling 2??? is it a bug in cocos2d-x?
     }
     else if(scrWidth == 1024 || scrHeight == 1024){ //ipad mini and old ipads
         
@@ -53,6 +53,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
     }
+    
+    CCSize designSize = CCSizeMake(480, 320);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     
     // turn on display FPS

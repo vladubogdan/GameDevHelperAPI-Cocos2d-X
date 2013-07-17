@@ -68,7 +68,10 @@ bool TestLayer::init()
         menu->alignItemsVertically();
         this->addChild(menu);
         
-        menu->setPosition(item->getContentSize().width, CCDirector::sharedDirector()->getWinSize().height - item->getContentSize().height/2);
+//        menu->setPosition(item->getContentSize().width, CCDirector::sharedDirector()->getWinSize().height - item->getContentSize().height/2);
+
+        menu->setPosition(20, 280);
+
         
         std::string message = this->initTest();
         
