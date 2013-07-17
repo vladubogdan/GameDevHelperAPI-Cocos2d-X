@@ -266,7 +266,7 @@ void HelloWorld::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     if(menu){
         CCPoint menuPosition = menu->getPosition();
 
-        CCSize s = CCDirector::sharedDirector()->getWinSizeInPixels();
+        CCSize s = CCDirector::sharedDirector()->getWinSize();
         
         CCPoint newPos = CCPoint(menuPosition.x, menuPosition.y + delta.y);
       

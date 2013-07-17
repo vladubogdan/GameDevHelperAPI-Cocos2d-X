@@ -69,8 +69,11 @@ bool TestLayer::init()
         this->addChild(menu);
         
 //        menu->setPosition(item->getContentSize().width, CCDirector::sharedDirector()->getWinSize().height - item->getContentSize().height/2);
+        
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        
 
-        menu->setPosition(20, 280);
+        menu->setPosition(20, winSize.height - 50);
 
         
         std::string message = this->initTest();

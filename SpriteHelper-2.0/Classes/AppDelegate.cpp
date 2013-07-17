@@ -26,6 +26,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     float scrHeight= CCEGLView::sharedOpenGLView()->getFrameSize().height;
     
     std::vector<std::string> res;
+
+    CCSize designSize = CCSizeMake(480, 320);
     
     if(scrWidth == 480 || scrHeight == 480){//very old iphones
         
@@ -42,6 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     else if(scrWidth == 1024 || scrHeight == 1024){ //ipad mini and old ipads
         
+        designSize = CCSizeMake(1024, 768);
         res.push_back("ipad");
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
@@ -49,12 +52,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     else if(scrWidth == 2048 || scrHeight == 2048){ //ipad retina and mac platform
         
         res.push_back("ipadhd");
-        
+        designSize = CCSizeMake(1024, 768);
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
-        CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
+        CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
     }
     
-    CCSize designSize = CCSizeMake(480, 320);
+
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
     
     
