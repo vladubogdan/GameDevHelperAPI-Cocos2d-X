@@ -456,7 +456,7 @@ void GHSkeleton::update(float dt)
     {
         if(transitionTime->getValue() < currentTranstionTime)
         {
-            CC_SAFE_RELEASE(transitionTime);
+            CC_SAFE_RELEASE_NULL(transitionTime);
 
             animation->setCurrentTime(dt);
             animation->setCurrentLoop(0);

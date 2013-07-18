@@ -14,6 +14,7 @@
 		6E383B2E174CBA4E00CF095C /* SpriteHelper2-TestCases-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E383B2D174CBA4E00CF095C /* SpriteHelper2-TestCases-Info.plist */; };
 		6E383B35174CC4D600CF095C /* Sprites_LoadSpriteFromPNGTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E383B33174CC4D600CF095C /* Sprites_LoadSpriteFromPNGTest.cpp */; };
 		6E8FA38C175084EB00664E10 /* Skeletons_AnimateAndMoveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E8FA38A175084EA00664E10 /* Skeletons_AnimateAndMoveTest.cpp */; };
+		6EA3D47D1797B2AE006A7FA3 /* Skeletons_TransitionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EA3D47B1797B2AE006A7FA3 /* Skeletons_TransitionTest.cpp */; };
 		6EFB1685174CED1C0011D5A5 /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB1683174CED1C0011D5A5 /* TestLayer.cpp */; };
 		6EFB1688174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB1686174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp */; };
 		6EFB16C9174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB16C7174CF4BE0011D5A5 /* Sprites_LoadSpriteFromPVRCCZTest.cpp */; };
@@ -137,6 +138,8 @@
 		6E383B34174CC4D600CF095C /* Sprites_LoadSpriteFromPNGTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprites_LoadSpriteFromPNGTest.h; sourceTree = "<group>"; };
 		6E8FA38A175084EA00664E10 /* Skeletons_AnimateAndMoveTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skeletons_AnimateAndMoveTest.cpp; sourceTree = "<group>"; };
 		6E8FA38B175084EA00664E10 /* Skeletons_AnimateAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeletons_AnimateAndMoveTest.h; sourceTree = "<group>"; };
+		6EA3D47B1797B2AE006A7FA3 /* Skeletons_TransitionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skeletons_TransitionTest.cpp; sourceTree = "<group>"; };
+		6EA3D47C1797B2AE006A7FA3 /* Skeletons_TransitionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeletons_TransitionTest.h; sourceTree = "<group>"; };
 		6EFB1683174CED1C0011D5A5 /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		6EFB1684174CED1C0011D5A5 /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
 		6EFB1686174CF0D40011D5A5 /* Sprites_LoadSpriteFromPVRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprites_LoadSpriteFromPVRTest.cpp; sourceTree = "<group>"; };
@@ -620,6 +623,8 @@
 				6EFB17C0174F87F20011D5A5 /* Skeletons_AnimationTest.h */,
 				6E8FA38A175084EA00664E10 /* Skeletons_AnimateAndMoveTest.cpp */,
 				6E8FA38B175084EA00664E10 /* Skeletons_AnimateAndMoveTest.h */,
+				6EA3D47B1797B2AE006A7FA3 /* Skeletons_TransitionTest.cpp */,
+				6EA3D47C1797B2AE006A7FA3 /* Skeletons_TransitionTest.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -803,6 +808,7 @@
 				6EFB17BE174F84C50011D5A5 /* Skeletons_LoadPoseTest.cpp in Sources */,
 				6EFB17C1174F87F50011D5A5 /* Skeletons_AnimationTest.cpp in Sources */,
 				6E8FA38C175084EB00664E10 /* Skeletons_AnimateAndMoveTest.cpp in Sources */,
+				6EA3D47D1797B2AE006A7FA3 /* Skeletons_TransitionTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

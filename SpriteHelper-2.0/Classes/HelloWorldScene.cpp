@@ -13,6 +13,8 @@
 #include "Skeletons_LoadPoseTest.h"
 #include "Skeletons_AnimationTest.h"
 #include "Skeletons_AnimateAndMoveTest.h"
+#include "Skeletons_TransitionTest.h"
+
 using namespace cocos2d;
 
 
@@ -168,6 +170,11 @@ bool HelloWorld::init()
         itemsArray->addObject(item);
         item->setTag(13);
 
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - transition from one animation to another", this,
+                                      menu_selector(HelloWorld::menuCallback));
+        itemsArray->addObject(item);
+        item->setTag(14);
+
         
         
         
@@ -246,6 +253,9 @@ void HelloWorld::menuCallback(CCObject* sender)
             CCDirector::sharedDirector()->replaceScene(Skeletons_AnimateAndMoveTest::scene());
             break;
         
+        case 14:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_TransitionTest::scene());
+            break;
             
             
         default:
