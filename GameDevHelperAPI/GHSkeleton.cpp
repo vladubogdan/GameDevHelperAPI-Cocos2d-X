@@ -429,7 +429,7 @@ void GHSkeleton::transitionToAnimationInTime(GHSkeletalAnimation* anim, float ti
         bone->savePosition();
     }
 
-    this->playAnimation(anim);//this will also rmeove any previous transition time
+    this->playAnimation(anim);//this will also remove any previous transition time
     
     transitionTime = CCFloat::create(time);
     transitionTime->retain();
@@ -444,7 +444,7 @@ void GHSkeleton::transitionToAnimationWithNameInTime(const char* animName, float
 
 
 void GHSkeleton::stopAnimation(){
-    CC_SAFE_RELEASE(animation);
+    CC_SAFE_RELEASE_NULL(animation);
     this->unscheduleUpdate();
 }
 
@@ -516,6 +516,12 @@ void GHSkeleton::update(float dt)
             switch(animation->getPlayMode())
             {
                 case GH_SKELETAL_ANIM_PLAY_NORMAL:
+                {
+                    this->stopAnimation();
+                    return;
+                }
+                    break;
+                    
                 case GH_SKELETAL_ANIM_PLAY_LOOP:
                 {
                     animation->setCurrentTime(0);

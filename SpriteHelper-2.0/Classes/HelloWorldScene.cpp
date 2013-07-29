@@ -14,6 +14,7 @@
 #include "Skeletons_AnimationTest.h"
 #include "Skeletons_AnimateAndMoveTest.h"
 #include "Skeletons_TransitionTest.h"
+#include "Skeletons_AnimationPlayMode.h"
 
 using namespace cocos2d;
 
@@ -175,7 +176,12 @@ bool HelloWorld::init()
         itemsArray->addObject(item);
         item->setTag(14);
 
-        
+
+        item = CCMenuItemFont::create("Skeletons - GameDevHelperAPI - animation play mode", this,
+                                      menu_selector(HelloWorld::menuCallback));
+        itemsArray->addObject(item);
+        item->setTag(15);
+
         
         
         CCSize size = item->getContentSize();
@@ -256,7 +262,11 @@ void HelloWorld::menuCallback(CCObject* sender)
         case 14:
             CCDirector::sharedDirector()->replaceScene(Skeletons_TransitionTest::scene());
             break;
-            
+
+        case 15:
+            CCDirector::sharedDirector()->replaceScene(Skeletons_AnimationPlayMode::scene());
+            break;
+
             
         default:
 

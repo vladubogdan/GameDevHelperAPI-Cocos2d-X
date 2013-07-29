@@ -95,6 +95,7 @@
 		6E8FA3871750780D00664E10 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E8FA3591750780D00664E10 /* b2Rope.cpp */; };
 		6E8FA3891750785000664E10 /* spriteSheetAnimationsTest_SheetAnimations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E8FA3881750785000664E10 /* spriteSheetAnimationsTest_SheetAnimations.plist */; };
 		6E8FA390175086DE00664E10 /* Skeletons_AnimateAndMoveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E8FA38E175086DE00664E10 /* Skeletons_AnimateAndMoveTest.cpp */; };
+		6ED11BA217A65E2C00334C7F /* Skeletons_AnimationPlayMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6ED11BA017A65E2C00334C7F /* Skeletons_AnimationPlayMode.cpp */; };
 		6EFB16D7174CF9F40011D5A5 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D3174CF9F40011D5A5 /* hd */; };
 		6EFB16D8174CF9F40011D5A5 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D4174CF9F40011D5A5 /* ipad */; };
 		6EFB16D9174CF9F40011D5A5 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB16D5174CF9F40011D5A5 /* ipadhd */; };
@@ -293,6 +294,8 @@
 		6E8FA3881750785000664E10 /* spriteSheetAnimationsTest_SheetAnimations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = spriteSheetAnimationsTest_SheetAnimations.plist; sourceTree = "<group>"; };
 		6E8FA38E175086DE00664E10 /* Skeletons_AnimateAndMoveTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Skeletons_AnimateAndMoveTest.cpp; path = ../Classes/Skeletons_AnimateAndMoveTest.cpp; sourceTree = "<group>"; };
 		6E8FA38F175086DE00664E10 /* Skeletons_AnimateAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Skeletons_AnimateAndMoveTest.h; path = ../Classes/Skeletons_AnimateAndMoveTest.h; sourceTree = "<group>"; };
+		6ED11BA017A65E2C00334C7F /* Skeletons_AnimationPlayMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Skeletons_AnimationPlayMode.cpp; path = ../Classes/Skeletons_AnimationPlayMode.cpp; sourceTree = "<group>"; };
+		6ED11BA117A65E2C00334C7F /* Skeletons_AnimationPlayMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Skeletons_AnimationPlayMode.h; path = ../Classes/Skeletons_AnimationPlayMode.h; sourceTree = "<group>"; };
 		6EFB16D3174CF9F40011D5A5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		6EFB16D4174CF9F40011D5A5 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		6EFB16D5174CF9F40011D5A5 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
@@ -376,6 +379,8 @@
 				6E8FA2C31750778B00664E10 /* Skeletons_LoadPoseTest.cpp */,
 				6E8FA2C41750778B00664E10 /* Skeletons_LoadPoseTest.h */,
 				6E8FA2C51750778B00664E10 /* Skeletons_LoadTest.cpp */,
+				6ED11BA017A65E2C00334C7F /* Skeletons_AnimationPlayMode.cpp */,
+				6ED11BA117A65E2C00334C7F /* Skeletons_AnimationPlayMode.h */,
 				6E8FA2C61750778B00664E10 /* Skeletons_LoadTest.h */,
 				6E8FA38E175086DE00664E10 /* Skeletons_AnimateAndMoveTest.cpp */,
 				6E8FA38F175086DE00664E10 /* Skeletons_AnimateAndMoveTest.h */,
@@ -823,6 +828,7 @@
 				6E8FA3871750780D00664E10 /* b2Rope.cpp in Sources */,
 				6E8FA390175086DE00664E10 /* Skeletons_AnimateAndMoveTest.cpp in Sources */,
 				6E1ED29A179A58820060F2AA /* Skeletons_TransitionTest.cpp in Sources */,
+				6ED11BA217A65E2C00334C7F /* Skeletons_AnimationPlayMode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
