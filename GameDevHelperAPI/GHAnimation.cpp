@@ -145,7 +145,7 @@ restoreSprite(false),
 randomReplay(false),
 minRandomTime(0),
 maxRandomTime(0),
-totalTime(0.2),
+totalTime(0.2f),
 playing(false),
 currentTime(0),
 currentFrameIdx(0),
@@ -276,7 +276,7 @@ void GHAnimation::setTotalTime(float val)
 {
     float newTime = val;
     if(newTime < 0.1)
-        newTime = 0.1;
+        newTime = 0.1f;
         
     float currentTotalTime = totalTime;
     totalTime = 0;

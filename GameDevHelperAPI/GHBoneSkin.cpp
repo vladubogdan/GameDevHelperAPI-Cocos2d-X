@@ -33,7 +33,7 @@ GHBoneSkin* GHBoneSkin::createSkinWithSprite(GHSprite* spr,
                                              const char* skinUUID)
 {
     GHBoneSkin *pobNode = new GHBoneSkin();
-	if (pobNode && pobNode->initWithSprite(spr, bn, skinName, skinUUID));
+	if (pobNode && pobNode->initWithSprite(spr, bn, skinName, skinUUID))
     {
 	    pobNode->autorelease();
         return pobNode;
