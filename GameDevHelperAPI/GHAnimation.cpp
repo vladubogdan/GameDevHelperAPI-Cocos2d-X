@@ -337,7 +337,8 @@ void GHAnimation::update(float dt)
         if(nextFrame >= frames->count()){
             
             if(loop){
-                if(activeFrame->getTime() + currentRandomRepeatTime <= currentTime)
+                if(false == randomReplay ||
+                   (activeFrame->getTime() + currentRandomRepeatTime <= currentTime))
                 {
                     nextFrame = 0;
                     currentRandomRepeatTime = this->calculatedRandomReplayTime();
