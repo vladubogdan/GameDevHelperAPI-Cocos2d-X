@@ -13,6 +13,8 @@ AppDelegate::~AppDelegate()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+    ::srand(time(0));
+
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     

@@ -298,7 +298,7 @@ void GHAnimation::setTotalTime(float val)
 float GHAnimation::calculatedRandomReplayTime()
 {
     float diff = maxRandomTime - minRandomTime;
-	srand ( time(NULL) );
+	//srand ( time(NULL) );
     return (((float) (rand() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + minRandomTime;
 }
 
