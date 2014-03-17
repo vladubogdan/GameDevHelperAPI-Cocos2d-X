@@ -9,7 +9,7 @@
 #ifndef GAME_DEV_HELPER_ios_ghMacros_h
 #define GAME_DEV_HELPER_ios_ghMacros_h
 
-#import "ghConfig.h"
+#include "ghConfig.h"
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
 

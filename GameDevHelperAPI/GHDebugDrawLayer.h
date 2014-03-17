@@ -6,13 +6,13 @@
 //
 //
 
-#import "ghConfig.h"
-#import "cocos2d.h"
+#include "ghConfig.h"
+#include "cocos2d.h"
 using namespace cocos2d;
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
 
-#import "Box2D.h"
+#include "Box2D.h"
 
 /**
  A debug layer for when using physics in order to draw the physic representation on screen.

@@ -6,8 +6,8 @@
 //
 //
 
-#import "GHAnimation.h"
-#import "GHSprite.h"
+#include "GHAnimation.h"
+#include "GHSprite.h"
 
 GHAnimationFrame::GHAnimationFrame():
 m_spriteFrame(NULL),

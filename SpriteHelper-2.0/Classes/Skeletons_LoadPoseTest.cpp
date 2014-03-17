@@ -77,7 +77,7 @@ void Skeletons_LoadPoseTest::changePose(){
 //    poseNames.push_back("PushPose");
     poseNames.push_back("ShootPose");
     
-    int poseNameIdx = arc4random() % poseNames.size();
+    int poseNameIdx = rand() % poseNames.size();
     
     std::string poseName = poseNames[poseNameIdx];
     

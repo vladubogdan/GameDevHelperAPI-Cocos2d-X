@@ -74,7 +74,7 @@ void Sprites_LoadSpritesFromPNGTest::executeTestCodeAtPosition(CCPoint p)
     spriteFrameNames.push_back("pineapple");
     spriteFrameNames.push_back("statue");
     
-    int spriteNameIdx = arc4random() % spriteFrameNames.size();
+    int spriteNameIdx = rand() % spriteFrameNames.size();
     
     std::string sprFrameName = spriteFrameNames[spriteNameIdx];
     

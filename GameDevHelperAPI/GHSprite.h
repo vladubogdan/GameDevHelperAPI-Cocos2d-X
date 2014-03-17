@@ -10,14 +10,14 @@
 #define __GAME_DEV_HELPER_SPRITE_H__
 
 
-#import "cocos2d.h"
-#import "ghConfig.h"
+#include "cocos2d.h"
+#include "ghConfig.h"
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
-#import "Box2D.h"
+#include "Box2D.h"
 #endif
 
-#import "GHAnimation.h"
+#include "GHAnimation.h"
 
 /**
  A GHSprite is an advanced subclass of CCSprite.

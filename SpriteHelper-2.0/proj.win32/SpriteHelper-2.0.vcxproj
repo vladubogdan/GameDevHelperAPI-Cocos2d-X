@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
+    <RootNamespace>SpriteHelper-2.0</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d-x-2.1.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d-x.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(COCOS2DX)cocos2dx;$(COCOS2DX)cocos2dx\include;$(COCOS2DX)cocos2dx\kazmath\include;$(COCOS2DX)cocos2dx\platform\win32;$(COCOS2DX)cocos2dx\platform\third_party\win32;$(COCOS2DX)cocos2dx\platform\third_party\win32\OGLES;$(COCOS2DX)external;$(COCOS2DX)CocosDenshion\include;$(COCOS2DX)extensions;$(COCOS2DX);$(COCOS2DX)Box2D;$(COCOS2DX)GameDevHelperAPI;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NOMINMAX;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GH_ENABLE_PHYSICS_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(COCOS2DX)cocos2dx;$(COCOS2DX)cocos2dx\include;$(COCOS2DX)cocos2dx\kazmath\include;$(COCOS2DX)cocos2dx\platform\win32;$(COCOS2DX)cocos2dx\platform\third_party\win32;$(COCOS2DX)cocos2dx\platform\third_party\win32\OGLES;$(COCOS2DX)external;$(COCOS2DX)CocosDenshion\include;$(COCOS2DX)extensions;$(COCOS2DX);$(COCOS2DX)Box2D;$(COCOS2DX)GameDevHelperAPI;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NOMINMAX;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(COCOS2DX)external\libwebsockets\win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(COCOS2DX)external\msgpack\win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(THIRDPARTY)openssl\win32\lib\VC\*.*" "$(OutDir)"
+xcopy /Y /Q "$(THIRDPARTY)openssl\win32\bin\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Box2D\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2Collision.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2Distance.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\b2TimeOfImpact.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="..\..\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2Draw.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2Math.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2Settings.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="..\..\Box2D\Common\b2Timer.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2Body.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2Island.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2World.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\b2WorldCallbacks.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClCompile Include="..\..\Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHAnimation.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHAnimationCache.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHBone.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHBoneSkin.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHDebugDrawLayer.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHDirector.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHPoint.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHSkeletalAnimation.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHSkeletalAnimationCache.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHSkeleton.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHSprite.cpp" />
+    <ClCompile Include="..\..\GameDevHelperAPI\GHSpriteBatchNode.cpp" />
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\Physics_CollisionFiltering.cpp" />
+    <ClCompile Include="..\Classes\Physics_LoadSpritesWithPhysicalBody.cpp" />
+    <ClCompile Include="..\Classes\SheetAnimations_GameDevHelperAPI_ComplexAnimation.cpp" />
+    <ClCompile Include="..\Classes\SheetAnimations_GameDevHelperAPI_RandomFrames.cpp" />
+    <ClCompile Include="..\Classes\SheetAnimations_GameDevHelperAPI_RandomRepeatTime.cpp" />
+    <ClCompile Include="..\Classes\SheetAnimations_LoadAnimationTest.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_AnimateAndMoveTest.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_AnimationPlayMode.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_AnimationTest.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_LoadPoseTest.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_LoadTest.cpp" />
+    <ClCompile Include="..\Classes\Skeletons_TransitionTest.cpp" />
+    <ClCompile Include="..\Classes\Sprites_LoadSpriteFromPNGTest.cpp" />
+    <ClCompile Include="..\Classes\Sprites_LoadSpriteFromPVRCCZTest.cpp" />
+    <ClCompile Include="..\Classes\Sprites_LoadSpriteFromPVRTest.cpp" />
+    <ClCompile Include="..\Classes\TestLayer.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Box2D\Box2D.h" />
+    <ClInclude Include="..\..\Box2D\Collision\b2BroadPhase.h" />
+    <ClInclude Include="..\..\Box2D\Collision\b2Collision.h" />
+    <ClInclude Include="..\..\Box2D\Collision\b2Distance.h" />
+    <ClInclude Include="..\..\Box2D\Collision\b2DynamicTree.h" />
+    <ClInclude Include="..\..\Box2D\Collision\b2TimeOfImpact.h" />
+    <ClInclude Include="..\..\Box2D\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="..\..\Box2D\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="..\..\Box2D\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="..\..\Box2D\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="..\..\Box2D\Collision\Shapes\b2Shape.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2BlockAllocator.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2Draw.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2GrowableStack.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2Math.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2Settings.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2StackAllocator.h" />
+    <ClInclude Include="..\..\Box2D\Common\b2Timer.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2Body.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2Fixture.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2Island.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2World.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\b2WorldCallbacks.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="..\..\Box2D\Dynamics\Joints\b2WheelJoint.h" />
+    <ClInclude Include="..\..\Box2D\Rope\b2Rope.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GameDevHelper.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHAnimation.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHAnimationCache.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHBone.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHBoneSkin.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\ghConfig.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHDebugDrawLayer.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHDirector.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\ghMacros.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHPoint.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHSkeletalAnimation.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHSkeletalAnimationCache.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHSkeleton.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHSprite.h" />
+    <ClInclude Include="..\..\GameDevHelperAPI\GHSpriteBatchNode.h" />
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Physics_CollisionFiltering.h" />
+    <ClInclude Include="..\Classes\Physics_LoadSpritesWithPhysicalBody.h" />
+    <ClInclude Include="..\Classes\SheetAnimations_GameDevHelperAPI_ComplexAnimation.h" />
+    <ClInclude Include="..\Classes\SheetAnimations_GameDevHelperAPI_RandomFrames.h" />
+    <ClInclude Include="..\Classes\SheetAnimations_GameDevHelperAPI_RandomRepeatTime.h" />
+    <ClInclude Include="..\Classes\SheetAnimations_LoadAnimationTest.h" />
+    <ClInclude Include="..\Classes\Skeletons_AnimateAndMoveTest.h" />
+    <ClInclude Include="..\Classes\Skeletons_AnimationPlayMode.h" />
+    <ClInclude Include="..\Classes\Skeletons_AnimationTest.h" />
+    <ClInclude Include="..\Classes\Skeletons_LoadPoseTest.h" />
+    <ClInclude Include="..\Classes\Skeletons_LoadTest.h" />
+    <ClInclude Include="..\Classes\Skeletons_TransitionTest.h" />
+    <ClInclude Include="..\Classes\Sprites_LoadSpriteFromPNGTest.h" />
+    <ClInclude Include="..\Classes\Sprites_LoadSpriteFromPVRCCZTest.h" />
+    <ClInclude Include="..\Classes\Sprites_LoadSpriteFromPVRTest.h" />
+    <ClInclude Include="..\Classes\TestLayer.h" />
+    <ClInclude Include="main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cocos2dx\proj.win32\cocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CocosDenshion\proj.win32\CocosDenshion.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

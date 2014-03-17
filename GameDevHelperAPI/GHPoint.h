@@ -19,7 +19,7 @@ There are multiple versions of Cocos2d-x out there. In some GHPoint is a subclas
  In order to get around the problems of using GameDevHelper API with different cocos2d-x version this class has been created.
  */
 
-class CC_DLL GHPoint : public CCObject
+class GHPoint : public CCObject
 {
 public:
     float x;

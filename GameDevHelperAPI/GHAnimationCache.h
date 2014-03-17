@@ -10,7 +10,7 @@
 #define __GAME_DEV_HELPER_SPRITE_ANIMATION_CACHE_H__
 
 
-#import "cocos2d.h"
+#include "cocos2d.h"
 using namespace cocos2d;
 
 class GHAnimation;
