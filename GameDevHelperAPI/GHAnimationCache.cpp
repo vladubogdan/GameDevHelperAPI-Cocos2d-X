@@ -9,7 +9,9 @@
 #include "GHAnimationCache.h"
 #include "GHAnimation.h"
 
+#ifdef __apple__
 #pragma mark CCAnimationCache - Alloc, Init & Dealloc
+#endif
 
 GHAnimationCache* GHAnimationCache::s_pSharedAnimationCache = NULL;
 
@@ -52,7 +54,9 @@ GHAnimationCache::~GHAnimationCache()
 //	return [NSString stringWithFormat:@"<%@ = %p | num of animations =  %lu>", [self class], self, (unsigned long)[animations_ count]];
 //}
 
+#ifdef __apple__
 #pragma mark GHAnimationCache - load/get/del
+#endif
 
 void GHAnimationCache::addAnimation(GHAnimation *animation, const char * name)
 {
@@ -75,7 +79,9 @@ GHAnimation* GHAnimationCache::animationByName(const char* name)
 }
 
 
+#ifdef __apple__
 #pragma mark GHAnimationCache - from file
+#endif
 
 void GHAnimationCache::parseAnimationDictionary(CCDictionary* animations)
 {

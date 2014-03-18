@@ -90,7 +90,7 @@ void Physics_LoadSpritesWithPhysicalBody::executeTestCodeAtPosition(CCPoint p)
     spriteFrameNames.push_back("statue");
     spriteFrameNames.push_back("ball");
     
-    int spriteNameIdx = arc4random() % spriteFrameNames.size();
+    int spriteNameIdx = rand() % spriteFrameNames.size();
     
     std::string sprFrameName = spriteFrameNames[spriteNameIdx];
     

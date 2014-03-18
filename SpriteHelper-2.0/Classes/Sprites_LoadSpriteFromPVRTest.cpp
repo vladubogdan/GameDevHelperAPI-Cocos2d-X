@@ -75,7 +75,7 @@ void Sprites_LoadSpriteFromPVRTest::executeTestCodeAtPosition(CCPoint p)
     spriteFrameNames.push_back("fruit7");
     spriteFrameNames.push_back("fruit8");
     
-    int spriteNameIdx = arc4random() % spriteFrameNames.size();
+    int spriteNameIdx = rand() % spriteFrameNames.size();
     
     std::string sprFrameName = spriteFrameNames[spriteNameIdx];
     

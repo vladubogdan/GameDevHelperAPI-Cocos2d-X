@@ -107,7 +107,7 @@ void Skeletons_TransitionTest::changeAnimation(){
     animNames.push_back("SoftWalk");
     animNames.push_back("StrongWalk");
     
-    int animNameIdx = arc4random() % animNames.size();
+    int animNameIdx = rand() % animNames.size();
     
     std::string finalAnimName = animNames[animNameIdx];
     

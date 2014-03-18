@@ -10,7 +10,9 @@
 #include "GHSkeletalAnimation.h"
 
 
+#ifdef __apple__
 #pragma mark CCAnimationCache - Alloc, Init & Dealloc
+#endif
 
 GHSkeletalAnimationCache* GHSkeletalAnimationCache::s_pSharedAnimationCache = NULL;
 

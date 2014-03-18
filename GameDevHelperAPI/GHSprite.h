@@ -10,14 +10,14 @@
 #define __GAME_DEV_HELPER_SPRITE_H__
 
 
-#import "cocos2d.h"
-#import "ghConfig.h"
+#include "cocos2d.h"
+#include "ghConfig.h"
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
-#import "Box2D.h"
+#include "Box2D.h"
 #endif
 
-#import "GHAnimation.h"
+#include "GHAnimation.h"
 
 /**
  A GHSprite is an advanced subclass of CCSprite.
@@ -36,7 +36,9 @@ public:
     GHSprite();
     virtual ~GHSprite();
     
+#ifdef __apple__
 #pragma mark INIT
+#endif
 
     /**
      * Creates a sprite with an sprite frame name.
@@ -72,7 +74,9 @@ public:
 
     
     
+#ifdef __apple__
 #pragma mark VARIOUS_PROPERTIES
+#endif
     /**
      * Set the name of current sprite object.
      * @param  value A null terminated string which indicates the sprite name.
@@ -107,7 +111,9 @@ public:
     
     
     
+#ifdef __apple__
 #pragma mark ANIMATIONS
+#endif
     /**
      Prepares a sprite sheet animation on this sprite using the animation object.
      */
@@ -168,7 +174,9 @@ public:
     
     
 #if GH_ENABLE_PHYSICS_INTEGRATION
+#ifdef __apple__
 #pragma mark PHYSICS
+#endif
     
     /**
      Destroy the physical body created on this sprite.

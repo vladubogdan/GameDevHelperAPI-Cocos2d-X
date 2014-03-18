@@ -9,10 +9,10 @@
 #define __GAME_DEV_HELPER_DIRECTOR_H__
 
 
-#import "ghConfig.h"
+#include "ghConfig.h"
 
 #if GH_ENABLE_PHYSICS_INTEGRATION
-#import "Box2D.h"
+#include "Box2D.h"
 #endif
 
 

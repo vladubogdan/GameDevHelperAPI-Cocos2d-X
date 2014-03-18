@@ -80,7 +80,7 @@ void Sprites_LoadSpriteFromPVRCCZTest::executeTestCodeAtPosition(CCPoint p)
     spriteFrameNames.push_back("fruit7_ccz");
     spriteFrameNames.push_back("fruit8_ccz");
     
-    int spriteNameIdx = arc4random() % spriteFrameNames.size();
+    int spriteNameIdx = rand() % spriteFrameNames.size();
     
     std::string sprFrameName = spriteFrameNames[spriteNameIdx];
     

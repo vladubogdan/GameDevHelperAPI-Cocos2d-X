@@ -201,7 +201,7 @@ void GHDebugDrawLayer::DrawSolidPolygonWithVertices(const b2Vec2* old_vertices,
     mShaderProgram->use();
     mShaderProgram->setUniformsForBuiltins();
 
-    ccVertex2F vertices[vertexCount];
+    std::vector<ccVertex2F> vertices(vertexCount);
     
 	for( int i=0;i<vertexCount;i++) {
 		b2Vec2 tmp = old_vertices[i];
@@ -214,7 +214,7 @@ void GHDebugDrawLayer::DrawSolidPolygonWithVertices(const b2Vec2* old_vertices,
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
     
 
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &vertices[0]);
     
 	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
     
@@ -268,7 +268,7 @@ void GHDebugDrawLayer::DrawSolidCircleWithCenter(const b2Vec2& center,
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
     
-	GLfloat				glVertices[vertexCount*2];
+	std::vector<GLfloat> glVertices(vertexCount*2);
 	for (int32 i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
@@ -279,7 +279,7 @@ void GHDebugDrawLayer::DrawSolidCircleWithCenter(const b2Vec2& center,
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
 
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &glVertices[0]);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
@@ -315,7 +315,7 @@ void GHDebugDrawLayer::DrawCircleWithCenter(const b2Vec2& center,
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
     
-	GLfloat				glVertices[vertexCount*2];
+	std::vector<GLfloat> glVertices(vertexCount*2);
 	for (int32 i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
@@ -326,7 +326,7 @@ void GHDebugDrawLayer::DrawCircleWithCenter(const b2Vec2& center,
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
     
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &glVertices[0]);
     
 	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
     

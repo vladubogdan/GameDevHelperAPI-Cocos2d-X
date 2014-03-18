@@ -13,6 +13,8 @@ AppDelegate::~AppDelegate()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+    ::srand(time(0));
+
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     
@@ -29,27 +31,27 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     CCSize designSize = CCSizeMake(480, 320);
     
-    if(scrWidth == 480 || scrHeight == 480){//very old iphones
+    if(scrWidth <= 480 || scrHeight <= 480){//very old iphones
         
         res.push_back("sd");
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
     }
-    else if(scrWidth == 640 || scrHeight == 640){ //check for both iphone4/4S and iphone5
+    else if(scrWidth <= 640 || scrHeight <= 640){ //check for both iphone4/4S and iphone5
         res.push_back("hd");
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(2.0f);//why does cocos2d resize the sprites and make them really small with content scaling 2??? is it a bug in cocos2d-x?
     }
-    else if(scrWidth == 1024 || scrHeight == 1024){ //ipad mini and old ipads
+    else if(scrWidth <= 1024 || scrHeight <= 1024){ //ipad mini and old ipads
         
         designSize = CCSizeMake(1024, 768);
         res.push_back("ipad");
         CCFileUtils::sharedFileUtils()->setSearchPaths(res);
         CCDirector::sharedDirector()->setContentScaleFactor(1.0f);
     }
-    else if(scrWidth == 2048 || scrHeight == 2048){ //ipad retina and mac platform
+    else /* if(scrWidth >= 2048 || scrHeight >= 2048) */ { //ipad retina and mac platform
         
         res.push_back("ipadhd");
         designSize = CCSizeMake(1024, 768);

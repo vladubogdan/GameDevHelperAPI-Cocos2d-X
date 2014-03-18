@@ -6,8 +6,8 @@
 //
 //
 
-#import "GHAnimation.h"
-#import "GHSprite.h"
+#include "GHAnimation.h"
+#include "GHSprite.h"
 
 GHAnimationFrame::GHAnimationFrame():
 m_spriteFrame(NULL),
@@ -145,7 +145,7 @@ restoreSprite(false),
 randomReplay(false),
 minRandomTime(0),
 maxRandomTime(0),
-totalTime(0.2),
+totalTime(0.2f),
 playing(false),
 currentTime(0),
 currentFrameIdx(0),
@@ -276,7 +276,7 @@ void GHAnimation::setTotalTime(float val)
 {
     float newTime = val;
     if(newTime < 0.1)
-        newTime = 0.1;
+        newTime = 0.1f;
         
     float currentTotalTime = totalTime;
     totalTime = 0;
@@ -298,7 +298,7 @@ void GHAnimation::setTotalTime(float val)
 float GHAnimation::calculatedRandomReplayTime()
 {
     float diff = maxRandomTime - minRandomTime;
-	srand ( time(NULL) );
+	//srand ( time(NULL) );
     return (((float) (rand() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + minRandomTime;
 }
 
@@ -337,7 +337,8 @@ void GHAnimation::update(float dt)
         if(nextFrame >= frames->count()){
             
             if(loop){
-                if(activeFrame->getTime() + currentRandomRepeatTime <= currentTime)
+                if(false == randomReplay ||
+                   (activeFrame->getTime() + currentRandomRepeatTime <= currentTime))
                 {
                     nextFrame = 0;
                     currentRandomRepeatTime = this->calculatedRandomReplayTime();

@@ -15,20 +15,24 @@
 
 GHSprite* GHSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-#if COCOS2D_DEBUG > 0
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+#if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
     CCAssert(pFrame != NULL, msg);
 #endif
-    
-    
     GHSprite *pobNode = new GHSprite();
-	if (pobNode && pobNode->initWithSpriteFrameName(pszSpriteFrameName))
+
+    if (!pobNode)
+        return NULL;
+
+    if ((pFrame && pobNode->initWithSpriteFrame(pFrame)) ||
+	    pobNode->initWithSpriteFrameName(pszSpriteFrameName))
     {
 	    pobNode->autorelease();
         return pobNode;
     }
+
     CC_SAFE_DELETE(pobNode);
 	return NULL;
 }
