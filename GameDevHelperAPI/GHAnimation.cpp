@@ -346,7 +346,7 @@ void GHAnimation::update(float dt)
                     endedRep = true;
                 }
                 else{
-                    nextFrame = frames->count() - 1;
+                    nextFrame = 0;//frames->count() - 1;
                     resetCurrentTime = false;
                 }
             }
