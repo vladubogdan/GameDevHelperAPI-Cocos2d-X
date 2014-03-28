@@ -107,9 +107,9 @@ void Skeletons_AnimationPlayMode::changeAnimation(){
         
         GHSkeletalAnimation* anim = GHSkeletalAnimationCache::sharedSkeletalAnimationCache()->skeletalAnimationWithName(finalAnimName.c_str());
         
-        anim->setPlayMode(GH_SKELETAL_ANIM_PLAY_NORMAL);
+        //anim->setPlayMode(GH_SKELETAL_ANIM_PLAY_NORMAL);
         //anim->setPlayMode(GH_SKELETAL_ANIM_PLAY_PINGPONG);
-        //anim->setPlayMode(GH_SKELETAL_ANIM_PLAY_LOOP);
+        anim->setPlayMode(GH_SKELETAL_ANIM_PLAY_LOOP);
 
         CCLog("START ANIMIMATION %s with Mode %d", finalAnimName.c_str(), anim->getPlayMode());
     
